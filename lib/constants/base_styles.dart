@@ -25,6 +25,11 @@ class BaseStyles {
     fontWeight: FontWeight.w500,
     fontSize: 18,
   );
+  static final goldMedium16 = GoogleFonts.koHo(
+    color: AppColors.goldColor,
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+  );
   static final pinkMedium18 = GoogleFonts.koHo(
     color: AppColors.pinkColor,
     fontWeight: FontWeight.w500,

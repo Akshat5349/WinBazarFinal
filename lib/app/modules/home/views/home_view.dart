@@ -118,7 +118,7 @@ class HomeView extends GetView<HomeController> {
                                   width: Get.width * 0.45,
                                   // alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                    color: AppColors.pinkColor,
+                                    gradient: AppColors.goldGradient,
                                     // gradient: LinearGradient(colors: [Colors.red,Colors.black,Colors.red],begin: Alignment.topCenter,end: Alignment.bottomCenter),
                                     border: Border.all(
                                         color: Colors.black, width: 1),
@@ -130,11 +130,11 @@ class HomeView extends GetView<HomeController> {
                                     children: [
                                       Text(
                                         'Chat',
-                                        style: BaseStyles.whiteMedium16,
+                                        style: BaseStyles.purpleMedium16,
                                       ),
                                       Icon(
                                         Icons.language,
-                                        color: Colors.white,
+                                        color: AppColors.pinkColor,
                                       ),
                                     ],
                                   ),
@@ -151,8 +151,7 @@ class HomeView extends GetView<HomeController> {
                                   width: Get.width * 0.45,
                                   // alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                    color: AppColors.pinkColor,
-                                    // gradient: LinearGradient(colors: [Colors.red,Colors.black,Colors.red],begin: Alignment.topCenter,end: Alignment.bottomCenter),
+                                    gradient: AppColors.goldGradient,
                                     border: Border.all(
                                         color: Colors.black, width: 1),
                                     borderRadius: BorderRadius.circular(25),
@@ -162,12 +161,12 @@ class HomeView extends GetView<HomeController> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Call Now',
-                                        style: BaseStyles.whiteMedium16,
+                                        'Gali Disawar',
+                                        style: BaseStyles.purpleMedium16,
                                       ),
                                       Icon(
-                                        Icons.phone,
-                                        color: Colors.white,
+                                        Icons.play_arrow_outlined,
+                                        color: AppColors.pinkColor,
                                       ),
                                     ],
                                   ),
@@ -196,8 +195,7 @@ class HomeView extends GetView<HomeController> {
                                         width: Get.width * 0.45,
                                         // alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          color: AppColors.pinkColor,
-                                          // gradient: LinearGradient(colors: [Colors.red,Colors.black,Colors.red],begin: Alignment.topCenter,end: Alignment.bottomCenter),
+                                          gradient: AppColors.goldGradient,
                                           border: Border.all(
                                               color: Colors.black, width: 1),
                                           borderRadius:
@@ -213,12 +211,12 @@ class HomeView extends GetView<HomeController> {
                                                   : Strings.settings[0]
                                                       .paymentBtnText
                                                       .toString(),
-                                              style: BaseStyles.whiteMedium16,
+                                              style: BaseStyles.purpleMedium16,
                                             ),
                                             Icon(
                                               Icons
                                                   .account_balance_wallet_outlined,
-                                              color: Colors.white,
+                                              color: AppColors.primaryColor,
                                             ),
                                           ],
                                         ),
@@ -237,8 +235,7 @@ class HomeView extends GetView<HomeController> {
                                         width: Get.width * 0.45,
                                         // alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          color: AppColors.pinkColor,
-                                          // gradient: LinearGradient(colors: [Colors.red,Colors.black,Colors.red],begin: Alignment.topCenter,end: Alignment.bottomCenter),
+                                          gradient: AppColors.goldGradient,
                                           border: Border.all(
                                               color: Colors.black, width: 1),
                                           borderRadius:
@@ -250,12 +247,12 @@ class HomeView extends GetView<HomeController> {
                                           children: [
                                             Text(
                                               'Withdraw Points',
-                                              style: BaseStyles.whiteMedium16,
+                                              style: BaseStyles.purpleMedium16,
                                             ),
                                             Icon(
                                               Icons
                                                   .remove_circle_outline_outlined,
-                                              color: Colors.white,
+                                              color: AppColors.pinkColor,
                                             ),
                                           ],
                                         ),
@@ -680,9 +677,16 @@ class HomeView extends GetView<HomeController> {
                                                           ],
                                                         ),
                                                         child: Icon(
-                                                          Icons.play_arrow,
-                                                          color: AppColors
-                                                              .pinkColor,
+                                                          date.compareTo(
+                                                                      closeDateCompair) <
+                                                                  0
+                                                              ? Icons.play_arrow
+                                                              : Icons.close,
+                                                          color: date.compareTo(
+                                                                      closeDateCompair) <
+                                                                  0
+                                                              ? Colors.green
+                                                              : Colors.red,
                                                           size: 20,
                                                         ),
                                                       ),
@@ -916,20 +920,12 @@ class HomeView extends GetView<HomeController> {
             ],
           ),
           child: FloatingActionButton(
-            onPressed: () {
-              // Navigate to home or main action
-            },
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            child: Text(
-              'AM 999',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 10,
-              ),
-            ),
-          ),
+              onPressed: () {
+                // Navigate to home or main action
+              },
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              child: Image.asset(ImagePath.LOGO)),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       );
