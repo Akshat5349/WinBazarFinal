@@ -8,6 +8,8 @@ import 'package:azmatka/widgets/main_drawer.dart';
 import 'package:azmatka/widgets/share.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -509,115 +511,6 @@ class HomeView extends GetView<HomeController> {
                                                       ),
                                                     ),
                                                     // Status indicator on right
-                                                    Container(
-                                                      width: 30,
-                                                      height: 30,
-                                                      decoration: BoxDecoration(
-                                                        color: date.compareTo(
-                                                                    closeDateCompair) <
-                                                                0
-                                                            ? Colors.green
-                                                                .withOpacity(
-                                                                    0.1)
-                                                            : Colors.red
-                                                                .withOpacity(
-                                                                    0.1),
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      child: Icon(
-                                                        date.compareTo(
-                                                                    closeDateCompair) <
-                                                                0
-                                                            ? Icons.check
-                                                            : Icons.close,
-                                                        color: date.compareTo(
-                                                                    closeDateCompair) <
-                                                                0
-                                                            ? Colors.green
-                                                            : Colors.red,
-                                                        size: 16,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              // Market status text
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 4),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      date.compareTo(
-                                                                  closeDateCompair) <
-                                                              0
-                                                          ? 'Market Running'
-                                                          : 'Close for today',
-                                                      style: TextStyle(
-                                                        color: date.compareTo(
-                                                                    closeDateCompair) <
-                                                                0
-                                                            ? Colors.green
-                                                            : Colors.grey[600],
-                                                        fontSize: 13,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              // Bottom pink bar with open/close times and play button
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.pinkColor,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(15),
-                                                    bottomRight:
-                                                        Radius.circular(15),
-                                                  ),
-                                                ),
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 14),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    // Open time
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Text(
-                                                          "Open",
-                                                          style: TextStyle(
-                                                            color:
-                                                                Colors.white70,
-                                                            fontSize: 12,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          openDate.toString(),
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    // Play button
                                                     GestureDetector(
                                                       onTap: () {
                                                         if (date.compareTo(
@@ -794,6 +687,98 @@ class HomeView extends GetView<HomeController> {
                                                         ),
                                                       ),
                                                     ),
+                                                  ],
+                                                ),
+                                              ),
+                                              // Market status text
+
+                                              // Bottom pink bar with open/close times and play button
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.pinkColor,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(15),
+                                                    bottomRight:
+                                                        Radius.circular(15),
+                                                  ),
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 16,
+                                                    vertical: 14),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    // Open time
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        Text(
+                                                          "Open",
+                                                          style: TextStyle(
+                                                            color:
+                                                                Colors.white70,
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          openDate.toString(),
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    // Play button
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 6,
+                                                              vertical: 2),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            date.compareTo(
+                                                                        closeDateCompair) <
+                                                                    0
+                                                                ? 'Market Running'
+                                                                : 'Close for today',
+                                                            style: TextStyle(
+                                                              color: date.compareTo(
+                                                                          closeDateCompair) <
+                                                                      0
+                                                                  ? Colors.green
+                                                                  : Colors
+                                                                      .red[600],
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+
                                                     // Close time
                                                     Column(
                                                       crossAxisAlignment:
@@ -835,6 +820,118 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 1,
+                blurRadius: 10,
+                offset: Offset(0, -2),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.white,
+              selectedItemColor: AppColors.pinkColor,
+              unselectedItemColor: Colors.grey[600],
+              selectedFontSize: 12,
+              unselectedFontSize: 10,
+              currentIndex: 0, // Default to home/My Bids
+              onTap: (index) {
+                switch (index) {
+                  case 0:
+                    // My Bids - stay on current page or navigate to bids page
+                    break;
+                  case 1:
+                    // Passbook - navigate to wallet history or transaction history
+                    break;
+                  case 2:
+                    // Home/Center button - handled by floating action button
+                    break;
+                  case 3:
+                    // Funds - navigate to wallet/payment screen
+                    if (controller.approve.value == 'true') {
+                      Get.to(() => WalletView());
+                    }
+                    break;
+                  case 4:
+                    // Support - navigate to support/contact page
+                    break;
+                }
+              },
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.list_alt, size: 24),
+                  label: 'My Bids',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.account_balance_wallet_outlined, size: 24),
+                  label: 'Passbook',
+                ),
+                BottomNavigationBarItem(
+                  icon: SizedBox.shrink(), // Empty for center FAB
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.account_balance, size: 24),
+                  label: 'Funds',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.support_agent, size: 24),
+                  label: 'Support',
+                ),
+              ],
+            ),
+          ),
+        ),
+        floatingActionButton: Container(
+          width: 65,
+          height: 65,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [AppColors.pinkColor, Colors.deepPurple],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.pinkColor.withOpacity(0.3),
+                spreadRadius: 2,
+                blurRadius: 8,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: FloatingActionButton(
+            onPressed: () {
+              // Navigate to home or main action
+            },
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            child: Text(
+              'AM 999',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 10,
+              ),
+            ),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       );
     });
   }
