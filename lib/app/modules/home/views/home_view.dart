@@ -508,18 +508,33 @@ class HomeView extends GetView<HomeController> {
                                                         ],
                                                       ),
                                                     ),
-                                                    // Close button on right
+                                                    // Status indicator on right
                                                     Container(
                                                       width: 30,
                                                       height: 30,
                                                       decoration: BoxDecoration(
-                                                        color: Colors.red
-                                                            .withOpacity(0.1),
+                                                        color: date.compareTo(
+                                                                    closeDateCompair) <
+                                                                0
+                                                            ? Colors.green
+                                                                .withOpacity(
+                                                                    0.1)
+                                                            : Colors.red
+                                                                .withOpacity(
+                                                                    0.1),
                                                         shape: BoxShape.circle,
                                                       ),
                                                       child: Icon(
-                                                        Icons.close,
-                                                        color: Colors.red,
+                                                        date.compareTo(
+                                                                    closeDateCompair) <
+                                                                0
+                                                            ? Icons.check
+                                                            : Icons.close,
+                                                        color: date.compareTo(
+                                                                    closeDateCompair) <
+                                                                0
+                                                            ? Colors.green
+                                                            : Colors.red,
                                                         size: 16,
                                                       ),
                                                     ),
