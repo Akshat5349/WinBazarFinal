@@ -6,6 +6,7 @@ import 'package:azmatka/constants/values.dart';
 import 'package:azmatka/widgets/base_url.dart';
 import 'package:azmatka/widgets/main_drawer.dart';
 import 'package:azmatka/widgets/share.dart';
+import 'package:azmatka/widgets/custom_widgets.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -336,100 +337,130 @@ class HomeView extends GetView<HomeController> {
                                                 "${date.year}-${m}-${d} ${item['close_time']}:00.000000"));
                                         DateTime closeDateCompair = DateTime.parse(
                                             "${date.year}-${m}-${d} ${item['close_time']}:00.000000");
-                                        return Container(
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: 16, vertical: 8),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey
-                                                    .withOpacity(0.2),
-                                                spreadRadius: 1,
-                                                blurRadius: 6,
-                                                offset: Offset(0, 2),
+                                        // Check if market is open based on current time
+                                        bool isMarketOpen = date.compareTo(
+                                                    closeDateCompair) <
+                                                0 &&
+                                            date.compareTo(opendateClose) > 0;
+                                        bool isMarketClosed =
+                                            date.compareTo(closeDateCompair) >=
+                                                0;
+
+                                        return GestureDetector(
+                                          onTap: () {
+                                            if (isMarketOpen ||
+                                                !isMarketClosed) {
+                                              if (controller.approve.value ==
+                                                  "true") {
+                                                Get.to(() => GamesView(),
+                                                    arguments: {
+                                                      'id': item['_id']
+                                                          .toString(),
+                                                      'name':
+                                                          item['market_name']
+                                                              .toString(),
+                                                      'type': 'regular',
+                                                      'market_type':
+                                                          item['market_type']
+                                                              .toString(),
+                                                      "item": item,
+                                                      "open": true,
+                                                      "close": true
+                                                    });
+                                              } else {
+                                                Get.toNamed('/quiz');
+                                              }
+                                            } else {
+                                              toast('Market is closed');
+                                            }
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 16, vertical: 6),
+                                            height: 120, // Fixed thinner height
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Color(
+                                                      0xFF1a2332), // Dark navy blue
+                                                  Color(
+                                                      0xFF2a3441), // Slightly lighter navy
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
                                               ),
-                                            ],
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              // Top section with chart icon, market name, and close button
-                                              Container(
-                                                padding: EdgeInsets.all(16),
-                                                child: Row(
-                                                  children: [
-                                                    // Chart icon on left
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        Get.toNamed(
-                                                          '/chart?market_name=${item['market_name']}&market_slug=${item['market_slug']}',
-                                                        );
-                                                        toast(item[
-                                                            'market_slug']);
-                                                      },
-                                                      child: Container(
-                                                        width: 40,
-                                                        height: 40,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                color: Color(0xFF3a4551),
+                                                width: 1,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black
+                                                      .withOpacity(0.3),
+                                                  blurRadius: 8,
+                                                  offset: Offset(0, 4),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(16),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  // Top row with market name and play/close icon
+                                                  Row(
+                                                    children: [
+                                                      // Left side arrow icon
+                                                      Container(
+                                                        width: 32,
+                                                        height: 32,
                                                         decoration:
                                                             BoxDecoration(
-                                                          color: Colors.pink
-                                                              .withOpacity(0.1),
-                                                          shape:
-                                                              BoxShape.circle,
+                                                          color: Color(
+                                                                  0xFFd4af37)
+                                                              .withOpacity(
+                                                                  0.2), // Gold background
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
                                                         ),
                                                         child: Icon(
                                                           Icons.trending_up,
-                                                          color: AppColors
-                                                              .pinkColor,
-                                                          size: 20,
+                                                          color: Color(
+                                                              0xFFd4af37), // Gold color
+                                                          size: 18,
                                                         ),
                                                       ),
-                                                    ),
-                                                    SizedBox(width: 12),
-                                                    // Market name and results in center
-                                                    Expanded(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            item['market_name']
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Colors
-                                                                  .black87,
+                                                      SizedBox(width: 12),
+                                                      // Market name and numbers
+                                                      Expanded(
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              item['market_name']
+                                                                  .toString()
+                                                                  .toUpperCase(),
+                                                              style: TextStyle(
+                                                                color: Color(
+                                                                    0xFFd4af37), // Gold color
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                letterSpacing:
+                                                                    0.5,
+                                                              ),
                                                             ),
-                                                          ),
-                                                          SizedBox(height: 6),
-                                                          Row(
-                                                            children: [
-                                                              // Open result
-                                                              Container(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        horizontal:
-                                                                            10,
-                                                                        vertical:
-                                                                            4),
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .pink
-                                                                      .withOpacity(
-                                                                          0.1),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                                child: Text(
+                                                            SizedBox(height: 4),
+                                                            Row(
+                                                              children: [
+                                                                Text(
                                                                   item['results'] ==
                                                                           null
                                                                       ? "***"
@@ -443,42 +474,26 @@ class HomeView extends GetView<HomeController> {
                                                                                   : "***",
                                                                   style:
                                                                       TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        14,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .bold,
-                                                                    color: AppColors
-                                                                        .pinkColor,
-                                                                    fontSize:
-                                                                        16,
+                                                                            .w500,
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              Text(" - ",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontSize:
-                                                                          16)),
-                                                              // Close result
-                                                              Container(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        horizontal:
-                                                                            10,
-                                                                        vertical:
-                                                                            4),
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .pink
-                                                                      .withOpacity(
-                                                                          0.1),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
+                                                                Text(
+                                                                  " • ",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Color(
+                                                                        0xFFd4af37),
+                                                                    fontSize:
+                                                                        14,
+                                                                  ),
                                                                 ),
-                                                                child: Text(
+                                                                Text(
                                                                   item['results'] ==
                                                                           null
                                                                       ? "***"
@@ -492,328 +507,159 @@ class HomeView extends GetView<HomeController> {
                                                                                   : "***",
                                                                   style:
                                                                       TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        14,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .bold,
-                                                                    color: AppColors
-                                                                        .pinkColor,
-                                                                    fontSize:
-                                                                        16,
+                                                                            .w500,
                                                                   ),
                                                                 ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    // Status indicator on right
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        if (date.compareTo(
-                                                                    closeDateCompair) <
-                                                                0 &&
-                                                            date.compareTo(
-                                                                    opendateClose) >
-                                                                0) {
-                                                          if (controller.approve
-                                                                  .value ==
-                                                              "true") {
-                                                            Get.to(
-                                                                () =>
-                                                                    GamesView(),
-                                                                arguments: {
-                                                                  'id': item[
-                                                                          '_id']
-                                                                      .toString(),
-                                                                  'name': item[
-                                                                          'market_name']
-                                                                      .toString(),
-                                                                  'type':
-                                                                      'regular',
-                                                                  'market_type':
-                                                                      item['market_type']
-                                                                          .toString(),
-                                                                  "item": item,
-                                                                  "open": false,
-                                                                  "close": true
-                                                                });
-                                                          } else {
-                                                            Get.toNamed(
-                                                                '/quiz');
-                                                          }
-                                                        } else {
-                                                          if (date.compareTo(
-                                                                  opendateClose) >
-                                                              0) {
-                                                            toast(
-                                                                'Market is close');
-                                                          } else {
-                                                            if (controller
-                                                                    .approve
-                                                                    .value
-                                                                    .toString() ==
-                                                                "true") {
-                                                              Get.to(
-                                                                  () =>
-                                                                      GamesView(),
-                                                                  arguments: {
-                                                                    'id': item[
-                                                                            '_id']
-                                                                        .toString(),
-                                                                    'name': item[
-                                                                            'market_name']
-                                                                        .toString(),
-                                                                    'type':
-                                                                        'regular',
-                                                                    'market_type':
-                                                                        item['market_type']
-                                                                            .toString(),
-                                                                    "item":
-                                                                        item,
-                                                                    "open":
-                                                                        true,
-                                                                    "close":
-                                                                        true
-                                                                  });
-                                                            } else {
-                                                              Get.toNamed(
-                                                                  '/quiz');
-                                                            }
-                                                          }
-                                                        }
-                                                        if (date.compareTo(
-                                                                    opendateClose) >
-                                                                0 &&
-                                                            date.compareTo(
-                                                                    closeDateCompair) <
-                                                                0) {
-                                                          if (controller
-                                                                  .approve.value
-                                                                  .toString() ==
-                                                              "true") {
-                                                            Get.to(
-                                                                () =>
-                                                                    GamesView(),
-                                                                arguments: {
-                                                                  'id': item[
-                                                                          '_id']
-                                                                      .toString(),
-                                                                  'name': item[
-                                                                          'market_name']
-                                                                      .toString(),
-                                                                  'type':
-                                                                      'regular',
-                                                                  'market_type':
-                                                                      item['market_type']
-                                                                          .toString(),
-                                                                  "item": item,
-                                                                  "open": true,
-                                                                  "close": true
-                                                                });
-                                                          } else {
-                                                            Get.toNamed(
-                                                                '/quiz');
-                                                          }
-                                                        } else {
-                                                          if (date.compareTo(
-                                                                  closeDateCompair) <
-                                                              0) {
-                                                            if (controller
-                                                                    .approve
-                                                                    .value
-                                                                    .toString() ==
-                                                                "true") {
-                                                              Get.to(
-                                                                  () =>
-                                                                      GamesView(),
-                                                                  arguments: {
-                                                                    'id': item[
-                                                                            '_id']
-                                                                        .toString(),
-                                                                    'name': item[
-                                                                            'market_name']
-                                                                        .toString(),
-                                                                    'type':
-                                                                        'regular',
-                                                                    'market_type':
-                                                                        item['market_type']
-                                                                            .toString(),
-                                                                    "item":
-                                                                        item,
-                                                                    "open":
-                                                                        true,
-                                                                    "close":
-                                                                        true
-                                                                  });
-                                                            } else {
-                                                              Get.toNamed(
-                                                                  '/quiz');
-                                                            }
-                                                          } else {
-                                                            toast(
-                                                                'Market is close');
-                                                          }
-                                                        }
-                                                      },
-                                                      child: Container(
-                                                        width: 35,
-                                                        height: 35,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.white,
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors
-                                                                  .black
-                                                                  .withOpacity(
-                                                                      0.1),
-                                                              blurRadius: 4,
-                                                              offset:
-                                                                  Offset(0, 2),
+                                                              ],
                                                             ),
                                                           ],
                                                         ),
+                                                      ),
+                                                      // Right side play/close icon
+                                                      Container(
+                                                        width: 36,
+                                                        height: 36,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: isMarketClosed
+                                                              ? Colors.red
+                                                                  .withOpacity(
+                                                                      0.2)
+                                                              : Colors.green
+                                                                  .withOpacity(
+                                                                      0.2),
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          border: Border.all(
+                                                            color:
+                                                                isMarketClosed
+                                                                    ? Colors.red
+                                                                    : Colors
+                                                                        .green,
+                                                            width: 1.5,
+                                                          ),
+                                                        ),
                                                         child: Icon(
-                                                          date.compareTo(
-                                                                      closeDateCompair) <
-                                                                  0
-                                                              ? Icons.play_arrow
-                                                              : Icons.close,
-                                                          color: date.compareTo(
-                                                                      closeDateCompair) <
-                                                                  0
-                                                              ? Colors.green
-                                                              : Colors.red,
+                                                          isMarketClosed
+                                                              ? Icons.close
+                                                              : Icons
+                                                                  .play_arrow,
+                                                          color: isMarketClosed
+                                                              ? Colors.red
+                                                              : Colors.green,
                                                           size: 20,
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              // Market status text
-
-                                              // Bottom pink bar with open/close times and play button
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.pinkColor,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(15),
-                                                    bottomRight:
-                                                        Radius.circular(15),
+                                                    ],
                                                   ),
-                                                ),
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 14),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    // Open time
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Text(
-                                                          "Open",
-                                                          style: TextStyle(
-                                                            color:
-                                                                Colors.white70,
-                                                            fontSize: 12,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          openDate.toString(),
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    // Play button
-                                                    Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 6,
-                                                              vertical: 2),
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+
+                                                  Spacer(),
+
+                                                  // Bottom row with times and status
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      // Open time
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
                                                         children: [
                                                           Text(
-                                                            date.compareTo(
-                                                                        closeDateCompair) <
-                                                                    0
-                                                                ? 'Market Running'
-                                                                : 'Close for today',
+                                                            "Open",
                                                             style: TextStyle(
-                                                              color: date.compareTo(
-                                                                          closeDateCompair) <
-                                                                      0
-                                                                  ? Colors.green
-                                                                  : Colors
-                                                                      .red[600],
+                                                              color: Colors
+                                                                  .white60,
+                                                              fontSize: 11,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            openDate.toString(),
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
                                                               fontSize: 13,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w500,
+                                                                      .w600,
                                                             ),
                                                           ),
                                                         ],
                                                       ),
-                                                    ),
 
-                                                    // Close time
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Text(
-                                                          "Close",
+                                                      // Center status button
+                                                      Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 12,
+                                                                vertical: 6),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Color(
+                                                              0xFFd4af37), // Gold background
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(16),
+                                                        ),
+                                                        child: Text(
+                                                          isMarketClosed
+                                                              ? 'Close for today'
+                                                              : 'Market Running',
                                                           style: TextStyle(
-                                                            color:
-                                                                Colors.white70,
+                                                            color: Color(
+                                                                0xFF1a2332), // Dark navy text
                                                             fontSize: 12,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          closeDate.toString(),
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 14,
                                                             fontWeight:
-                                                                FontWeight.bold,
+                                                                FontWeight.w600,
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
+                                                      ),
+
+                                                      // Close time
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Text(
+                                                            "Close",
+                                                            style: TextStyle(
+                                                              color: Colors
+                                                                  .white60,
+                                                              fontSize: 11,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            closeDate
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
                                               ),
-                                            ],
+                                            ),
                                           ),
                                         );
                                       },
