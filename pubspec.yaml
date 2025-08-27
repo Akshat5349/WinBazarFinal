@@ -1,0 +1,48 @@
+name: azmatka
+version: 1.0.2+09
+publish_to: none
+description: A new Flutter project.
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo/logo.png"
+
+dependencies:
+  carousel_slider: ^5.0.0
+  colour: ^1.0.5
+  cupertino_icons: ^1.0.2
+  device_info_plus: ^11.3.3
+  dio: ^5.8.0+1
+  flutter:
+    sdk: flutter
+  html: any
+  flutter_html: ^3.0.0
+  flutter_launcher_icons: ^0.14.3
+  fluttertoast: ^8.0.9
+  font_awesome_flutter: ^10.1.0
+  get: ^4.6.5
+  get_storage: ^2.0.3
+  google_fonts: ^6.2.1
+  image_picker: ^1.1.2
+  intl: ^0.20.2
+  share_plus: ^10.1.4
+  url_launcher: ^6.1.0
+  webview_flutter: ^4.10.0
+  image_picker_web: ^4.0.0
+  # flutter_webview_plugin: ^0.4.0
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/logo/
+    - assets/icons/

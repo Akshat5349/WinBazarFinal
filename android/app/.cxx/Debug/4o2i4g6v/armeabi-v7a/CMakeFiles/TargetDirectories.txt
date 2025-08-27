@@ -1,0 +1,2 @@
+/Users/akshatgiri/Downloads/vardhaan/android/app/.cxx/Debug/4o2i4g6v/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/akshatgiri/Downloads/vardhaan/android/app/.cxx/Debug/4o2i4g6v/armeabi-v7a/CMakeFiles/rebuild_cache.dir

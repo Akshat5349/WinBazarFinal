@@ -1,0 +1,2 @@
+/Users/akshatgiri/Downloads/vardhaan/android/app/.cxx/RelWithDebInfo/5n2h5421/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/akshatgiri/Downloads/vardhaan/android/app/.cxx/RelWithDebInfo/5n2h5421/armeabi-v7a/CMakeFiles/rebuild_cache.dir

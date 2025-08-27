@@ -1,0 +1,2 @@
+/Users/akshatgiri/Downloads/vardhaan/android/app/.cxx/RelWithDebInfo/5n2h5421/x86_64/CMakeFiles/edit_cache.dir
+/Users/akshatgiri/Downloads/vardhaan/android/app/.cxx/RelWithDebInfo/5n2h5421/x86_64/CMakeFiles/rebuild_cache.dir

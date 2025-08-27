@@ -1,0 +1,2 @@
+/Users/akshatgiri/Downloads/kalyan786/android/app/.cxx/Debug/2rc4m4s4/x86/CMakeFiles/edit_cache.dir
+/Users/akshatgiri/Downloads/kalyan786/android/app/.cxx/Debug/2rc4m4s4/x86/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,2 @@
+/Users/akshatgiri/Downloads/lucky777live/android/app/.cxx/RelWithDebInfo/516it4n5/x86/CMakeFiles/edit_cache.dir
+/Users/akshatgiri/Downloads/lucky777live/android/app/.cxx/RelWithDebInfo/516it4n5/x86/CMakeFiles/rebuild_cache.dir

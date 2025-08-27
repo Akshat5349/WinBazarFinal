@@ -1,0 +1,2 @@
+/Users/akshatgiri/Downloads/vardhaan/android/app/.cxx/Debug/4o2i4g6v/x86/CMakeFiles/edit_cache.dir
+/Users/akshatgiri/Downloads/vardhaan/android/app/.cxx/Debug/4o2i4g6v/x86/CMakeFiles/rebuild_cache.dir

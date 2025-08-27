@@ -1,0 +1,99 @@
+# Flutter/Dart/Pub related
+**/build/
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-plugins-dependencies.lock
+.flutter-versions
+generated_plugin_registrant.dart
+.flutter-plugins
+pubspec.lock
+
+# Android/IntelliJ/Android Studio/Gradle
+**/.gradle/
+**/local.properties
+**/android/app/build/
+**/android/build/
+**/android/key.properties
+**/android/*.keystore
+**/android/*.jks
+**/android/.cxx/
+.gradle/
+/capture/
+
+# iOS
+**/Pods/
+**/Runner.xcworkspace/
+**/DerivedData/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/ServiceDefinitions.json
+**/ios/Flutter/.symlinks/
+**/ios/Flutter/ephemeral/
+**/ios/Pods/
+**/ios/Flutter/App.framework
+**/ios/Flutter/engine
+
+# Xcode
+*.xcuserdata
+*.xcuserstate
+*.moved-aside
+*.xcworkspace
+xcuserdata/
+
+# VS Code
+.vscode/
+.vscode/*
+.history/
+
+# JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# macOS
+.DS_Store
+*.DS_Store?
+.AppleDouble
+.LSOverride
+
+# Other files
+*.log
+*.tmp
+*.temp
+*.swp
+*~
+
+# Sensitive files and keys
+
+credentials.json
+.env
+.env.*
+*.p12
+
+# Flutter web
+**/web/.dart_tool/
+**/web/assets/
+
+# Coverage and reports
+coverage/
+coverage.json
+lcov.info
+
+# Misc
+.packages
+.idea/
+
+# Ignore generated localization files (if using intl/generator)
+**/lib/generated_plugin_registrant.dart
+**/lib/generated/*.dart
+
+# Generated files from IDE or tooling
+*.iml
+*.class
+
+# End of file
