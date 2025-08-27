@@ -21,7 +21,7 @@ class HomeView extends GetView<HomeController> {
       return Scaffold(
         backgroundColor: AppColors.primaryColor,
         appBar: AppBar(
-          title: Text("Kalyan365 App"),
+          title: Text("WinBazar"),
           centerTitle: false,
           actions: [
             controller.approve.value == 'true'

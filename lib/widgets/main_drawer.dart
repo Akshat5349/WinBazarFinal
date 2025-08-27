@@ -34,9 +34,6 @@ class MainDrawer extends GetView<MainDrawerController> {
                 Obx(
                   () => Container(
                     padding: EdgeInsets.only(left: 25, top: 10, bottom: 10),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryAccentColor,
-                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,12 +46,12 @@ class MainDrawer extends GetView<MainDrawerController> {
                           child: controller.image.value != ''
                               ? CircleAvatar(
                                   radius: 40,
-                                  backgroundColor: Colors.lightBlue,
+                                  backgroundColor: Colors.transparent,
                                   backgroundImage: NetworkImage(
                                       '${BASE_URL_image2}${controller.image.value}'))
                               : CircleAvatar(
                                   radius: 40,
-                                  backgroundColor: Colors.lightBlue,
+                                  backgroundColor: Colors.transparent,
                                   backgroundImage: AssetImage(ImagePath.LOGO)),
                         ),
                         heightSpace10,

@@ -16,7 +16,7 @@ class AppColors {
   };
 
   static const primaryColor = Color(0xFF020b1c);
-  static const primaryAccentColor = Color(0xFFEFBF04);
+  static const primaryAccentColor = Color(0xFF03045e);
   static const primaryColorback = Color(0xFF03045e);
   static const lightYellow = Color(0xFFfffeac);
   static const bgGrey = Color(0xFFF9F9FB);
@@ -27,7 +27,7 @@ class AppColors {
   static const walletPriceGrey = Color(0xFF788A9B);
   static const blackColor = Color(0xFF4A4F55);
   static const whiteColor = Color(0xFFFFFFFF);
-  static const pinkColor = Color(0xFF004aad);
+  static const pinkColor = Color(0xFF03045e);
   static const blueColor = Color(0xFF2a000c);
   // static const pinkColor = Color(0xFFd906c3);
   // static const blueColor = Color(0xFF3c309b);

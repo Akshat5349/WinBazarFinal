@@ -12,7 +12,7 @@ class SplashController extends GetxController
     super.onInit();
     controller =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
-    animation1 = Tween<double>(begin: 100.0, end: 100.0).animate(controller);
+    animation1 = Tween<double>(begin: 220.0, end: 220.0).animate(controller);
     controller.forward();
     splash();
   }
@@ -27,25 +27,20 @@ class SplashController extends GetxController
   maintenanceApi() async {}
   splash() async {
     Future.delayed(Duration(seconds: 1), () async {
-
       try {
-      var res = await ApiProvider().getRequest3(
-          apiUrl: 'settings/list');
-      Strings.settings.clear();
-      if (res != null) {
-        for (int i = 0; i < res['data'].length; i++) {
-          Strings.settings.add(SettingModel.fromJson(res['data'][i]));
+        var res = await ApiProvider().getRequest3(apiUrl: 'settings/list');
+        Strings.settings.clear();
+        if (res != null) {
+          for (int i = 0; i < res['data'].length; i++) {
+            Strings.settings.add(SettingModel.fromJson(res['data'][i]));
+          }
         }
-
+      } catch (e) {
+        print(e.toString());
       }
 
-    } catch (e) {
-      print(e.toString());
-    }
-
-
-
-      if ((box.read('token') != null||box.read('token')!='') && box.read('is_registered') == 1) {
+      if ((box.read('token') != null || box.read('token') != '') &&
+          box.read('is_registered') == 1) {
         if (box.read('isClone') == true) {
           // Get.offAll(() => ProductView());
         } else {
@@ -71,6 +66,5 @@ class SplashController extends GetxController
     //     print(e.toString());
     //   }
     // });
-    
   }
 }

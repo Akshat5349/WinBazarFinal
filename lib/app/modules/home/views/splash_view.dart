@@ -11,11 +11,11 @@ class SplashView extends GetView<SplashController> {
         child: AnimatedBuilder(
           animation: controller.animation1,
           builder: (BuildContext context, Widget? child) {
-            return CircleAvatar(
-              radius: controller.animation1.value,
-              backgroundImage: AssetImage(
-                ImagePath.LOGO,
-              ),
+            return Image.asset(
+              ImagePath.LOGO,
+              width: controller.animation1.value,
+              height: controller.animation1.value,
+              fit: BoxFit.cover,
             );
           },
         ),
