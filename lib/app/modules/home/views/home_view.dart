@@ -119,23 +119,23 @@ class HomeView extends GetView<HomeController> {
                                   width: Get.width * 0.45,
                                   // alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                    gradient: AppColors.goldGradient,
-                                    // gradient: LinearGradient(colors: [Colors.red,Colors.black,Colors.red],begin: Alignment.topCenter,end: Alignment.bottomCenter),
                                     border: Border.all(
-                                        color: Colors.black, width: 1),
-                                    borderRadius: BorderRadius.circular(25),
+                                        color: Color(0xFFd4af37), width: 1),
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    spacing: 6,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        'Chat',
-                                        style: BaseStyles.purpleMedium16,
-                                      ),
                                       Icon(
-                                        Icons.language,
-                                        color: AppColors.pinkColor,
+                                        Icons.phone_outlined,
+                                        color: Color(0xFFd4af37),
+                                      ),
+                                      Text(
+                                        '${Strings.settings[0].whatsapp.toString()}',
+                                        style: BaseStyles.goldMedium16,
                                       ),
                                     ],
                                   ),
@@ -377,7 +377,7 @@ class HomeView extends GetView<HomeController> {
                                           child: Container(
                                             margin: EdgeInsets.symmetric(
                                                 horizontal: 16, vertical: 6),
-                                            height: 120, // Fixed thinner height
+                                            height: 140, // Fixed thinner height
                                             decoration: BoxDecoration(
                                               gradient: LinearGradient(
                                                 colors: [
@@ -527,21 +527,15 @@ class HomeView extends GetView<HomeController> {
                                                         height: 36,
                                                         decoration:
                                                             BoxDecoration(
-                                                          color: isMarketClosed
-                                                              ? Colors.red
-                                                                  .withOpacity(
-                                                                      0.2)
-                                                              : Colors.green
-                                                                  .withOpacity(
-                                                                      0.2),
-                                                          shape:
-                                                              BoxShape.circle,
+                                                          color: Color(
+                                                                  0xFFd4af37)
+                                                              .withOpacity(0.2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
                                                           border: Border.all(
-                                                            color:
-                                                                isMarketClosed
-                                                                    ? Colors.red
-                                                                    : Colors
-                                                                        .green,
+                                                            color: Color(
+                                                                0xFFd4af37),
                                                             width: 1.5,
                                                           ),
                                                         ),
@@ -550,112 +544,128 @@ class HomeView extends GetView<HomeController> {
                                                               ? Icons.close
                                                               : Icons
                                                                   .play_arrow,
-                                                          color: isMarketClosed
-                                                              ? Colors.red
-                                                              : Colors.green,
+                                                          color:
+                                                              Color(0xFFd4af37),
                                                           size: 20,
                                                         ),
                                                       ),
                                                     ],
                                                   ),
 
-                                                  Spacer(),
-
                                                   // Bottom row with times and status
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      // Open time
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          Text(
-                                                            "Open",
-                                                            style: TextStyle(
-                                                              color: Colors
-                                                                  .white60,
-                                                              fontSize: 11,
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 12),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 8,
+                                                            vertical: 6),
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFFd4af37)
+                                                          .withOpacity(0.2),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        // Open time
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Text(
+                                                              "Open",
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white60,
+                                                                fontSize: 11,
+                                                              ),
                                                             ),
-                                                          ),
-                                                          Text(
-                                                            openDate.toString(),
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 13,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
+                                                            Text(
+                                                              openDate
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      ),
-
-                                                      // Center status button
-                                                      Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 12,
-                                                                vertical: 6),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Color(
-                                                              0xFFd4af37), // Gold background
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(16),
+                                                          ],
                                                         ),
-                                                        child: Text(
-                                                          isMarketClosed
-                                                              ? 'Close for today'
-                                                              : 'Market Running',
-                                                          style: TextStyle(
+
+                                                        // Center status button
+                                                        Container(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      24,
+                                                                  vertical: 2),
+                                                          decoration:
+                                                              BoxDecoration(
                                                             color: Color(
-                                                                0xFF1a2332), // Dark navy text
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w600,
+                                                                0xFFd4af37), // Gold background
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        16),
                                                           ),
-                                                        ),
-                                                      ),
-
-                                                      // Close time
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          Text(
-                                                            "Close",
+                                                          child: Text(
+                                                            isMarketClosed
+                                                                ? 'Close for today'
+                                                                : 'Market Running',
                                                             style: TextStyle(
-                                                              color: Colors
-                                                                  .white60,
-                                                              fontSize: 11,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            closeDate
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 13,
+                                                              color: Color(
+                                                                  0xFF1a2332), // Dark navy text
+                                                              fontSize: 12,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
                                                             ),
                                                           ),
-                                                        ],
-                                                      ),
-                                                    ],
+                                                        ),
+
+                                                        // Close time
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .end,
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Text(
+                                                              "Close",
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white60,
+                                                                fontSize: 11,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              closeDate
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),
