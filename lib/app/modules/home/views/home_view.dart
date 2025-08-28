@@ -117,14 +117,12 @@ class HomeView extends GetView<HomeController> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
                                   width: Get.width * 0.45,
-                                  // alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     border: Border.all(
                                         color: Color(0xFFd4af37), width: 1),
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Row(
-                                    spacing: 6,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -133,6 +131,7 @@ class HomeView extends GetView<HomeController> {
                                         Icons.phone_outlined,
                                         color: Color(0xFFd4af37),
                                       ),
+                                      SizedBox(width: 6),
                                       Text(
                                         '${Strings.settings[0].whatsapp.toString()}',
                                         style: BaseStyles.goldMedium16,
@@ -150,24 +149,24 @@ class HomeView extends GetView<HomeController> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
                                   width: Get.width * 0.45,
-                                  // alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                    gradient: AppColors.goldGradient,
                                     border: Border.all(
-                                        color: Colors.black, width: 1),
-                                    borderRadius: BorderRadius.circular(25),
+                                        color: Color(0xFFd4af37), width: 1),
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        'Gali Disawar',
-                                        style: BaseStyles.purpleMedium16,
-                                      ),
                                       Icon(
                                         Icons.play_arrow_outlined,
-                                        color: AppColors.pinkColor,
+                                        color: Color(0xFFd4af37),
+                                      ),
+                                      SizedBox(width: 6),
+                                      Text(
+                                        'Gali Disawar',
+                                        style: BaseStyles.goldMedium16,
                                       ),
                                     ],
                                   ),
@@ -194,30 +193,32 @@ class HomeView extends GetView<HomeController> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 20, vertical: 10),
                                         width: Get.width * 0.45,
-                                        // alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          gradient: AppColors.goldGradient,
                                           border: Border.all(
-                                              color: Colors.black, width: 1),
+                                              color: Color(0xFFd4af37),
+                                              width: 1),
                                           borderRadius:
-                                              BorderRadius.circular(25),
+                                              BorderRadius.circular(16),
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
+                                            Icon(
+                                              Icons
+                                                  .account_balance_wallet_outlined,
+                                              color: Color(0xFFd4af37),
+                                            ),
+                                            SizedBox(width: 6),
                                             Text(
                                               controller.loading.value
                                                   ? ""
                                                   : Strings.settings[0]
                                                       .paymentBtnText
                                                       .toString(),
-                                              style: BaseStyles.purpleMedium16,
-                                            ),
-                                            Icon(
-                                              Icons
-                                                  .account_balance_wallet_outlined,
-                                              color: AppColors.primaryColor,
+                                              style: BaseStyles.goldMedium16,
                                             ),
                                           ],
                                         ),
@@ -234,26 +235,28 @@ class HomeView extends GetView<HomeController> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 20, vertical: 10),
                                         width: Get.width * 0.45,
-                                        // alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          gradient: AppColors.goldGradient,
                                           border: Border.all(
-                                              color: Colors.black, width: 1),
+                                              color: Color(0xFFd4af37),
+                                              width: 1),
                                           borderRadius:
-                                              BorderRadius.circular(25),
+                                              BorderRadius.circular(16),
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              'Withdraw Points',
-                                              style: BaseStyles.purpleMedium16,
-                                            ),
                                             Icon(
                                               Icons
                                                   .remove_circle_outline_outlined,
-                                              color: AppColors.pinkColor,
+                                              color: Color(0xFFd4af37),
+                                            ),
+                                            SizedBox(width: 6),
+                                            Text(
+                                              'Withdrawal',
+                                              style: BaseStyles.goldMedium16,
                                             ),
                                           ],
                                         ),
