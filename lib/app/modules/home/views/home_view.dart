@@ -14,6 +14,79 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
+// Custom Marquee Text Widget
+class MarqueeText extends StatefulWidget {
+  final String text;
+  final TextStyle style;
+  final double speed;
+
+  const MarqueeText({
+    Key? key,
+    required this.text,
+    required this.style,
+    this.speed = 50,
+  }) : super(key: key);
+
+  @override
+  _MarqueeTextState createState() => _MarqueeTextState();
+}
+
+class _MarqueeTextState extends State<MarqueeText>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: 15),
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: 1.0, end: -1.0).animate(_controller);
+    _controller.repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Transform.translate(
+          offset:
+              Offset(_animation.value * MediaQuery.of(context).size.width, 0),
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.campaign,
+                  color: Color(0xFFd4af37),
+                  size: 18,
+                ),
+                SizedBox(width: 8),
+                Text(
+                  widget.text,
+                  style: widget.style,
+                  maxLines: 1,
+                  overflow: TextOverflow.visible,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
@@ -74,9 +147,43 @@ class HomeView extends GetView<HomeController> {
                               '${BASE_URL_slider}${controller.Sliders[0].basename}')
                           : Container(),
                     ),
+
+                    // Marquee text scrolling from right to left
+                    Container(
+                      height: 35,
+                      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFF1a2332),
+                            Color(0xFF2a3441),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: Color(0xFFd4af37),
+                          width: 1,
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(7),
+                        child: MarqueeText(
+                          text:
+                              '🎉 Welcome to WinBazar - Your Trusted Matka Gaming Platform! 💰 Fast Withdrawals • Secure Payments • 24/7 Support • Daily Bonuses Available! 🎯',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          speed: 50,
+                        ),
+                      ),
+                    ),
+
                     Container(
                       child: Column(children: [
-                        heightSpace20,
                         // Row(
                         //   children: [
                         //     widthSpace10,
