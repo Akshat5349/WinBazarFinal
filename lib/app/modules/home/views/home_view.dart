@@ -1,7 +1,9 @@
+import 'package:azmatka/app/modules/home/views/bid_history_view.dart';
 import 'package:azmatka/app/modules/home/views/gali_disawar_view.dart';
 import 'package:azmatka/app/modules/home/views/games_view.dart';
 import 'package:azmatka/app/modules/home/views/payment_screen.dart';
 import 'package:azmatka/app/modules/home/views/wallet_view.dart';
+import 'package:azmatka/app/modules/home/views/winning_history_view.dart';
 import 'package:azmatka/app/modules/home/views/withdraw_view.dart';
 import 'package:azmatka/constants/values.dart';
 import 'package:azmatka/widgets/base_url.dart';
@@ -814,30 +816,39 @@ class HomeView extends GetView<HomeController> {
             child: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               backgroundColor: Colors.white,
-              selectedItemColor: AppColors.pinkColor,
+              selectedItemColor: Colors.grey[600],
               unselectedItemColor: Colors.grey[600],
-              selectedFontSize: 12,
+              selectedFontSize: 10,
               unselectedFontSize: 10,
               currentIndex: 0, // Default to home/My Bids
               onTap: (index) {
                 switch (index) {
                   case 0:
                     // My Bids - stay on current page or navigate to bids page
+                    Get.to(() => BidHistoryView(), arguments: {
+                      'type': 'regular',
+                    });
                     break;
                   case 1:
                     // Passbook - navigate to wallet history or transaction history
-                    break;
-                  case 2:
-                    // Home/Center button - handled by floating action button
-                    break;
-                  case 3:
-                    // Funds - navigate to wallet/payment screen
                     if (controller.approve.value == 'true') {
                       Get.to(() => WalletView());
                     }
                     break;
+                  case 2:
+                    // Home/Center button - handled by floating action button
+                    Get.offAll(() => HomeView());
+                    break;
+                  case 3:
+                    // Funds - navigate to wallet/payment screen
+                    Get.to(() => WinningHistoryView(), arguments: {
+                      'type': 'regular',
+                    });
+                    break;
                   case 4:
                     // Support - navigate to support/contact page
+                    launchWhatsapp(
+                        '+91${Strings.settings[0].whatsapp.toString()}');
                     break;
                 }
               },
@@ -848,15 +859,15 @@ class HomeView extends GetView<HomeController> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.account_balance_wallet_outlined, size: 24),
-                  label: 'Passbook',
+                  label: 'Wallet',
                 ),
                 BottomNavigationBarItem(
                   icon: SizedBox.shrink(), // Empty for center FAB
                   label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.account_balance, size: 24),
-                  label: 'Funds',
+                  icon: Icon(Icons.emoji_events, size: 24),
+                  label: 'Win History',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.support_agent, size: 24),

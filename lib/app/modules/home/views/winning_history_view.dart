@@ -92,7 +92,7 @@ class WinningHistoryView extends GetView<WinningHistoryController> {
       width: Get.width * 0.20,
       child: Text(
         title,
-        style: BaseStyles.accentMedium18,
+        style: BaseStyles.purpleMedium16,
         textAlign: TextAlign.center,
       ),
     );
@@ -105,7 +105,7 @@ class WinningHistoryView extends GetView<WinningHistoryController> {
       width: Get.width * 0.20,
       child: Text(
         title,
-        style: style ?? BaseStyles.accentMedium18,
+        style: style ?? BaseStyles.purpleMedium16,
         textAlign: TextAlign.center,
       ),
     );
