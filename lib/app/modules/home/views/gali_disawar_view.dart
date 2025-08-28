@@ -1,4 +1,3 @@
-import 'package:azmatka/app/modules/home/views/gali_disawar_view.dart';
 import 'package:azmatka/app/modules/home/views/games_view.dart';
 import 'package:azmatka/app/modules/home/views/payment_screen.dart';
 import 'package:azmatka/app/modules/home/views/wallet_view.dart';
@@ -12,20 +11,20 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/home_controller.dart';
+import '../controllers/gali_disawar_controller.dart';
 
-class HomeView extends GetView<HomeController> {
+class GaliDisawarView extends GetView<GaliDisawarController> {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('es');
     var now = DateTime.now();
     var today = DateFormat.yMd('es').format(now);
-    Get.lazyPut(() => HomeController());
+    Get.lazyPut(() => GaliDisawarController());
     return Obx(() {
       return Scaffold(
         backgroundColor: AppColors.primaryColor,
         appBar: AppBar(
-          title: Text("WinBazar"),
+          title: Text("Gali Disawar"),
           centerTitle: false,
           actions: [
             controller.approve.value == 'true'
@@ -55,9 +54,6 @@ class HomeView extends GetView<HomeController> {
             widthSpace10,
           ],
         ),
-        drawer: MainDrawer(
-          approved: controller.approve.value,
-        ),
         body: controller.homeLoading.value
             ? Center(child: CircularProgressIndicator())
             : RefreshIndicator(
@@ -68,12 +64,6 @@ class HomeView extends GetView<HomeController> {
                 },
                 child: Column(
                   children: [
-                    Obx(
-                      () => controller.Sliders.length > 0
-                          ? Image.network(
-                              '${BASE_URL_slider}${controller.Sliders[0].basename}')
-                          : Container(),
-                    ),
                     Container(
                       child: Column(children: [
                         heightSpace20,
@@ -109,67 +99,44 @@ class HomeView extends GetView<HomeController> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  launchWhatsapp(
-                                      '+91${Strings.settings[0].whatsapp.toString()}');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  width: Get.width * 0.45,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Color(0xFFd4af37), width: 1),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.phone_outlined,
-                                        color: Color(0xFFd4af37),
-                                      ),
-                                      SizedBox(width: 6),
-                                      Text(
-                                        '${Strings.settings[0].whatsapp.toString()}',
-                                        style: BaseStyles.goldMedium16,
-                                      ),
-                                    ],
-                                  ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                width: Get.width * 0.45,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Color(0xFFd4af37), width: 1),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Left Digit : 10/90',
+                                      style: BaseStyles.goldMedium14,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              InkWell(
-                                onTap: () {
-                                  Get.to(() => GaliDisawarView());
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  width: Get.width * 0.45,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Color(0xFFd4af37), width: 1),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.play_arrow_outlined,
-                                        color: Color(0xFFd4af37),
-                                      ),
-                                      SizedBox(width: 6),
-                                      Text(
-                                        'Gali Disawar',
-                                        style: BaseStyles.goldMedium16,
-                                      ),
-                                    ],
-                                  ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                width: Get.width * 0.45,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Color(0xFFd4af37), width: 1),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Right Digit : 10/90',
+                                      style: BaseStyles.goldMedium14,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -182,84 +149,27 @@ class HomeView extends GetView<HomeController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    InkWell(
-                                      onTap: () {
-                                        if (controller.approve.value ==
-                                            'true') {
-                                          Get.to(PaymentScreen());
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
-                                        width: Get.width * 0.45,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Color(0xFFd4af37),
-                                              width: 1),
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons
-                                                  .account_balance_wallet_outlined,
-                                              color: Color(0xFFd4af37),
-                                            ),
-                                            SizedBox(width: 6),
-                                            Text(
-                                              controller.loading.value
-                                                  ? ""
-                                                  : Strings.settings[0]
-                                                      .paymentBtnText
-                                                      .toString(),
-                                              style: BaseStyles.goldMedium16,
-                                            ),
-                                          ],
-                                        ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 10),
+                                      width: Get.width * 0.45,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Color(0xFFd4af37), width: 1),
+                                        borderRadius: BorderRadius.circular(16),
                                       ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        if (controller.approve.value ==
-                                            'true') {
-                                          Get.to(WithdrawView());
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
-                                        width: Get.width * 0.45,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Color(0xFFd4af37),
-                                              width: 1),
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons
-                                                  .remove_circle_outline_outlined,
-                                              color: Color(0xFFd4af37),
-                                            ),
-                                            SizedBox(width: 6),
-                                            Text(
-                                              'Withdrawal',
-                                              style: BaseStyles.goldMedium16,
-                                            ),
-                                          ],
-                                        ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          SizedBox(width: 6),
+                                          Text(
+                                            "Jodi Digit : 10/900",
+                                            style: BaseStyles.goldMedium14,
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -417,33 +327,13 @@ class HomeView extends GetView<HomeController> {
                                                   Row(
                                                     children: [
                                                       // Left side arrow icon
-                                                      Container(
-                                                        width: 32,
-                                                        height: 32,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Color(
-                                                                  0xFFd4af37)
-                                                              .withOpacity(
-                                                                  0.2), // Gold background
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        child: Icon(
-                                                          Icons.trending_up,
-                                                          color: Color(
-                                                              0xFFd4af37), // Gold color
-                                                          size: 18,
-                                                        ),
-                                                      ),
-                                                      SizedBox(width: 12),
+
                                                       // Market name and numbers
                                                       Expanded(
                                                         child: Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
-                                                                  .start,
+                                                                  .center,
                                                           children: [
                                                             Text(
                                                               item['market_name']
@@ -462,19 +352,22 @@ class HomeView extends GetView<HomeController> {
                                                             ),
                                                             SizedBox(height: 4),
                                                             Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
                                                               children: [
                                                                 Text(
                                                                   item['results'] ==
                                                                           null
-                                                                      ? "***"
+                                                                      ? "*"
                                                                       : item['results']['open_pana'] ==
                                                                               null
-                                                                          ? "***"
+                                                                          ? "*"
                                                                           : item['results']['open_pana'].length == 0
-                                                                              ? "***"
+                                                                              ? "*"
                                                                               : item['results']['date'] == today
-                                                                                  ? item['results']['open_pana']['text_value']
-                                                                                  : "***",
+                                                                                  ? item['results']['open_pana']['text_value'][item['results']['open_pana']['text_value'].length - 1]
+                                                                                  : "*",
                                                                   style:
                                                                       TextStyle(
                                                                     color: Colors
@@ -487,27 +380,17 @@ class HomeView extends GetView<HomeController> {
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  " • ",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color(
-                                                                        0xFFd4af37),
-                                                                    fontSize:
-                                                                        14,
-                                                                  ),
-                                                                ),
-                                                                Text(
                                                                   item['results'] ==
                                                                           null
-                                                                      ? "***"
+                                                                      ? "*"
                                                                       : item['results']['close_pana'] ==
                                                                               null
-                                                                          ? "***"
+                                                                          ? "*"
                                                                           : item['results']['close_pana'].length == 0
-                                                                              ? "***"
+                                                                              ? "*"
                                                                               : item['results']['date'] == today
-                                                                                  ? item['results']['close_pana']['text_value']
-                                                                                  : "***",
+                                                                                  ? item['results']['close_pana']['text_value'][0]
+                                                                                  : "*",
                                                                   style:
                                                                       TextStyle(
                                                                     color: Colors
@@ -573,7 +456,8 @@ class HomeView extends GetView<HomeController> {
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
-                                                              .spaceBetween,
+                                                              .start,
+                                                      spacing: 20,
                                                       children: [
                                                         // Open time
                                                         Column(
@@ -611,7 +495,7 @@ class HomeView extends GetView<HomeController> {
                                                           padding: EdgeInsets
                                                               .symmetric(
                                                                   horizontal:
-                                                                      24,
+                                                                      30,
                                                                   vertical: 2),
                                                           decoration:
                                                               BoxDecoration(
@@ -635,37 +519,6 @@ class HomeView extends GetView<HomeController> {
                                                                       .w600,
                                                             ),
                                                           ),
-                                                        ),
-
-                                                        // Close time
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Text(
-                                                              "Close",
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white60,
-                                                                fontSize: 11,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              closeDate
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                            ),
-                                                          ],
                                                         ),
                                                       ],
                                                     ),

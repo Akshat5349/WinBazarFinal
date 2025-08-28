@@ -28,8 +28,8 @@ class AppColors {
   );
 
   static const primaryColor = Color(0xFF020b1c);
-  static const primaryAccentColor = Color(0xFF03045e);
-  static const primaryColorback = Color(0xFF03045e);
+  static const primaryAccentColor = Color(0xFF020b1c);
+  static const primaryColorback = Color(0xFF020b1c);
   static const lightYellow = Color(0xFFfffeac);
   static const bgGrey = Color(0xFFF9F9FB);
   static const lightGrey = Color(0xFFF9F9FB);
