@@ -2,6 +2,8 @@ import 'package:azmatka/app/Models/slider_model.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:azmatka/constants/values.dart';
 import 'package:azmatka/widgets/share.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   final loading = false.obs;
@@ -19,10 +21,13 @@ class HomeController extends GetxController {
   // ];
   @override
   void onInit() {
+    print(Strings.settings[0].popupHeading);
+    print(Strings.settings[0].popupMsg);
     super.onInit();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   showDownloadDialog();
-    // });
+    // Check and show daily popup after widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkAndShowDailyPopup();
+    });
   }
 
   @override
@@ -38,6 +43,140 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {}
+
+  // Check if popup should be shown today and show it
+  void checkAndShowDailyPopup() {
+    try {
+      String today = DateTime.now()
+          .toIso8601String()
+          .split('T')[0]; // Get YYYY-MM-DD format
+      String? lastPopupDate = box.read('last_popup_date');
+
+      // Show popup if it hasn't been shown today
+      if (lastPopupDate != today) {
+        // Check if settings are available and have popup content
+        if (Strings.settings.isNotEmpty &&
+            Strings.settings[0].popupHeading != null &&
+            Strings.settings[0].popupHeading!.isNotEmpty &&
+            Strings.settings[0].popupMsg != null &&
+            Strings.settings[0].popupMsg!.isNotEmpty) {
+          showDailyPopup();
+          // Save today's date to prevent showing again today
+          box.write('last_popup_date', today);
+        }
+      }
+    } catch (e) {
+      print('Error checking daily popup: ${e.toString()}');
+    }
+  }
+
+  // Show the daily popup with settings content
+  void showDailyPopup() {
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Row(
+          children: [
+            Icon(
+              Icons.campaign,
+              color: AppColors.primaryColor,
+              size: 24,
+            ),
+            SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                Strings.settings[0].popupHeading ?? 'Announcement',
+                style: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                Strings.settings[0].popupMsg ?? 'Welcome to WinBazar!',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[700],
+                  height: 1.4,
+                ),
+              ),
+              SizedBox(height: 16),
+              Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: AppColors.primaryColor.withOpacity(0.3),
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      color: AppColors.primaryColor,
+                      size: 20,
+                    ),
+                    SizedBox(width: 8),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: Text(
+              'Later',
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 16,
+              ),
+            ),
+          ),
+          MaterialButton(
+            height: 45,
+            onPressed: () {
+              Get.back();
+              // Optional: Add any action when user clicks "Got it"
+              // For example, navigate to a specific page or show more info
+            },
+            color: AppColors.primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            elevation: 2,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                "Got it!",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.whiteColor,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+      barrierDismissible: true,
+    );
+  }
 
   void showDownloadDialog() {
     Get.dialog(
