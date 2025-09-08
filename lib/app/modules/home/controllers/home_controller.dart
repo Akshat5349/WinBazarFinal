@@ -95,6 +95,19 @@ class HomeController extends GetxController {
                 ),
               ),
             ),
+            // Cross icon at top right
+            IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                Icons.close,
+                color: Colors.grey[600],
+                size: 24,
+              ),
+              padding: EdgeInsets.zero,
+              constraints: BoxConstraints(),
+            ),
           ],
         ),
         content: SingleChildScrollView(
@@ -128,51 +141,16 @@ class HomeController extends GetxController {
                       color: AppColors.primaryColor,
                       size: 20,
                     ),
-                    SizedBox(width: 8),
                   ],
                 ),
               ),
             ],
           ),
         ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: Text(
-              'Later',
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 16,
-              ),
-            ),
-          ),
-          MaterialButton(
-            height: 45,
-            onPressed: () {
-              Get.back();
-              // Optional: Add any action when user clicks "Got it"
-              // For example, navigate to a specific page or show more info
-            },
-            color: AppColors.primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            elevation: 2,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "Got it!",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.whiteColor,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          )
-        ],
+        // Remove the actions completely
+        actions: [],
+        actionsPadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.fromLTRB(24, 8, 24, 24),
       ),
       barrierDismissible: true,
     );
