@@ -10,6 +10,7 @@ import 'package:azmatka/widgets/base_url.dart';
 import 'package:azmatka/widgets/main_drawer.dart';
 import 'package:azmatka/widgets/share.dart';
 import 'package:azmatka/widgets/custom_widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -115,6 +116,7 @@ class HomeView extends GetView<HomeController> {
             controller.approve.value == 'true'
                 ? InkWell(
                     onTap: () {
+                      SystemSound.play(SystemSoundType.click);
                       Get.to(() => WalletView());
                     },
                     child: Icon(
@@ -229,6 +231,7 @@ class HomeView extends GetView<HomeController> {
                             children: [
                               InkWell(
                                 onTap: () {
+                                  SystemSound.play(SystemSoundType.click);
                                   launchWhatsapp(
                                       '+91${Strings.settings[0].whatsapp.toString()}');
                                 },
@@ -263,6 +266,7 @@ class HomeView extends GetView<HomeController> {
                               ),
                               InkWell(
                                 onTap: () {
+                                  SystemSound.play(SystemSoundType.click);
                                   Get.to(() => GaliDisawarView());
                                 },
                                 child: Container(
@@ -308,6 +312,7 @@ class HomeView extends GetView<HomeController> {
                                   children: [
                                     InkWell(
                                       onTap: () {
+                                        SystemSound.play(SystemSoundType.click);
                                         if (controller.approve.value ==
                                             'true') {
                                           Get.to(PaymentScreen());
@@ -354,6 +359,7 @@ class HomeView extends GetView<HomeController> {
                                     ),
                                     InkWell(
                                       onTap: () {
+                                        SystemSound.play(SystemSoundType.click);
                                         if (controller.approve.value ==
                                             'true') {
                                           Get.to(WithdrawView());
@@ -522,6 +528,9 @@ class HomeView extends GetView<HomeController> {
                                                     // Left side arrow icon
                                                     GestureDetector(
                                                       onTap: () {
+                                                        SystemSound.play(
+                                                            SystemSoundType
+                                                                .click);
                                                         Get.toNamed(
                                                           '/chart?market_name=${item['market_name']}&market_slug=${item['market_slug']}',
                                                         );
@@ -636,6 +645,9 @@ class HomeView extends GetView<HomeController> {
                                                     // Right side play/close icon
                                                     GestureDetector(
                                                       onTap: () {
+                                                        SystemSound.play(
+                                                            SystemSoundType
+                                                                .click);
                                                         if (isMarketOpen ||
                                                             !isMarketClosed) {
                                                           if (controller.approve
@@ -852,6 +864,7 @@ class HomeView extends GetView<HomeController> {
               unselectedFontSize: 10,
               currentIndex: 0, // Default to home/My Bids
               onTap: (index) {
+                SystemSound.play(SystemSoundType.click);
                 switch (index) {
                   case 0:
                     // My Bids - stay on current page or navigate to bids page

@@ -36,6 +36,8 @@ class SettingModel {
   String? withdrawBtnText;
   String? withdrawScreenMsg;
   String? paymentScreenMsg;
+  String? popupMsg;
+  String? popupHeading;
   int? iV;
 
   SettingModel(
@@ -76,6 +78,8 @@ class SettingModel {
       this.withdrawBtnText,
       this.withdrawScreenMsg,
       this.paymentScreenImg,
+      this.popupMsg,
+      this.popupHeading,
       this.iV});
 
   SettingModel.fromJson(Map<String, dynamic> json) {
@@ -136,6 +140,8 @@ class SettingModel {
     paymentScreenImg =
         json['paymentPageImg'] != null ? json['paymentPageImg'] : '';
     iV = json['__v'] != null ? json['__v'] : '';
+    popupMsg = json['popup_msg'] != null ? json['popup_msg'] : '';
+    popupHeading = json['popup_heading'] != null ? json['popup_heading'] : '';
   }
 
   Map<String, dynamic> toJson() {
@@ -163,6 +169,8 @@ class SettingModel {
     data['ifsc_code'] = this.ifscCode;
     data['app_link'] = this.appLink;
     data['msg'] = this.msg;
+    data['popup_msg'] = this.popupMsg;
+    data['popup_heading'] = this.popupHeading;
     data['home_title_1'] = this.homeTitle1;
     data['home_title_2'] = this.homeTitle2;
     data['upi_name'] = this.upiName;

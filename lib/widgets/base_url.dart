@@ -1,6 +1,6 @@
 // const BASE_URL = 'https://shyammatka.co.in/api/';
-const BASE_URL = 'https://vardhan.ink/app/';
-const BASE_URL_image = 'https://vardhan.ink/uploads/product/';
-const BASE_URL_slider = 'https://vardhan.ink/uploads/sliders/';
-const BASE_URL_image2 = 'https://vardhan.ink/uploads/profile/';
-const BASE_URL_qr = 'https://vardhan.ink/uploads/qrImage/';
+const BASE_URL = 'https://winbazar.store/app/';
+const BASE_URL_image = 'https://winbazar.store/uploads/product/';
+const BASE_URL_slider = 'https://winbazar.store/uploads/sliders/';
+const BASE_URL_image2 = 'https://winbazar.store/uploads/profile/';
+const BASE_URL_qr = 'https://winbazar.store/uploads/qrImage/';
