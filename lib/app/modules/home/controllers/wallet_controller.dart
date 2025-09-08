@@ -28,6 +28,7 @@ class WalletController extends GetxController {
           token: "Bearer ${box.read('token')}");
       walletHistory.clear();
       walletHistory.addAll(res['data']['transactions']);
+      print(walletHistory.length);
       balance.value = res['data']['wallet_balance'].toString();
     } catch (e) {
       print(e.toString());

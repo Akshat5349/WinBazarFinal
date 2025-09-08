@@ -34,6 +34,14 @@ class MainDrawer extends GetView<MainDrawerController> {
                 Obx(
                   () => Container(
                     padding: EdgeInsets.only(left: 25, top: 10, bottom: 10),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: AppColors.goldColor,
+                          width: 1,
+                        ),
+                      ),
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,11 +68,12 @@ class MainDrawer extends GetView<MainDrawerController> {
                         heightSpace5,
                         Text("${controller.mobile.value}",
                             style: BaseStyles.whiteMedium18),
+                        heightSpace10
                       ],
                     ),
                   ),
                 ),
-                heightSpace20,
+                heightSpace10,
                 info(
                     title: DrawerDetails.dashboard,
                     images: DrawerImages.dashboard,

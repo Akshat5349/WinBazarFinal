@@ -103,15 +103,23 @@ class HomeView extends GetView<HomeController> {
           title: Text("WinBazar"),
           centerTitle: false,
           actions: [
+            IconButton(
+              onPressed: () {
+                Get.to(() => BidHistoryView());
+              },
+              icon: Icon(
+                Icons.notifications_outlined,
+                color: AppColors.goldColor,
+              ),
+            ),
             controller.approve.value == 'true'
                 ? InkWell(
                     onTap: () {
                       Get.to(() => WalletView());
                     },
-                    child: Image.asset(
-                      DrawerImages.pointManagement,
-                      height: 30,
-                      width: 30,
+                    child: Icon(
+                      Icons.account_balance_wallet_outlined,
+                      color: AppColors.goldColor,
                     ),
                   )
                 : Container(),
@@ -152,22 +160,22 @@ class HomeView extends GetView<HomeController> {
 
                     // Marquee text scrolling from right to left
                     Container(
-                      height: 35,
-                      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      height: 20,
+                      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xFF1a2332),
-                            Color(0xFF2a3441),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                        // gradient: LinearGradient(
+                        //   colors: [
+                        //     Color(0xFF1a2332),
+                        //     Color(0xFF2a3441),
+                        //   ],
+                        //   begin: Alignment.topLeft,
+                        //   end: Alignment.bottomRight,
+                        // ),
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: Color(0xFFd4af37),
-                          width: 1,
-                        ),
+                        // border: Border.all(
+                        //   color: Color(0xFFd4af37),
+                        //   width: 1,
+                        // ),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(7),
@@ -175,7 +183,7 @@ class HomeView extends GetView<HomeController> {
                           text:
                               '🎉 Welcome to WinBazar - Your Trusted Matka Gaming Platform! 💰 Fast Withdrawals • Secure Payments • 24/7 Support • Daily Bonuses Available! 🎯',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.red[400],
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
@@ -214,7 +222,8 @@ class HomeView extends GetView<HomeController> {
                         // ),
                         // heightSpace20,
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -225,9 +234,10 @@ class HomeView extends GetView<HomeController> {
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
+                                      horizontal: 20, vertical: 6),
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
+                                    color: Color(0xFFd4af37),
                                     border: Border.all(
                                         color: Color(0xFFd4af37), width: 1),
                                     borderRadius: BorderRadius.circular(16),
@@ -239,12 +249,13 @@ class HomeView extends GetView<HomeController> {
                                     children: [
                                       Icon(
                                         Icons.phone_outlined,
-                                        color: Color(0xFFd4af37),
+                                        color: AppColors.primaryColor,
                                       ),
                                       SizedBox(width: 6),
                                       Text(
                                         '${Strings.settings[0].whatsapp.toString()}',
-                                        style: BaseStyles.goldMedium16,
+                                        style: BaseStyles.goldMedium16.copyWith(
+                                            color: AppColors.primaryColor),
                                       ),
                                     ],
                                   ),
@@ -256,9 +267,10 @@ class HomeView extends GetView<HomeController> {
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
+                                      horizontal: 20, vertical: 6),
                                   width: Get.width * 0.45,
                                   decoration: BoxDecoration(
+                                    color: Color(0xFFd4af37),
                                     border: Border.all(
                                         color: Color(0xFFd4af37), width: 1),
                                     borderRadius: BorderRadius.circular(16),
@@ -270,12 +282,14 @@ class HomeView extends GetView<HomeController> {
                                     children: [
                                       Icon(
                                         Icons.play_arrow_outlined,
-                                        color: Color(0xFFd4af37),
+                                        color: AppColors.primaryColor,
                                       ),
                                       SizedBox(width: 6),
                                       Text(
                                         'Gali Disawar',
-                                        style: BaseStyles.goldMedium16,
+                                        style: BaseStyles.whiteMedium16
+                                            .copyWith(
+                                                color: AppColors.primaryColor),
                                       ),
                                     ],
                                   ),
@@ -286,7 +300,8 @@ class HomeView extends GetView<HomeController> {
                         ),
                         controller.approve.value == 'true'
                             ? Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12.0, vertical: 8),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -300,9 +315,10 @@ class HomeView extends GetView<HomeController> {
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
+                                            horizontal: 20, vertical: 6),
                                         width: Get.width * 0.45,
                                         decoration: BoxDecoration(
+                                          color: Color(0xFFd4af37),
                                           border: Border.all(
                                               color: Color(0xFFd4af37),
                                               width: 1),
@@ -318,7 +334,7 @@ class HomeView extends GetView<HomeController> {
                                             Icon(
                                               Icons
                                                   .account_balance_wallet_outlined,
-                                              color: Color(0xFFd4af37),
+                                              color: AppColors.primaryColor,
                                             ),
                                             SizedBox(width: 6),
                                             Text(
@@ -327,7 +343,10 @@ class HomeView extends GetView<HomeController> {
                                                   : Strings.settings[0]
                                                       .paymentBtnText
                                                       .toString(),
-                                              style: BaseStyles.goldMedium16,
+                                              style: BaseStyles.goldMedium16
+                                                  .copyWith(
+                                                      color: AppColors
+                                                          .primaryColor),
                                             ),
                                           ],
                                         ),
@@ -342,9 +361,10 @@ class HomeView extends GetView<HomeController> {
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
+                                            horizontal: 20, vertical: 6),
                                         width: Get.width * 0.45,
                                         decoration: BoxDecoration(
+                                          color: Color(0xFFd4af37),
                                           border: Border.all(
                                               color: Color(0xFFd4af37),
                                               width: 1),
@@ -360,12 +380,15 @@ class HomeView extends GetView<HomeController> {
                                             Icon(
                                               Icons
                                                   .remove_circle_outline_outlined,
-                                              color: Color(0xFFd4af37),
+                                              color: AppColors.primaryColor,
                                             ),
                                             SizedBox(width: 6),
                                             Text(
                                               'Withdrawal',
-                                              style: BaseStyles.goldMedium16,
+                                              style: BaseStyles.goldMedium16
+                                                  .copyWith(
+                                                      color: AppColors
+                                                          .primaryColor),
                                             ),
                                           ],
                                         ),
@@ -375,7 +398,6 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               )
                             : Container(),
-                        heightSpace20,
                       ]),
                     ),
                     // GestureDetector(
@@ -458,75 +480,53 @@ class HomeView extends GetView<HomeController> {
                                             date.compareTo(closeDateCompair) >=
                                                 0;
 
-                                        return GestureDetector(
-                                          onTap: () {
-                                            if (isMarketOpen ||
-                                                !isMarketClosed) {
-                                              if (controller.approve.value ==
-                                                  "true") {
-                                                Get.to(() => GamesView(),
-                                                    arguments: {
-                                                      'id': item['_id']
-                                                          .toString(),
-                                                      'name':
-                                                          item['market_name']
-                                                              .toString(),
-                                                      'type': 'regular',
-                                                      'market_type':
-                                                          item['market_type']
-                                                              .toString(),
-                                                      "item": item,
-                                                      "open": true,
-                                                      "close": true
-                                                    });
-                                              } else {
-                                                Get.toNamed('/quiz');
-                                              }
-                                            } else {
-                                              toast('Market is closed');
-                                            }
-                                          },
-                                          child: Container(
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 16, vertical: 6),
-                                            height: 140, // Fixed thinner height
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Color(
-                                                      0xFF1a2332), // Dark navy blue
-                                                  Color(
-                                                      0xFF2a3441), // Slightly lighter navy
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              border: Border.all(
-                                                color: Color(0xFF3a4551),
-                                                width: 1,
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.3),
-                                                  blurRadius: 8,
-                                                  offset: Offset(0, 4),
-                                                ),
+                                        return Container(
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 16, vertical: 6),
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Color(
+                                                    0xFF1a2332), // Dark navy blue
+                                                Color(
+                                                    0xFF2a3441), // Slightly lighter navy
                                               ],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
                                             ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(16),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  // Top row with market name and play/close icon
-                                                  Row(
-                                                    children: [
-                                                      // Left side arrow icon
-                                                      Container(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            border: Border.all(
+                                              color: Color(0xFFd4af37),
+                                              width: 1,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black
+                                                    .withOpacity(0.3),
+                                                blurRadius: 8,
+                                                offset: Offset(0, 4),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 16, vertical: 4),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                // Top row with market name and play/close icon
+                                                Row(
+                                                  children: [
+                                                    // Left side arrow icon
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Get.toNamed(
+                                                          '/chart?market_name=${item['market_name']}&market_slug=${item['market_slug']}',
+                                                        );
+                                                      },
+                                                      child: Container(
                                                         width: 32,
                                                         height: 32,
                                                         decoration:
@@ -546,95 +546,130 @@ class HomeView extends GetView<HomeController> {
                                                           size: 18,
                                                         ),
                                                       ),
-                                                      SizedBox(width: 12),
-                                                      // Market name and numbers
-                                                      Expanded(
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              item['market_name']
-                                                                  .toString()
-                                                                  .toUpperCase(),
-                                                              style: TextStyle(
-                                                                color: Color(
-                                                                    0xFFd4af37), // Gold color
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                letterSpacing:
-                                                                    0.5,
+                                                    ),
+                                                    SizedBox(width: 12),
+                                                    // Market name and numbers
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            item['market_name']
+                                                                .toString()
+                                                                .toUpperCase(),
+                                                            style: TextStyle(
+                                                              color: Color(
+                                                                  0xFFd4af37), // Gold color
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              letterSpacing:
+                                                                  0.5,
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 4),
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                item['results'] ==
+                                                                        null
+                                                                    ? "***"
+                                                                    : item['results']['open_pana'] ==
+                                                                            null
+                                                                        ? "***"
+                                                                        : item['results']['open_pana'].length ==
+                                                                                0
+                                                                            ? "***"
+                                                                            : item['results']['date'] == today
+                                                                                ? item['results']['open_pana']['text_value']
+                                                                                : "***",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
                                                               ),
-                                                            ),
-                                                            SizedBox(height: 4),
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  item['results'] ==
-                                                                          null
-                                                                      ? "***"
-                                                                      : item['results']['open_pana'] ==
-                                                                              null
-                                                                          ? "***"
-                                                                          : item['results']['open_pana'].length == 0
-                                                                              ? "***"
-                                                                              : item['results']['date'] == today
-                                                                                  ? item['results']['open_pana']['text_value']
-                                                                                  : "***",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
+                                                              Text(
+                                                                " • ",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color(
+                                                                      0xFFd4af37),
+                                                                  fontSize: 14,
                                                                 ),
-                                                                Text(
-                                                                  " • ",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color(
-                                                                        0xFFd4af37),
-                                                                    fontSize:
-                                                                        14,
-                                                                  ),
+                                                              ),
+                                                              Text(
+                                                                item['results'] ==
+                                                                        null
+                                                                    ? "***"
+                                                                    : item['results']['close_pana'] ==
+                                                                            null
+                                                                        ? "***"
+                                                                        : item['results']['close_pana'].length ==
+                                                                                0
+                                                                            ? "***"
+                                                                            : item['results']['date'] == today
+                                                                                ? item['results']['close_pana']['text_value']
+                                                                                : "***",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
                                                                 ),
-                                                                Text(
-                                                                  item['results'] ==
-                                                                          null
-                                                                      ? "***"
-                                                                      : item['results']['close_pana'] ==
-                                                                              null
-                                                                          ? "***"
-                                                                          : item['results']['close_pana'].length == 0
-                                                                              ? "***"
-                                                                              : item['results']['date'] == today
-                                                                                  ? item['results']['close_pana']['text_value']
-                                                                                  : "***",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
                                                       ),
-                                                      // Right side play/close icon
-                                                      Container(
+                                                    ),
+                                                    // Right side play/close icon
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        if (isMarketOpen ||
+                                                            !isMarketClosed) {
+                                                          if (controller.approve
+                                                                  .value ==
+                                                              "true") {
+                                                            Get.to(
+                                                                () =>
+                                                                    GamesView(),
+                                                                arguments: {
+                                                                  'id': item[
+                                                                          '_id']
+                                                                      .toString(),
+                                                                  'name': item[
+                                                                          'market_name']
+                                                                      .toString(),
+                                                                  'type':
+                                                                      'regular',
+                                                                  'market_type':
+                                                                      item['market_type']
+                                                                          .toString(),
+                                                                  "item": item,
+                                                                  "open": true,
+                                                                  "close": true
+                                                                });
+                                                          } else {
+                                                            Get.toNamed(
+                                                                '/quiz');
+                                                          }
+                                                        } else {
+                                                          toast(
+                                                              'Market is closed');
+                                                        }
+                                                      },
+                                                      child: Container(
                                                         width: 36,
                                                         height: 36,
                                                         decoration:
@@ -661,126 +696,121 @@ class HomeView extends GetView<HomeController> {
                                                           size: 20,
                                                         ),
                                                       ),
-                                                    ],
+                                                    )
+                                                  ],
+                                                ),
+
+                                                // Bottom row with times and status
+                                                Container(
+                                                  margin:
+                                                      EdgeInsets.only(top: 12),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 6),
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xFFd4af37)
+                                                        .withOpacity(0.2),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
-
-                                                  // Bottom row with times and status
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        top: 12),
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 8,
-                                                            vertical: 6),
-                                                    decoration: BoxDecoration(
-                                                      color: Color(0xFFd4af37)
-                                                          .withOpacity(0.2),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        // Open time
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Text(
-                                                              "Open",
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white60,
-                                                                fontSize: 11,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              openDate
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-
-                                                        // Center status button
-                                                        Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      24,
-                                                                  vertical: 2),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0xFFd4af37), // Gold background
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        16),
-                                                          ),
-                                                          child: Text(
-                                                            isMarketClosed
-                                                                ? 'Close for today'
-                                                                : 'Market Running',
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      // Open time
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Text(
+                                                            "Open",
                                                             style: TextStyle(
-                                                              color: Color(
-                                                                  0xFF1a2332), // Dark navy text
-                                                              fontSize: 12,
+                                                              color: Colors
+                                                                  .white60,
+                                                              fontSize: 11,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            openDate.toString(),
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 13,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
                                                             ),
                                                           ),
-                                                        ),
+                                                        ],
+                                                      ),
 
-                                                        // Close time
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Text(
-                                                              "Close",
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white60,
-                                                                fontSize: 11,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              closeDate
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                            ),
-                                                          ],
+                                                      // Center status button
+                                                      Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 24,
+                                                                vertical: 2),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Color(
+                                                              0xFFd4af37), // Gold background
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(16),
                                                         ),
-                                                      ],
-                                                    ),
+                                                        child: Text(
+                                                          isMarketClosed
+                                                              ? 'Close for today'
+                                                              : 'Market Running',
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                                0xFF1a2332), // Dark navy text
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      // Close time
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Text(
+                                                            "Close",
+                                                            style: TextStyle(
+                                                              color: Colors
+                                                                  .white60,
+                                                              fontSize: 11,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            closeDate
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         );
