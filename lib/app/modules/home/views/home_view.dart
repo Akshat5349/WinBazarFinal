@@ -189,8 +189,7 @@ class HomeView extends GetView<HomeController> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(7),
                         child: MarqueeText(
-                          text:
-                              '🎉 Welcome to WinBazar - Your Trusted Matka Gaming Platform! 💰 Fast Withdrawals • Secure Payments • 24/7 Support • Daily Bonuses Available! 🎯',
+                          text: Strings.settings[0].movingText.toString(),
                           style: TextStyle(
                             color: Colors.red[400],
                             fontSize: 14,

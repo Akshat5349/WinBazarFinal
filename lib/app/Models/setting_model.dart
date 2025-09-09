@@ -38,6 +38,8 @@ class SettingModel {
   String? paymentScreenMsg;
   String? popupMsg;
   String? popupHeading;
+  String? movingText;
+  bool? vpaEnabled;
   int? iV;
 
   SettingModel(
@@ -80,6 +82,8 @@ class SettingModel {
       this.paymentScreenImg,
       this.popupMsg,
       this.popupHeading,
+      this.movingText,
+      this.vpaEnabled,
       this.iV});
 
   SettingModel.fromJson(Map<String, dynamic> json) {
@@ -142,6 +146,8 @@ class SettingModel {
     iV = json['__v'] != null ? json['__v'] : '';
     popupMsg = json['popup_msg'] != null ? json['popup_msg'] : '';
     popupHeading = json['popup_heading'] != null ? json['popup_heading'] : '';
+    movingText = json['moving_text'] != null ? json['moving_text'] : '';
+    vpaEnabled = json['vpa_enabled'] != null ? json['vpa_enabled'] : false;
   }
 
   Map<String, dynamic> toJson() {
@@ -185,6 +191,8 @@ class SettingModel {
     data['withdrawBtnText'] = withdrawBtnText;
     data['withdrawPageMessage'] = withdrawScreenMsg;
     data['paymentPageImg'] = paymentScreenImg;
+    data['moving_text'] = this.movingText;
+    data['vpa_enabled'] = this.vpaEnabled;
     data['__v'] = this.iV;
     return data;
   }

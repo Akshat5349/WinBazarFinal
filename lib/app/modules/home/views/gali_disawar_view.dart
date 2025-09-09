@@ -1,5 +1,7 @@
 import 'package:azmatka/app/modules/home/views/games_view.dart';
 import 'package:azmatka/app/modules/home/views/home_view.dart';
+import 'package:azmatka/app/modules/home/views/jodi_bid_history_view.dart';
+import 'package:azmatka/app/modules/home/views/jodi_winning_history_view.dart';
 import 'package:azmatka/app/modules/home/views/payment_screen.dart';
 import 'package:azmatka/app/modules/home/views/wallet_view.dart';
 import 'package:azmatka/app/modules/home/views/withdraw_view.dart';
@@ -8,6 +10,7 @@ import 'package:azmatka/widgets/base_url.dart';
 import 'package:azmatka/widgets/main_drawer.dart';
 import 'package:azmatka/widgets/share.dart';
 import 'package:azmatka/widgets/custom_widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -114,7 +117,7 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Left Digit : 10/90',
+                                      'Single Digit : 10/90',
                                       style: BaseStyles.goldMedium14,
                                     ),
                                   ],
@@ -133,50 +136,17 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
+                                    SizedBox(width: 6),
                                     Text(
-                                      'Right Digit : 10/90',
+                                      "Jodi Digit : 10/900",
                                       style: BaseStyles.goldMedium14,
                                     ),
                                   ],
                                 ),
-                              ),
+                              )
                             ],
                           ),
                         ),
-                        controller.approve.value == 'true'
-                            ? Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 10),
-                                      width: Get.width * 0.45,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Color(0xFFd4af37), width: 1),
-                                        borderRadius: BorderRadius.circular(16),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          SizedBox(width: 6),
-                                          Text(
-                                            "Jodi Digit : 10/900",
-                                            style: BaseStyles.goldMedium14,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container(),
                         heightSpace20,
                       ]),
                     ),
@@ -273,7 +243,7 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                                       'name':
                                                           item['market_name']
                                                               .toString(),
-                                                      'type': 'regular',
+                                                      'type': 'Jodi',
                                                       'market_type':
                                                           item['market_type']
                                                               .toString(),
@@ -291,7 +261,6 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                           child: Container(
                                             margin: EdgeInsets.symmetric(
                                                 horizontal: 16, vertical: 6),
-                                            height: 140, // Fixed thinner height
                                             decoration: BoxDecoration(
                                               gradient: LinearGradient(
                                                 colors: [
@@ -306,7 +275,7 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                               border: Border.all(
-                                                color: Color(0xFF3a4551),
+                                                color: Color(0xFFd4af37),
                                                 width: 1,
                                               ),
                                               boxShadow: [
@@ -319,7 +288,8 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                               ],
                                             ),
                                             child: Padding(
-                                              padding: EdgeInsets.all(16),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 16, vertical: 4),
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -328,7 +298,37 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                                   Row(
                                                     children: [
                                                       // Left side arrow icon
-
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          SystemSound.play(
+                                                              SystemSoundType
+                                                                  .click);
+                                                          Get.toNamed(
+                                                            '/chart?market_name=${item['market_name']}&market_slug=${item['market_slug']}',
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          width: 32,
+                                                          height: 32,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Color(
+                                                                    0xFFd4af37)
+                                                                .withOpacity(
+                                                                    0.2), // Gold background
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                          ),
+                                                          child: Icon(
+                                                            Icons.trending_up,
+                                                            color: Color(
+                                                                0xFFd4af37), // Gold color
+                                                            size: 18,
+                                                          ),
+                                                        ),
+                                                      ),
                                                       // Market name and numbers
                                                       Expanded(
                                                         child: Column(
@@ -570,9 +570,15 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                 switch (index) {
                   case 0:
                     // My Bids - stay on current page or navigate to bids page
+                    Get.to(() => JodiBidHistoryView(), arguments: {
+                      'type': 'regular',
+                    });
                     break;
                   case 1:
                     // Passbook - navigate to wallet history or transaction history
+                    Get.to(() => JodiWinningHistoryView(), arguments: {
+                      'type': 'regular',
+                    });
                     break;
                   case 2:
                     // Home/Center button - handled by floating action button
@@ -596,7 +602,7 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.account_balance_wallet_outlined, size: 24),
-                  label: 'Passbook',
+                  label: 'Winnings',
                 ),
                 BottomNavigationBarItem(
                   icon: SizedBox.shrink(), // Empty for center FAB
@@ -636,6 +642,7 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
           child: FloatingActionButton(
               onPressed: () {
                 // Navigate to home or main action
+                Get.back();
               },
               backgroundColor: Colors.transparent,
               elevation: 0,

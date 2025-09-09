@@ -85,7 +85,8 @@ class GaliDisawarController extends GetxController {
     try {
       loading.value = true;
       var res = await ApiProvider()
-          .getRequest(apiUrl: 'games_list', token: box.read('token'));
+          .getRequest(apiUrl: 'jodi_games_list', token: box.read('token'));
+      print(res.toString());
       market.clear();
       market.addAll(res['games']);
       market.sort((a, b) => (a['open_time']).compareTo(b['open_time']));

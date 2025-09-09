@@ -1,3 +1,4 @@
+import 'package:azmatka/app/modules/home/views/bank_details_view.dart';
 import 'package:azmatka/app/modules/home/views/privacy_and_policy_view.dart';
 import 'package:azmatka/widgets/base_url.dart';
 import 'package:get_storage/get_storage.dart';
@@ -87,6 +88,15 @@ class MainDrawer extends GetView<MainDrawerController> {
                         action: () {
                           Get.back();
                           Get.to(() => WalletView());
+                        })
+                    : Container(),
+                approved == 'true'
+                    ? info(
+                        title: DrawerDetails.bankDetails,
+                        images: DrawerImages.bankDetails,
+                        action: () {
+                          Get.back();
+                          Get.to(() => BankDetailsView());
                         })
                     : Container(),
                 approved == 'true'

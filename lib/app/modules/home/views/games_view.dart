@@ -68,93 +68,78 @@ class GamesView extends GetView<GamesController> {
                                 ),
                         ],
                       ),
-                      controller.type != 'starline'
+                      heightSpace20,
+                      controller.type == "Jodi"
+                          ? Container()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                design(
+                                  title: 'SINGLE PANA',
+                                  ontap: () {
+                                    Get.to(() => GameBetView(), arguments: {
+                                      'title': 'Single Pana',
+                                      'id': '3',
+                                      'gameId': controller.id,
+                                      'type': controller.type,
+                                      'appTitle': controller.title,
+                                      'market_type': controller.marketType,
+                                      'gameTypeId': controller.gameType[2]
+                                              ['_id']
+                                          .toString(),
+                                      "item": controller.item,
+                                      "open": controller.open,
+                                      "close": controller.close
+                                    });
+                                  },
+                                  childImage: controller.gameType[2]['image'],
+                                ),
+                                design(
+                                  title: 'DOUBLE PANA',
+                                  ontap: () {
+                                    Get.to(() => GameBetView(), arguments: {
+                                      'title': 'Double Pana',
+                                      'id': '4',
+                                      'gameId': controller.id,
+                                      'type': controller.type,
+                                      'appTitle': controller.title,
+                                      'market_type': controller.marketType,
+                                      'gameTypeId': controller.gameType[3]
+                                              ['_id']
+                                          .toString(),
+                                      "item": controller.item,
+                                      "open": controller.open,
+                                      "close": controller.close
+                                    });
+                                  },
+                                  childImage: controller.gameType[3]['image'],
+                                ),
+                              ],
+                            ),
+                      heightSpace20,
+                      controller.type == "Jodi"
                           ? Container()
                           : design(
-                              title: 'SINGLE DIGIT',
+                              title: 'TRIPLE PANA',
                               ontap: () {
                                 Get.to(() => GameBetView(), arguments: {
-                                  'title': 'Single Digit',
-                                  'id': '1',
+                                  'title': 'Triple Pana',
+                                  'id': '5',
                                   'gameId': controller.id,
-                                  'appTitle': controller.title,
                                   'type': controller.type,
+                                  'appTitle': controller.title,
                                   'market_type': controller.marketType,
                                   'gameTypeId':
-                                      controller.gameType[0]['_id'].toString(),
+                                      controller.gameType[4]['_id'].toString(),
                                   "item": controller.item,
                                   "open": controller.open,
                                   "close": controller.close
                                 });
                               },
-                              childImage: controller.gameType[0]['image'],
+                              childImage: controller.gameType[4]['image'],
                             ),
                       heightSpace20,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          design(
-                            title: 'SINGLE PANA',
-                            ontap: () {
-                              Get.to(() => GameBetView(), arguments: {
-                                'title': 'Single Pana',
-                                'id': '3',
-                                'gameId': controller.id,
-                                'type': controller.type,
-                                'appTitle': controller.title,
-                                'market_type': controller.marketType,
-                                'gameTypeId':
-                                    controller.gameType[2]['_id'].toString(),
-                                "item": controller.item,
-                                "open": controller.open,
-                                "close": controller.close
-                              });
-                            },
-                            childImage: controller.gameType[2]['image'],
-                          ),
-                          design(
-                            title: 'DOUBLE PANA',
-                            ontap: () {
-                              Get.to(() => GameBetView(), arguments: {
-                                'title': 'Double Pana',
-                                'id': '4',
-                                'gameId': controller.id,
-                                'type': controller.type,
-                                'appTitle': controller.title,
-                                'market_type': controller.marketType,
-                                'gameTypeId':
-                                    controller.gameType[3]['_id'].toString(),
-                                "item": controller.item,
-                                "open": controller.open,
-                                "close": controller.close
-                              });
-                            },
-                            childImage: controller.gameType[3]['image'],
-                          ),
-                        ],
-                      ),
-                      heightSpace20,
-                      design(
-                        title: 'TRIPLE PANA',
-                        ontap: () {
-                          Get.to(() => GameBetView(), arguments: {
-                            'title': 'Triple Pana',
-                            'id': '5',
-                            'gameId': controller.id,
-                            'type': controller.type,
-                            'appTitle': controller.title,
-                            'market_type': controller.marketType,
-                            'gameTypeId':
-                                controller.gameType[4]['_id'].toString(),
-                            "item": controller.item,
-                            "open": controller.open,
-                            "close": controller.close
-                          });
-                        },
-                        childImage: controller.gameType[4]['image'],
-                      ),
-                      heightSpace20,
-                      controller.type == 'starline'
+                      controller.type == "Jodi"
                           ? Container()
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
