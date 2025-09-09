@@ -13,6 +13,7 @@ flutter_icons:
   adaptive_icon_background: "#020b1c"
 
 dependencies:
+  audioplayers: ^6.1.0
   carousel_slider: ^5.0.0
   colour: ^1.0.5
   cupertino_icons: ^1.0.2
@@ -48,3 +49,4 @@ flutter:
     - assets/images/
     - assets/logo/
     - assets/icons/
+    - assets/audio/

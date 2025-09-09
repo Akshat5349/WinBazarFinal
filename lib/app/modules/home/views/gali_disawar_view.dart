@@ -1,4 +1,5 @@
 import 'package:azmatka/app/modules/home/views/games_view.dart';
+import 'package:azmatka/app/modules/home/views/home_view.dart';
 import 'package:azmatka/app/modules/home/views/payment_screen.dart';
 import 'package:azmatka/app/modules/home/views/wallet_view.dart';
 import 'package:azmatka/app/modules/home/views/withdraw_view.dart';
@@ -575,6 +576,7 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                     break;
                   case 2:
                     // Home/Center button - handled by floating action button
+                    Get.to(() => HomeView());
                     break;
                   case 3:
                     // Funds - navigate to wallet/payment screen
