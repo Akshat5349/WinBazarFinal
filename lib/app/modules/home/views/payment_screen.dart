@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:azmatka/constants/values.dart';
 import 'package:azmatka/widgets/app_button.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 // import 'dart:typed_data';
 // import 'package:image_picker_web/image_picker_web.dart';
@@ -165,6 +167,59 @@ class _PaymentScreenState extends State<PaymentScreen>
     }
   }
 
+  // Method to build quick add amount buttons
+  Widget _buildQuickAddButton(String amount) {
+    return GestureDetector(
+      onTap: () {
+        // Add haptic feedback
+        HapticFeedback.selectionClick();
+        // Set the amount in the text controller
+        amountController.text = amount;
+      },
+      child: Container(
+        width: Get.width * 0.26,
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFd4af37),
+              Color(0xFFf4d03f),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xFFd4af37).withOpacity(0.3),
+              blurRadius: 6,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.add_circle_outline,
+              color: AppColors.primaryColor,
+              size: 20,
+            ),
+            SizedBox(height: 4),
+            Text(
+              "₹$amount",
+              style: TextStyle(
+                color: AppColors.primaryColor,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,6 +258,47 @@ class _PaymentScreenState extends State<PaymentScreen>
                                 controller: amountController,
                                 hintText: "Enter Points",
                                 keyboardType: TextInputType.number),
+                            heightSpace10,
+                            // Quick Add Amount Buttons
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Quick Add",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      _buildQuickAddButton("300"),
+                                      _buildQuickAddButton("500"),
+                                      _buildQuickAddButton("1000"),
+                                    ],
+                                  ),
+                                  SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      _buildQuickAddButton("2000"),
+                                      _buildQuickAddButton("5000"),
+                                      _buildQuickAddButton("10000"),
+                                      Container(
+                                          width: Get.width *
+                                              0.28), // Empty space for alignment
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                             heightSpace20,
                             Center(
                               child: ElevatedButton(

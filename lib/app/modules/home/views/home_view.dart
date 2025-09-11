@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:azmatka/app/modules/home/views/bid_history_view.dart';
 import 'package:azmatka/app/modules/home/views/gali_disawar_view.dart';
 import 'package:azmatka/app/modules/home/views/games_view.dart';
@@ -93,6 +94,7 @@ class _MarqueeTextState extends State<MarqueeText>
 }
 
 class HomeView extends GetView<HomeController> {
+  final player = AudioPlayer();
   @override
   Widget build(BuildContext context) {
     // Play bell sound when screen loads
@@ -982,7 +984,7 @@ class HomeView extends GetView<HomeController> {
   void _playBellSound() async {
     try {
       // Use the enhanced bell sound from AudioService
-      await AudioService.playEnhancedBellSound();
+      await player.play(AssetSource('audio/click.mp3'));
     } catch (e) {
       print('AudioService failed: $e');
 

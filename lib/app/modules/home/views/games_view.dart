@@ -1,10 +1,17 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:azmatka/app/modules/home/controllers/games_controller.dart';
 import 'package:azmatka/app/modules/home/views/game_bet_view.dart';
 import 'package:azmatka/constants/values.dart';
+import 'package:flutter/services.dart';
 
 class GamesView extends GetView<GamesController> {
+  final player = AudioPlayer();
   @override
   Widget build(BuildContext context) {
+    // Play bell sound when screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _playBellSound();
+    });
     Get.lazyPut(() => GamesController());
     return Scaffold(
       appBar: AppBar(
@@ -222,5 +229,46 @@ class GamesView extends GetView<GamesController> {
         ),
       ),
     );
+  }
+
+  // Method to play bell sound when screen loads
+  void _playBellSound() async {
+    try {
+      // Use the enhanced bell sound from AudioService
+      await player.play(AssetSource('audio/click.mp3'));
+    } catch (e) {
+      print('AudioService failed: $e');
+
+      try {
+        // Fallback: Create bell effect manually
+        SystemSound.play(SystemSoundType.alert);
+        HapticFeedback.heavyImpact();
+
+        // Create echo effect
+        Future.delayed(Duration(milliseconds: 150), () {
+          SystemSound.play(SystemSoundType.click);
+          HapticFeedback.mediumImpact();
+        });
+
+        Future.delayed(Duration(milliseconds: 300), () {
+          HapticFeedback.lightImpact();
+        });
+      } catch (e2) {
+        print('SystemSound failed: $e2');
+
+        try {
+          // Last resort: Just haptic feedback
+          HapticFeedback.heavyImpact();
+          Future.delayed(Duration(milliseconds: 100), () {
+            HapticFeedback.mediumImpact();
+          });
+          Future.delayed(Duration(milliseconds: 200), () {
+            HapticFeedback.lightImpact();
+          });
+        } catch (e3) {
+          print('All sound methods failed: $e3');
+        }
+      }
+    }
   }
 }
