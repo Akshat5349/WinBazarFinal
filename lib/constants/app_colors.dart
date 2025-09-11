@@ -15,32 +15,77 @@ class AppColors {
     900: Color.fromRGBO(136, 14, 79, 1),
   };
 
-  static const goldGradient = LinearGradient(
+  // Modern colorful gradients for CTAs
+  static const primaryGradient = LinearGradient(
     colors: [
-      Color(0xFFEBD197), // Light gold
-      Color(0xFFB48811), // Rich gold
-      Color(0xFFA2790D), // Deep gold
-      Color(0xFFBB9B49), // Muted gold highlight
+      Color(0xFF4FC3F7), // Light blue
+      Color(0xFF29B6F6), // Medium blue
+      Color(0xFF0288D1), // Darker blue
     ],
-    stops: [0.0, 0.5, 0.7, 1.0],
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
+    stops: [0.0, 0.5, 1.0],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   );
 
-  static const primaryColor = Color(0xFF020b1c);
-  static const primaryAccentColor = Color(0xFF020b1c);
-  static const primaryColorback = Color(0xFF020b1c);
-  static const lightYellow = Color(0xFFfffeac);
-  static const bgGrey = Color(0xFFF9F9FB);
-  static const lightGrey = Color(0xFFF9F9FB);
-  static const grey = Color(0xFF758594);
-  static const darkGrey = Color(0xFF5A5D61);
-  static const walletPriceGrey = Color(0xFF788A9B);
-  static const blackColor = Color(0xFF4A4F55);
-  static const whiteColor = Color(0xFFFFFFFF);
-  static const pinkColor = Color(0xFF03045e);
-  static const blueColor = Color(0xFF2a000c);
-  static const goldColor = Color(0xFFE1B941);
+  static const successGradient = LinearGradient(
+    colors: [
+      Color(0xFF66BB6A), // Light green
+      Color(0xFF4CAF50), // Green
+      Color(0xFF388E3C), // Dark green
+    ],
+    stops: [0.0, 0.5, 1.0],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const warningGradient = LinearGradient(
+    colors: [
+      Color(0xFFFFB74D), // Light orange
+      Color(0xFFFF9800), // Orange
+      Color(0xFFF57C00), // Dark orange
+    ],
+    stops: [0.0, 0.5, 1.0],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const errorGradient = LinearGradient(
+    colors: [
+      Color(0xFFEF5350), // Light red
+      Color(0xFFF44336), // Red
+      Color(0xFFD32F2F), // Dark red
+    ],
+    stops: [0.0, 0.5, 1.0],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // Modern color palette
+  static const primaryColor = Color(0xFF42A5F5); // Light blue
+  static const primaryAccentColor = Color(0xFF42A5F5); // Light blue
+  static const primaryColorback = Color(0xFFFFFFFF); // White background
+  static const lightBlue = Color(0xFFE3F2FD); // Very light blue
+  static const bgGrey = Color(0xFFFAFAFA); // Light grey background
+  static const lightGrey = Color(0xFFE0E0E0); // Light grey
+  static const grey = Color(0xFF9E9E9E); // Medium grey
+  static const darkGrey = Color(0xFF424242); // Dark grey
+  static const walletPriceGrey = Color(0xFF616161); // Wallet text color
+  static const blackColor = Color(0xFF212121); // Almost black
+  static const whiteColor = Color(0xFFFFFFFF); // Pure white
+  static const pinkColor = Color(0xFFE91E63); // Pink accent
+  static const blueColor = Color(0xFF2196F3); // Blue accent
+  static const goldColor = Color(0xFFFFC107); // Gold/Yellow accent
+
+  // Additional modern colors
+  static const successColor = Color(0xFF4CAF50); // Green
+  static const warningColor = Color(0xFFFF9800); // Orange
+  static const errorColor = Color(0xFFF44336); // Red
+  static const infoColor = Color(0xFF2196F3); // Blue
+
+  // Card and surface colors
+  static const cardColor = Color(0xFFFFFFFF); // White cards
+  static const surfaceColor = Color(0xFFFAFAFA); // Surface background
+  static const dividerColor = Color(0xFFE0E0E0); // Dividers
   // static const pinkColor = Color(0xFFd906c3);
   // static const blueColor = Color(0xFF3c309b);
 }

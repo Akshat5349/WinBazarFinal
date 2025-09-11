@@ -12,16 +12,28 @@ void main() async {
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primaryColor: Color(0xFF03045e),
-          pageTransitionsTheme: PageTransitionsTheme(builders: {
-            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          }),
-          appBarTheme: AppBarTheme(
-              iconTheme: IconThemeData(color: AppColors.whiteColor),
-              titleTextStyle: BaseStyles.whiteMedium20,
-              backgroundColor: AppColors.primaryAccentColor,
-              elevation: 0)),
+        primaryColor: AppColors.primaryColor,
+        scaffoldBackgroundColor: AppColors.whiteColor,
+        cardColor: AppColors.cardColor,
+        pageTransitionsTheme: PageTransitionsTheme(builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        }),
+        appBarTheme: AppBarTheme(
+            iconTheme: IconThemeData(color: AppColors.whiteColor),
+            titleTextStyle: BaseStyles.whiteMedium20,
+            backgroundColor: AppColors.primaryColor,
+            elevation: 2,
+            shadowColor: AppColors.lightGrey),
+        colorScheme: ColorScheme.light(
+          primary: AppColors.primaryColor,
+          secondary: AppColors.pinkColor,
+          background: AppColors.whiteColor,
+          surface: AppColors.cardColor,
+          error: AppColors.errorColor,
+        ),
+        dividerColor: AppColors.dividerColor,
+      ),
       onInit: () async {
         var box = GetStorage();
         DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();

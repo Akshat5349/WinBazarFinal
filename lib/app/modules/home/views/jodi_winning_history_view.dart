@@ -92,7 +92,7 @@ class JodiWinningHistoryView extends GetView<JodiWinningHistoryController> {
       width: Get.width * 0.20,
       child: Text(
         title,
-        style: BaseStyles.purpleMedium16,
+        style: BaseStyles.primaryMedium16,
         textAlign: TextAlign.center,
       ),
     );
@@ -105,7 +105,7 @@ class JodiWinningHistoryView extends GetView<JodiWinningHistoryController> {
       width: Get.width * 0.20,
       child: Text(
         title,
-        style: style ?? BaseStyles.purpleMedium16,
+        style: style ?? BaseStyles.primaryMedium16,
         textAlign: TextAlign.center,
       ),
     );

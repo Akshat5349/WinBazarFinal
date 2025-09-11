@@ -138,7 +138,7 @@ class CustomWidgets {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(labelText ?? '', style: labelStyle ?? BaseStyles.purpleMedium16),
+        Text(labelText ?? '', style: labelStyle ?? BaseStyles.primaryMedium16),
         heightSpace5,
         Container(
           decoration: BoxDecoration(

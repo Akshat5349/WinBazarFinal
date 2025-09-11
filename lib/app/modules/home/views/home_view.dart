@@ -102,52 +102,85 @@ class HomeView extends GetView<HomeController> {
     Get.lazyPut(() => HomeController());
     return Obx(() {
       return Scaffold(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
-          title: Text("WinBazar"),
+          title: Text("WinBazar", style: BaseStyles.whiteMedium20),
           centerTitle: false,
+          elevation: 0,
+          backgroundColor: AppColors.primaryColor,
           actions: [
-            IconButton(
-              onPressed: () {
-                Get.to(() => NoticeView());
-              },
-              icon: Icon(
-                Icons.notifications_outlined,
-                color: AppColors.goldColor,
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+              decoration: BoxDecoration(
+                color: AppColors.whiteColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: IconButton(
+                onPressed: () {
+                  Get.to(() => NoticeView());
+                },
+                icon: Icon(
+                  Icons.notifications_outlined,
+                  color: AppColors.whiteColor,
+                  size: 22,
+                ),
               ),
             ),
             controller.approve.value == 'true'
-                ? InkWell(
-                    onTap: () {
-                      SystemSound.play(SystemSoundType.click);
-                      Get.to(() => WalletView());
-                    },
-                    child: Icon(
-                      Icons.account_balance_wallet_outlined,
-                      color: AppColors.goldColor,
+                ? Container(
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [AppColors.goldColor, Color(0xFFFFA000)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        SystemSound.play(SystemSoundType.click);
+                        Get.to(() => WalletView());
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.account_balance_wallet_outlined,
+                            color: AppColors.whiteColor,
+                            size: 18,
+                          ),
+                          SizedBox(width: 6),
+                          Obx(
+                            () => Text(
+                              "₹${controller.userWallet['wallet_balance'].toString()}",
+                              style: TextStyle(
+                                color: AppColors.whiteColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 : Container(),
-            widthSpace5,
-            controller.approve.value == 'true'
-                ? Obx(
-                    () => Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          controller.userWallet['wallet_balance'].toString(),
-                          style:
-                              BaseStyles.whiteMedium18.copyWith(fontSize: 20),
-                        )),
-                  )
-                : Container(),
-            widthSpace10,
+            SizedBox(width: 8),
           ],
         ),
         drawer: MainDrawer(
           approved: controller.approve.value,
         ),
         body: controller.homeLoading.value
-            ? Center(child: CircularProgressIndicator())
+            ? Center(
+                child: CircularProgressIndicator(
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
+                ),
+              )
             : RefreshIndicator(
                 onRefresh: () async {
                   controller.homeApi();
@@ -225,181 +258,238 @@ class HomeView extends GetView<HomeController> {
                         //   ],
                         // ),
                         // heightSpace20,
+                        // Action buttons with modern design
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 8),
+                              horizontal: 16.0, vertical: 12),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  SystemSound.play(SystemSoundType.click);
-                                  launchWhatsapp(
-                                      '+91${Strings.settings[0].whatsapp.toString()}');
-                                },
+                              // WhatsApp button
+                              Expanded(
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 6),
-                                  width: Get.width * 0.45,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFd4af37),
-                                    border: Border.all(
-                                        color: Color(0xFFd4af37), width: 1),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        ImagePath.whatsapp,
-                                        height: 20,
-                                        width: 20,
+                                  margin: EdgeInsets.only(right: 8),
+                                  child: InkWell(
+                                    onTap: () {
+                                      SystemSound.play(SystemSoundType.click);
+                                      launchWhatsapp(
+                                          '+91${Strings.settings[0].whatsapp.toString()}');
+                                    },
+                                    child: Container(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 16),
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color(0xFF25D366),
+                                            Color(0xFF128C7E)
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(16),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color(0xFF25D366)
+                                                .withOpacity(0.3),
+                                            blurRadius: 8,
+                                            offset: Offset(0, 4),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(width: 6),
-                                      Text(
-                                        '${Strings.settings[0].whatsapp.toString()}',
-                                        style: BaseStyles.goldMedium16.copyWith(
-                                            color: AppColors.primaryColor),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            ImagePath.whatsapp,
+                                            height: 20,
+                                            width: 20,
+                                          ),
+                                          SizedBox(width: 8),
+                                          Text(
+                                            'WhatsApp',
+                                            style: TextStyle(
+                                              color: AppColors.whiteColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Poppins',
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              InkWell(
-                                onTap: () {
-                                  SystemSound.play(SystemSoundType.click);
-                                  Get.to(() => GaliDisawarView());
-                                },
+                              // Gali Disawar button
+                              Expanded(
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 6),
-                                  width: Get.width * 0.45,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFd4af37),
-                                    border: Border.all(
-                                        color: Color(0xFFd4af37), width: 1),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.play_arrow_outlined,
-                                        color: AppColors.primaryColor,
+                                  margin: EdgeInsets.only(left: 8),
+                                  child: InkWell(
+                                    onTap: () {
+                                      SystemSound.play(SystemSoundType.click);
+                                      Get.to(() => GaliDisawarView());
+                                    },
+                                    child: Container(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 16),
+                                      decoration: BoxDecoration(
+                                        gradient: AppColors.primaryGradient,
+                                        borderRadius: BorderRadius.circular(16),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: AppColors.primaryColor
+                                                .withOpacity(0.3),
+                                            blurRadius: 8,
+                                            offset: Offset(0, 4),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(width: 6),
-                                      Text(
-                                        'Gali Disawar',
-                                        style: BaseStyles.whiteMedium16
-                                            .copyWith(
-                                                color: AppColors.primaryColor),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.casino_outlined,
+                                            color: AppColors.whiteColor,
+                                            size: 20,
+                                          ),
+                                          SizedBox(width: 8),
+                                          Text(
+                                            'Gali Disawar',
+                                            style: TextStyle(
+                                              color: AppColors.whiteColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Poppins',
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ),
+                        // Payment and withdraw buttons
                         controller.approve.value == 'true'
                             ? Padding(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 12.0, vertical: 8),
+                                    horizontal: 16.0, vertical: 8),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    InkWell(
-                                      onTap: () {
-                                        SystemSound.play(SystemSoundType.click);
-                                        if (controller.approve.value ==
-                                            'true') {
-                                          Get.to(PaymentScreen());
-                                        }
-                                      },
+                                    // Add Money button
+                                    Expanded(
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 6),
-                                        width: Get.width * 0.45,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFd4af37),
-                                          border: Border.all(
-                                              color: Color(0xFFd4af37),
-                                              width: 1),
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons
-                                                  .account_balance_wallet_outlined,
-                                              color: AppColors.primaryColor,
+                                        margin: EdgeInsets.only(right: 8),
+                                        child: InkWell(
+                                          onTap: () {
+                                            SystemSound.play(
+                                                SystemSoundType.click);
+                                            if (controller.approve.value ==
+                                                'true') {
+                                              Get.to(PaymentScreen());
+                                            }
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 16),
+                                            decoration: BoxDecoration(
+                                              gradient:
+                                                  AppColors.successGradient,
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: AppColors.successColor
+                                                      .withOpacity(0.3),
+                                                  blurRadius: 8,
+                                                  offset: Offset(0, 4),
+                                                ),
+                                              ],
                                             ),
-                                            SizedBox(width: 6),
-                                            Text(
-                                              controller.loading.value
-                                                  ? ""
-                                                  : Strings.settings[0]
-                                                      .paymentBtnText
-                                                      .toString(),
-                                              style: BaseStyles.goldMedium16
-                                                  .copyWith(
-                                                      color: AppColors
-                                                          .primaryColor),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.add_circle_outline,
+                                                  color: AppColors.whiteColor,
+                                                  size: 20,
+                                                ),
+                                                SizedBox(width: 8),
+                                                Text(
+                                                  'Add Money',
+                                                  style: TextStyle(
+                                                    color: AppColors.whiteColor,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily: 'Poppins',
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    InkWell(
-                                      onTap: () {
-                                        SystemSound.play(SystemSoundType.click);
-                                        if (controller.approve.value ==
-                                            'true') {
-                                          Get.to(WithdrawView());
-                                        }
-                                      },
+                                    // Withdraw button
+                                    Expanded(
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 6),
-                                        width: Get.width * 0.45,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFd4af37),
-                                          border: Border.all(
-                                              color: Color(0xFFd4af37),
-                                              width: 1),
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons
-                                                  .remove_circle_outline_outlined,
-                                              color: AppColors.primaryColor,
+                                        margin: EdgeInsets.only(left: 8),
+                                        child: InkWell(
+                                          onTap: () {
+                                            SystemSound.play(
+                                                SystemSoundType.click);
+                                            if (controller.approve.value ==
+                                                'true') {
+                                              Get.to(WithdrawView());
+                                            }
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 16),
+                                            decoration: BoxDecoration(
+                                              gradient:
+                                                  AppColors.warningGradient,
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: AppColors.warningColor
+                                                      .withOpacity(0.3),
+                                                  blurRadius: 8,
+                                                  offset: Offset(0, 4),
+                                                ),
+                                              ],
                                             ),
-                                            SizedBox(width: 6),
-                                            Text(
-                                              'Withdrawal',
-                                              style: BaseStyles.goldMedium16
-                                                  .copyWith(
-                                                      color: AppColors
-                                                          .primaryColor),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.remove_circle_outline,
+                                                  color: AppColors.whiteColor,
+                                                  size: 20,
+                                                ),
+                                                SizedBox(width: 8),
+                                                Text(
+                                                  'Withdraw',
+                                                  style: TextStyle(
+                                                    color: AppColors.whiteColor,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily: 'Poppins',
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                     ),

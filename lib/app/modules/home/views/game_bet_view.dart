@@ -41,24 +41,28 @@ class GameBetView extends GetView<GameBetController> {
                     ))),
             controller.type == 'starline'
                 ? Container()
-                : controller.title == 'Jodi Digit' || controller.title == 'Full Sangam'
+                : controller.title == 'Jodi Digit' ||
+                        controller.title == 'Full Sangam'
                     ? Container()
                     : heightSpace20,
             controller.type == 'starline'
                 ? Container()
-                : controller.title == 'Jodi Digit' || controller.title == 'Full Sangam'
+                : controller.title == 'Jodi Digit' ||
+                        controller.title == 'Full Sangam'
                     ? Container()
-                    : Text('Choose session', style: BaseStyles.purpleMedium16),
+                    : Text('Choose session', style: BaseStyles.primaryMedium16),
             heightSpace5,
             controller.type == 'starline'
                 ? Container()
-                : controller.title == 'Jodi Digit' || controller.title == 'Full Sangam'
+                : controller.title == 'Jodi Digit' ||
+                        controller.title == 'Full Sangam'
                     ? Container()
                     : Container(
                         width: Get.width,
                         height: 45,
                         decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.primaryAccentColor),
+                            border:
+                                Border.all(color: AppColors.primaryAccentColor),
                             borderRadius: BorderRadius.circular(10)),
                         child: Obx(
                           () => Row(
@@ -90,8 +94,10 @@ class GameBetView extends GetView<GameBetController> {
                         controller: controller.openPanaContoller,
                         readOnly: true,
                         ontap: () {
-                          Get.to(() => SelectDigitView(),
-                              arguments: {'id': controller.id,'valueFor' : 'Open Pana'});
+                          Get.to(() => SelectDigitView(), arguments: {
+                            'id': controller.id,
+                            'valueFor': 'Open Pana'
+                          });
                         })
                     : Container())
                 : Container(),
@@ -106,8 +112,10 @@ class GameBetView extends GetView<GameBetController> {
                         controller: controller.closePanaContoller,
                         readOnly: true,
                         ontap: () {
-                          Get.to(() => SelectDigitView(),
-                              arguments: {'id': controller.id,'valueFor' : 'Close Pana'});
+                          Get.to(() => SelectDigitView(), arguments: {
+                            'id': controller.id,
+                            'valueFor': 'Close Pana'
+                          });
                         })
                     : Container())
                 : Container(),
@@ -123,8 +131,10 @@ class GameBetView extends GetView<GameBetController> {
                             controller: controller.closeDigitContoller,
                             readOnly: true,
                             ontap: () {
-                              Get.to(() => SelectDigitView(),
-                                  arguments: {'id': '1','valueFor' : 'Close Digit'});
+                              Get.to(() => SelectDigitView(), arguments: {
+                                'id': '1',
+                                'valueFor': 'Close Digit'
+                              });
                             })
                         : CustomWidgets().buildTextFormFieldWithLabel(
                             darkMode: false,
@@ -133,8 +143,10 @@ class GameBetView extends GetView<GameBetController> {
                             controller: controller.openDigitContoller,
                             readOnly: true,
                             ontap: () {
-                              Get.to(() => SelectDigitView(),
-                                  arguments: {'id': '1','valueFor' : 'Open Digit'});
+                              Get.to(() => SelectDigitView(), arguments: {
+                                'id': '1',
+                                'valueFor': 'Open Digit'
+                              });
                             }))
                     : CustomWidgets().buildTextFormFieldWithLabel(
                         darkMode: false,
@@ -143,8 +155,10 @@ class GameBetView extends GetView<GameBetController> {
                         controller: controller.digitContoller,
                         readOnly: true,
                         ontap: () {
-                          Get.to(() => SelectDigitView(),
-                              arguments: {'id': controller.id,'valueFor' : 'Digit'});
+                          Get.to(() => SelectDigitView(), arguments: {
+                            'id': controller.id,
+                            'valueFor': 'Digit'
+                          });
                         }),
             heightSpace20,
             CustomWidgets().buildTextFormFieldWithLabel(

@@ -24,185 +24,210 @@ class MainDrawer extends GetView<MainDrawerController> {
     Get.lazyPut(() => MainDrawerController());
     var box = GetStorage();
     return SizedBox(
-      width: 250,
+      width: 280,
       child: Drawer(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.whiteColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
         child: SafeArea(
           child: Container(
-            margin: EdgeInsets.only(top: 20),
-            child: ListView(
+            child: Column(
               children: [
-                Obx(
-                  () => Container(
-                    padding: EdgeInsets.only(left: 25, top: 10, bottom: 10),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: AppColors.goldColor,
-                          width: 1,
-                        ),
-                      ),
+                // Header section with gradient background
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                  child: Obx(
+                    () => Row(
                       children: [
                         InkWell(
                           onTap: () {
                             Get.back();
                             Get.to(() => ProfileView());
                           },
-                          child: controller.image.value != ''
-                              ? CircleAvatar(
-                                  radius: 40,
-                                  backgroundColor: Colors.transparent,
-                                  backgroundImage: NetworkImage(
-                                      '${BASE_URL_image2}${controller.image.value}'))
-                              : CircleAvatar(
-                                  radius: 40,
-                                  backgroundColor: Colors.transparent,
-                                  backgroundImage: AssetImage(ImagePath.LOGO)),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppColors.whiteColor,
+                                width: 2,
+                              ),
+                            ),
+                            child: controller.image.value != ''
+                                ? CircleAvatar(
+                                    radius: 35,
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage: NetworkImage(
+                                        '${BASE_URL_image2}${controller.image.value}'))
+                                : CircleAvatar(
+                                    radius: 35,
+                                    backgroundColor: AppColors.lightBlue,
+                                    backgroundImage:
+                                        AssetImage(ImagePath.LOGO)),
+                          ),
                         ),
-                        heightSpace10,
-                        Text("${controller.name.value}",
-                            style: BaseStyles.whiteMedium18),
-                        heightSpace5,
-                        Text("${controller.mobile.value}",
-                            style: BaseStyles.whiteMedium18),
-                        heightSpace10
+                        SizedBox(width: 15),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("${controller.name.value}",
+                                  style: BaseStyles.whiteMedium18),
+                              SizedBox(height: 4),
+                              Text("${controller.mobile.value}",
+                                  style: BaseStyles.whiteMedium16.copyWith(
+                                    color:
+                                        AppColors.whiteColor.withOpacity(0.9),
+                                    fontSize: 14,
+                                  )),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
-                heightSpace10,
-                info(
-                    title: DrawerDetails.dashboard,
-                    images: DrawerImages.dashboard,
-                    action: () {
-                      Get.back();
-                    }),
-                approved == 'true'
-                    ? info(
-                        title: DrawerDetails.pointManagement,
-                        images: DrawerImages.pointManagement,
-                        action: () {
-                          Get.back();
-                          Get.to(() => WalletView());
-                        })
-                    : Container(),
-                approved == 'true'
-                    ? info(
-                        title: DrawerDetails.bankDetails,
-                        images: DrawerImages.bankDetails,
-                        action: () {
-                          Get.back();
-                          Get.to(() => BankDetailsView());
-                        })
-                    : Container(),
-                approved == 'true'
-                    ? Column(
-                        children: [
-                          info(
-                              title: DrawerDetails.result,
-                              images: DrawerImages.result,
+                // Menu items section
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    children: [
+                      info(
+                          title: DrawerDetails.dashboard,
+                          images: DrawerImages.dashboard,
+                          action: () {
+                            Get.back();
+                          }),
+                      approved == 'true'
+                          ? info(
+                              title: DrawerDetails.pointManagement,
+                              images: DrawerImages.pointManagement,
                               action: () {
                                 Get.back();
-                                Get.to(() => ResultView(), arguments: {
-                                  'type': 'regular',
-                                });
-                              }),
-                          info(
-                              title: DrawerDetails.bidHistory,
-                              images: DrawerImages.bid,
+                                Get.to(() => WalletView());
+                              })
+                          : Container(),
+                      approved == 'true'
+                          ? info(
+                              title: DrawerDetails.bankDetails,
+                              images: DrawerImages.bankDetails,
                               action: () {
                                 Get.back();
-                                Get.to(() => BidHistoryView(), arguments: {
-                                  'type': 'regular',
-                                });
-                              }),
-                          info(
-                              title: DrawerDetails.winingHistory,
-                              images: DrawerImages.winingHistory,
-                              action: () {
-                                Get.back();
-                                Get.to(() => WinningHistoryView(), arguments: {
-                                  'type': 'regular',
-                                });
-                              }),
-                          // approved == 'true'?info(
-                          //     title: DrawerDetails.bankDetails,
-                          //     images: DrawerImages.bankDetails,
-                          //     action: () {
-                          //       Get.back();
-                          //       Get.to(() => BankDetailsView());
-                          //     }):Container(),
-                          info(
-                              title: DrawerDetails.winRate,
-                              images: DrawerImages.winRate,
-                              action: () {
-                                Get.back();
-                                Get.to(() => WinRateView());
-                              }),
-                        ],
-                      )
-                    : Container(),
-
-                // info(
-                //     title: DrawerDetails.notices,
-                //     images: DrawerImages.notices,
-                //     action: () {
-                //       Get.back();
-                //       Get.to(() => NoticeView());
-                //     }),
-                info(
-                    title: 'About Us',
-                    images: DrawerImages.instructions,
-                    action: () {
-                      Get.back();
-                      Get.to(() => InstructionView());
-                    }),
-                info(
-                    title: DrawerDetails.FAQ,
-                    images: DrawerImages.faq,
-                    action: () {
-                      Get.back();
-                      Get.to(() => FAQScreen());
-                    }),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Divider(
-                    color: AppColors.primaryAccentColor,
-                    thickness: 2,
+                                Get.to(() => BankDetailsView());
+                              })
+                          : Container(),
+                      approved == 'true'
+                          ? Column(
+                              children: [
+                                info(
+                                    title: DrawerDetails.result,
+                                    images: DrawerImages.result,
+                                    action: () {
+                                      Get.back();
+                                      Get.to(() => ResultView(), arguments: {
+                                        'type': 'regular',
+                                      });
+                                    }),
+                                info(
+                                    title: DrawerDetails.bidHistory,
+                                    images: DrawerImages.bid,
+                                    action: () {
+                                      Get.back();
+                                      Get.to(() => BidHistoryView(),
+                                          arguments: {
+                                            'type': 'regular',
+                                          });
+                                    }),
+                                info(
+                                    title: DrawerDetails.winingHistory,
+                                    images: DrawerImages.winingHistory,
+                                    action: () {
+                                      Get.back();
+                                      Get.to(() => WinningHistoryView(),
+                                          arguments: {
+                                            'type': 'regular',
+                                          });
+                                    }),
+                                // approved == 'true'?info(
+                                //     title: DrawerDetails.bankDetails,
+                                //     images: DrawerImages.bankDetails,
+                                //     action: () {
+                                //       Get.back();
+                                //       Get.to(() => BankDetailsView());
+                                //     }):Container(),
+                                info(
+                                    title: DrawerDetails.winRate,
+                                    images: DrawerImages.winRate,
+                                    action: () {
+                                      Get.back();
+                                      Get.to(() => WinRateView());
+                                    }),
+                              ],
+                            )
+                          : Container(),
+                      info(
+                          title: 'About Us',
+                          images: DrawerImages.instructions,
+                          action: () {
+                            Get.back();
+                            Get.to(() => InstructionView());
+                          }),
+                      info(
+                          title: DrawerDetails.FAQ,
+                          images: DrawerImages.faq,
+                          action: () {
+                            Get.back();
+                            Get.to(() => FAQScreen());
+                          }),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 8.0),
+                        child: Divider(
+                          color: AppColors.lightGrey,
+                          thickness: 1,
+                        ),
+                      ),
+                      info(
+                          title: DrawerDetails.shareApp,
+                          images: DrawerImages.share,
+                          action: () {
+                            Share.share(Strings.settings[0].appLink.toString(),
+                                subject: '');
+                          }),
+                      info(
+                          title: DrawerDetails.rating,
+                          images: DrawerImages.rate,
+                          action: () {
+                            Get.back();
+                            launchPlaystore(
+                                Strings.settings[0].appLink.toString());
+                          }),
+                      info(
+                          title: 'Privacy Policy',
+                          images: DrawerImages.newpassword,
+                          action: () {
+                            Get.back();
+                            Get.to(() => PrivacyPolicyScreen());
+                          }),
+                      info(
+                          title: DrawerDetails.logout,
+                          images: DrawerImages.logout,
+                          action: () {
+                            box.erase();
+                            Get.offAllNamed('/login');
+                          }),
+                    ],
                   ),
                 ),
-                info(
-                    title: DrawerDetails.shareApp,
-                    images: DrawerImages.share,
-                    action: () {
-                      Share.share(Strings.settings[0].appLink.toString(),
-                          subject: '');
-                    }),
-                info(
-                    title: DrawerDetails.rating,
-                    images: DrawerImages.rate,
-                    action: () {
-                      Get.back();
-                      launchPlaystore(Strings.settings[0].appLink.toString());
-                    }),
-                info(
-                    title: 'Privacy Policy',
-                    images: DrawerImages.newpassword,
-                    action: () {
-                      Get.back();
-                      Get.to(() => PrivacyPolicyScreen());
-                    }),
-                info(
-                    title: DrawerDetails.logout,
-                    images: DrawerImages.logout,
-                    action: () {
-                      box.erase();
-                      Get.offAllNamed('/login');
-                    }),
               ],
             ),
           ),
@@ -213,15 +238,40 @@ class MainDrawer extends GetView<MainDrawerController> {
 }
 
 info({required title, required images, required action}) {
-  return ListTile(
-    onTap: action,
-    horizontalTitleGap: 10,
-    leading: Image.asset(
-      images,
-      width: 30,
-      height: 30,
+  return Container(
+    margin: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(12),
+      color: AppColors.surfaceColor,
     ),
-    title: Text(title, style: BaseStyles.accentMedium18),
-    dense: true,
+    child: ListTile(
+      onTap: action,
+      horizontalTitleGap: 12,
+      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      leading: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Image.asset(
+          images,
+          width: 20,
+          height: 20,
+          color: AppColors.primaryColor,
+        ),
+      ),
+      title: Text(
+        title,
+        style: BaseStyles.accentMedium18.copyWith(
+          color: AppColors.blackColor,
+          fontSize: 16,
+        ),
+      ),
+      dense: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+    ),
   );
 }

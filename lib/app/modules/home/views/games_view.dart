@@ -204,28 +204,100 @@ class GamesView extends GetView<GamesController> {
 
   Widget design(
       {required title, required Function() ontap, required childImage}) {
+    // Define colors for different game types
+    List<List<Color>> gameGradients = [
+      [Color(0xFF4FC3F7), Color(0xFF29B6F6)], // Light Blue
+      [Color(0xFF66BB6A), Color(0xFF4CAF50)], // Green
+      [Color(0xFFFFB74D), Color(0xFFFF9800)], // Orange
+      [Color(0xFFEF5350), Color(0xFFF44336)], // Red
+      [Color(0xFFAB47BC), Color(0xFF9C27B0)], // Purple
+      [Color(0xFF26A69A), Color(0xFF00BCD4)], // Teal
+      [Color(0xFFEC407A), Color(0xFFE91E63)], // Pink
+    ];
+
+    int colorIndex = title.hashCode.abs() % gameGradients.length;
+
     return GestureDetector(
       onTap: ontap,
       child: Container(
-        height: 150,
-        width: 150,
-        // decoration: BoxDecoration(
-        //   image: DecorationImage(
-        //     image: AssetImage(ImagePath.star),
-        //     fit: BoxFit.fill,
-        //   ),
-        // ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.network(
-              "https://winbazar.store/uploads/game_type/" + childImage,
-              height: 100,
-              fit: BoxFit.fill,
+        height: 160,
+        width: 160,
+        margin: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: gameGradients[colorIndex],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: gameGradients[colorIndex][0].withOpacity(0.3),
+              blurRadius: 12,
+              offset: Offset(0, 6),
             ),
-            Text(title, style: BaseStyles.blackMedium14)
           ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: ontap,
+            borderRadius: BorderRadius.circular(20),
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        "https://winbazar.store/uploads/game_type/" +
+                            childImage,
+                        height: 60,
+                        width: 60,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Icon(
+                              Icons.casino,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Poppins',
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

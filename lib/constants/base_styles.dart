@@ -5,62 +5,100 @@ import 'package:flutter/material.dart';
 import 'package:azmatka/constants/app_colors.dart';
 
 class BaseStyles {
-  static final purpleMedium16 = GoogleFonts.koHo(
-    color: AppColors.primaryAccentColor,
+  // Primary text styles with modern colors
+  static final primaryMedium16 = GoogleFonts.poppins(
+    color: AppColors.primaryColor,
     fontWeight: FontWeight.w500,
     fontSize: 16,
   );
-  static final productTitle = GoogleFonts.poppins(
-    fontSize: 14,
-    color: AppColors.blackColor,
-    fontWeight: FontWeight.w500,
-  );
-  static final purpleMedium18 = GoogleFonts.koHo(
-    color: AppColors.primaryAccentColor,
-    fontWeight: FontWeight.w500,
+
+  static final primaryMedium18 = GoogleFonts.poppins(
+    color: AppColors.primaryColor,
+    fontWeight: FontWeight.w600,
     fontSize: 18,
   );
-  static final goldMedium18 = GoogleFonts.koHo(
-    color: AppColors.goldColor,
-    fontWeight: FontWeight.w500,
-    fontSize: 18,
-  );
-  static final goldMedium16 = GoogleFonts.koHo(
-    color: AppColors.goldColor,
-    fontWeight: FontWeight.w500,
-    fontSize: 16,
-  );
-  static final goldMedium14 = GoogleFonts.koHo(
-    color: AppColors.goldColor,
-    fontWeight: FontWeight.w500,
-    fontSize: 14,
-  );
-  static final pinkMedium18 = GoogleFonts.koHo(
-    color: AppColors.pinkColor,
-    fontWeight: FontWeight.w500,
-    fontSize: 18,
-  );
-  static final whiteMedium16 = GoogleFonts.koHo(
-    color: AppColors.whiteColor,
-    fontWeight: FontWeight.w500,
-    fontSize: 16,
-  );
-  static final whiteMedium20 = GoogleFonts.koHo(
-    color: AppColors.whiteColor,
-    fontWeight: FontWeight.w500,
+
+  static final primaryBold20 = GoogleFonts.poppins(
+    color: AppColors.primaryColor,
+    fontWeight: FontWeight.w700,
     fontSize: 20,
   );
-  static final whiteMedium18 = GoogleFonts.koHo(
-    color: AppColors.whiteColor,
-    fontWeight: FontWeight.w500,
+
+  // Colorful text styles for CTAs
+  static final successMedium16 = GoogleFonts.poppins(
+    color: AppColors.successColor,
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+  );
+
+  static final warningMedium16 = GoogleFonts.poppins(
+    color: AppColors.warningColor,
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+  );
+
+  static final errorMedium16 = GoogleFonts.poppins(
+    color: AppColors.errorColor,
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+  );
+
+  // Updated existing styles with modern colors
+  static final productTitle = GoogleFonts.poppins(
+    fontSize: 16,
+    color: AppColors.blackColor,
+    fontWeight: FontWeight.w600,
+  );
+
+  static final goldMedium18 = GoogleFonts.poppins(
+    color: AppColors.goldColor,
+    fontWeight: FontWeight.w600,
     fontSize: 18,
   );
-  static final accentMedium18 = GoogleFonts.koHo(
-    color: AppColors.whiteColor,
+
+  static final goldMedium16 = GoogleFonts.poppins(
+    color: AppColors.goldColor,
     fontWeight: FontWeight.w500,
+    fontSize: 16,
+  );
+
+  static final goldMedium14 = GoogleFonts.poppins(
+    color: AppColors.goldColor,
+    fontWeight: FontWeight.w500,
+    fontSize: 14,
+  );
+
+  static final pinkMedium18 = GoogleFonts.poppins(
+    color: AppColors.pinkColor,
+    fontWeight: FontWeight.w600,
     fontSize: 18,
   );
-  static final whiteNormal16 = GoogleFonts.koHo(
+
+  static final whiteMedium16 = GoogleFonts.poppins(
+    color: AppColors.whiteColor,
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+  );
+
+  static final whiteMedium20 = GoogleFonts.poppins(
+    color: AppColors.whiteColor,
+    fontWeight: FontWeight.w600,
+    fontSize: 20,
+  );
+
+  static final whiteMedium18 = GoogleFonts.poppins(
+    color: AppColors.whiteColor,
+    fontWeight: FontWeight.w600,
+    fontSize: 18,
+  );
+
+  static final accentMedium18 = GoogleFonts.poppins(
+    color: AppColors.primaryColor,
+    fontWeight: FontWeight.w600,
+    fontSize: 18,
+  );
+
+  static final whiteNormal16 = GoogleFonts.poppins(
     color: AppColors.whiteColor,
     fontWeight: FontWeight.w400,
     fontSize: 16,

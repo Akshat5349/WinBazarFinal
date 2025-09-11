@@ -46,11 +46,13 @@ class ResultView extends GetView<ResultController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                  //  Text(item['amount'].toString()),
-                                    item['market_id'] == null?Text(""): Text(
-                                     item['market_id']['market_name'],
-                                      style: BaseStyles.blackMedium20,
-                                    ),
+                                    //  Text(item['amount'].toString()),
+                                    item['market_id'] == null
+                                        ? Text("")
+                                        : Text(
+                                            item['market_id']['market_name'],
+                                            style: BaseStyles.blackMedium20,
+                                          ),
                                     item['game_type_id'] == null
                                         ? Text("")
                                         : Text(
@@ -110,7 +112,7 @@ class ResultView extends GetView<ResultController> {
     return Container(
       alignment: Alignment.center,
       width: Get.width * 0.2,
-      child: Text(title, style: BaseStyles.purpleMedium18),
+      child: Text(title, style: BaseStyles.primaryMedium18),
     );
   }
 

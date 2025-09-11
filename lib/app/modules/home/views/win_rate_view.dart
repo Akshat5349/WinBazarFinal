@@ -40,10 +40,10 @@ class WinRateView extends GetView {
                     fit: BoxFit.fill,
                   ),
                   widthSpace5,
-                  Text(title, style: BaseStyles.purpleMedium18),
+                  Text(title, style: BaseStyles.primaryMedium18),
                 ],
               ),
-              Text(price, style: BaseStyles.purpleMedium18)
+              Text(price, style: BaseStyles.primaryMedium18)
             ],
           ),
         ),
