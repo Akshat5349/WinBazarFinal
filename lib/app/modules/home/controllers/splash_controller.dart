@@ -51,7 +51,7 @@ class SplashController extends GetxController
       //   Get.offAll(SignupView());
       // }
       else {
-        Get.offAllNamed('/login');
+        Get.offAllNamed('/signup');
       }
     });
     //   try {

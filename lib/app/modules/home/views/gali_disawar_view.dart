@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:azmatka/app/modules/home/views/games_view.dart';
 import 'package:azmatka/app/modules/home/views/home_view.dart';
 import 'package:azmatka/app/modules/home/views/jodi_bid_history_view.dart';
@@ -18,8 +19,14 @@ import 'package:get/get.dart';
 import '../controllers/gali_disawar_controller.dart';
 
 class GaliDisawarView extends GetView<GaliDisawarController> {
+  final player = AudioPlayer();
   @override
   Widget build(BuildContext context) {
+    // Play bell sound when screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _playBellSound();
+    });
+
     initializeDateFormatting('es');
     var now = DateTime.now();
     var today = DateFormat.yMd('es').format(now);
@@ -651,6 +658,47 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       );
     });
+  }
+
+  // Method to play bell sound when screen loads
+  void _playBellSound() async {
+    try {
+      // Use the enhanced bell sound from AudioService
+      await player.play(AssetSource('audio/click.mp3'));
+    } catch (e) {
+      print('AudioService failed: $e');
+
+      try {
+        // Fallback: Create bell effect manually
+        SystemSound.play(SystemSoundType.alert);
+        HapticFeedback.heavyImpact();
+
+        // Create echo effect
+        Future.delayed(Duration(milliseconds: 150), () {
+          SystemSound.play(SystemSoundType.click);
+          HapticFeedback.mediumImpact();
+        });
+
+        Future.delayed(Duration(milliseconds: 300), () {
+          HapticFeedback.lightImpact();
+        });
+      } catch (e2) {
+        print('SystemSound failed: $e2');
+
+        try {
+          // Last resort: Just haptic feedback
+          HapticFeedback.heavyImpact();
+          Future.delayed(Duration(milliseconds: 100), () {
+            HapticFeedback.mediumImpact();
+          });
+          Future.delayed(Duration(milliseconds: 200), () {
+            HapticFeedback.lightImpact();
+          });
+        } catch (e3) {
+          print('All sound methods failed: $e3');
+        }
+      }
+    }
   }
 
   // Widget setupAlertDialoadContainer() {

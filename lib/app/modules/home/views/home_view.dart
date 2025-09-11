@@ -94,14 +94,8 @@ class _MarqueeTextState extends State<MarqueeText>
 }
 
 class HomeView extends GetView<HomeController> {
-  final player = AudioPlayer();
   @override
   Widget build(BuildContext context) {
-    // Play bell sound when screen loads
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _playBellSound();
-    });
-
     initializeDateFormatting('es');
     var now = DateTime.now();
     var today = DateFormat.yMd('es').format(now);
@@ -258,9 +252,10 @@ class HomeView extends GetView<HomeController> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Icon(
-                                        Icons.phone_outlined,
-                                        color: AppColors.primaryColor,
+                                      Image.asset(
+                                        ImagePath.whatsapp,
+                                        height: 20,
+                                        width: 20,
                                       ),
                                       SizedBox(width: 6),
                                       Text(
@@ -979,45 +974,4 @@ class HomeView extends GetView<HomeController> {
   //         ),
   //       ));
   // }
-
-  // Method to play bell sound when screen loads
-  void _playBellSound() async {
-    try {
-      // Use the enhanced bell sound from AudioService
-      await player.play(AssetSource('audio/click.mp3'));
-    } catch (e) {
-      print('AudioService failed: $e');
-
-      try {
-        // Fallback: Create bell effect manually
-        SystemSound.play(SystemSoundType.alert);
-        HapticFeedback.heavyImpact();
-
-        // Create echo effect
-        Future.delayed(Duration(milliseconds: 150), () {
-          SystemSound.play(SystemSoundType.click);
-          HapticFeedback.mediumImpact();
-        });
-
-        Future.delayed(Duration(milliseconds: 300), () {
-          HapticFeedback.lightImpact();
-        });
-      } catch (e2) {
-        print('SystemSound failed: $e2');
-
-        try {
-          // Last resort: Just haptic feedback
-          HapticFeedback.heavyImpact();
-          Future.delayed(Duration(milliseconds: 100), () {
-            HapticFeedback.mediumImpact();
-          });
-          Future.delayed(Duration(milliseconds: 200), () {
-            HapticFeedback.lightImpact();
-          });
-        } catch (e3) {
-          print('All sound methods failed: $e3');
-        }
-      }
-    }
-  }
 }

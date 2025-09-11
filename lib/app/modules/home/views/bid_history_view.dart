@@ -1,7 +1,5 @@
 import 'package:azmatka/app/modules/home/controllers/bid_history_controller.dart';
 import 'package:azmatka/constants/values.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class BidHistoryView extends GetView<BidHistoryController> {
   @override
@@ -28,13 +26,15 @@ class BidHistoryView extends GetView<BidHistoryController> {
           () => controller.loading.value
               ? Center(
                   child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
                   ),
                 )
               : controller.historyData.length == 0
                   ? _buildEmptyState()
                   : Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       child: ListView.builder(
                         itemCount: controller.historyData.length,
                         itemBuilder: (context, index) {
@@ -89,21 +89,23 @@ class BidHistoryView extends GetView<BidHistoryController> {
                 : item['market_id']['market_name'];
 
     // Get game type
-    String gameType = item.containsKey('game_type_id') && item['game_type_id'] != null
-        ? item['game_type_id']['type'].toString()
-        : 'Single';
+    String gameType =
+        item.containsKey('game_type_id') && item['game_type_id'] != null
+            ? item['game_type_id']['type'].toString()
+            : 'Single';
 
     // Get game order
-    int gameOrder = item.containsKey('game_type_id') && item['game_type_id'] != null
-        ? int.tryParse(item['game_type_id']['order'].toString()) ?? 0
-        : 0;
+    int gameOrder =
+        item.containsKey('game_type_id') && item['game_type_id'] != null
+            ? int.tryParse(item['game_type_id']['order'].toString()) ?? 0
+            : 0;
 
     // Determine number display based on order and session
     String displayNumber = _getDisplayNumber(item, gameOrder);
 
     // Get session with proper formatting
     String session = item['session'].toString().toUpperCase();
-    
+
     // Determine status color
     Color statusColor = _getStatusColor(session);
 
@@ -151,7 +153,8 @@ class BidHistoryView extends GetView<BidHistoryController> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
                         color: statusColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
@@ -171,9 +174,9 @@ class BidHistoryView extends GetView<BidHistoryController> {
                     ),
                   ],
                 ),
-                
+
                 SizedBox(height: 16),
-                
+
                 // Game type and number row
                 Row(
                   children: [
@@ -196,9 +199,9 @@ class BidHistoryView extends GetView<BidHistoryController> {
                     ),
                   ],
                 ),
-                
+
                 SizedBox(height: 12),
-                
+
                 // Date and amount row
                 Row(
                   children: [
@@ -284,7 +287,7 @@ class BidHistoryView extends GetView<BidHistoryController> {
 
   String _getDisplayNumber(Map item, int gameOrder) {
     String session = item['session'].toString().toLowerCase();
-    
+
     if (gameOrder == 5) {
       // Jodi game
       if (session == 'open') {

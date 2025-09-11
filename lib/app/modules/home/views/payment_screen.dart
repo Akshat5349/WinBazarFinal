@@ -182,13 +182,14 @@ class _PaymentScreenState extends State<PaymentScreen>
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFFd4af37),
-              Color(0xFFf4d03f),
+              Color(0xFFd4af37).withAlpha(125),
+              Color(0xFFf4d03f).withAlpha(125),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Color(0xFFd4af37), width: 1),
           boxShadow: [
             BoxShadow(
               color: Color(0xFFd4af37).withOpacity(0.3),
@@ -291,9 +292,6 @@ class _PaymentScreenState extends State<PaymentScreen>
                                       _buildQuickAddButton("2000"),
                                       _buildQuickAddButton("5000"),
                                       _buildQuickAddButton("10000"),
-                                      Container(
-                                          width: Get.width *
-                                              0.28), // Empty space for alignment
                                     ],
                                   ),
                                 ],
