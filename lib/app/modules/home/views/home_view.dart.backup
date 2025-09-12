@@ -581,37 +581,184 @@ class HomeView extends GetView<HomeController> {
 
                                         return Container(
                                           margin: EdgeInsets.symmetric(
-                                              horizontal: 16, vertical: 6),
+                                              horizontal: 16, vertical: 8),
                                           decoration: BoxDecoration(
                                             color: AppColors.whiteColor,
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                             border: Border.all(
                                               color: isMarketClosed
-                                                  ? AppColors.errorColor
+                                                  ? AppColors.errorColor.withOpacity(0.3)
                                                   : isMarketOpen
-                                                      ? AppColors.successColor
-                                                      : AppColors.primaryColor,
+                                                      ? AppColors.successColor.withOpacity(0.3)
+                                                      : AppColors.primaryColor.withOpacity(0.3),
                                               width: 2,
                                             ),
                                             boxShadow: [
                                               BoxShadow(
-                                                color: AppColors.blackColor
-                                                    .withOpacity(0.1),
+                                                color: Colors.grey.withOpacity(0.1),
                                                 blurRadius: 12,
                                                 offset: Offset(0, 6),
                                               ),
                                             ],
                                           ),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 16, vertical: 4),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                // Top row with market name and play/close icon
-                                                Row(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: InkWell(
+                                              onTap: () {
+                                                SystemSound.play(SystemSoundType.click);
+                                                if (!isMarketClosed) {
+                                                  Get.to(() => GamesView(), arguments: {
+                                                    'title': item['market_name'],
+                                                    'id': item['_id'],
+                                                    'type': item['market_type'],
+                                                    'item': item,
+                                                    'open': openDate,
+                                                    'close': closeDate,
+                                                  });
+                                                }
+                                              },
+                                              borderRadius: BorderRadius.circular(20),
+                                              child: Padding(
+                                                padding: EdgeInsets.all(20),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    // Header with market name and status
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                            item['market_name'],
+                                                            style: TextStyle(
+                                                              color: AppColors.blackColor,
+                                                              fontSize: 20,
+                                                              fontWeight: FontWeight.w700,
+                                                              fontFamily: 'Poppins',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          padding: EdgeInsets.symmetric(
+                                                              horizontal: 12, vertical: 6),
+                                                          decoration: BoxDecoration(
+                                                            gradient: isMarketClosed
+                                                                ? AppColors.errorGradient
+                                                                : isMarketOpen
+                                                                    ? AppColors.successGradient
+                                                                    : AppColors.primaryGradient,
+                                                            borderRadius:
+                                                                BorderRadius.circular(20),
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: [
+                                                              Icon(
+                                                                isMarketClosed
+                                                                    ? Icons.close
+                                                                    : isMarketOpen
+                                                                        ? Icons.play_arrow
+                                                                        : Icons.schedule,
+                                                                color: AppColors.whiteColor,
+                                                                size: 16,
+                                                              ),
+                                                              SizedBox(width: 4),
+                                                              Text(
+                                                                isMarketClosed
+                                                                    ? 'Closed'
+                                                                    : isMarketOpen
+                                                                        ? 'Open'
+                                                                        : 'Waiting',
+                                                                style: TextStyle(
+                                                                  color: AppColors.whiteColor,
+                                                                  fontSize: 12,
+                                                                  fontWeight: FontWeight.w600,
+                                                                  fontFamily: 'Poppins',
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 16),
+                                                    // Results section
+                                                    Container(
+                                                      padding: EdgeInsets.all(16),
+                                                      decoration: BoxDecoration(
+                                                        color: AppColors.surfaceColor,
+                                                        borderRadius: BorderRadius.circular(12),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment.spaceAround,
+                                                        children: [
+                                                          _buildResultColumn(
+                                                            title: 'Open',
+                                                            value: item['results'] == null
+                                                                ? "***"
+                                                                : item['results']['open_pana'] == null
+                                                                    ? "***"
+                                                                    : item['results']['date'] == today
+                                                                        ? item['results']['open_pana']['text_value'][0]
+                                                                        : "***",
+                                                            color: AppColors.primaryColor,
+                                                          ),
+                                                          Container(
+                                                            width: 2,
+                                                            height: 40,
+                                                            color: AppColors.dividerColor,
+                                                          ),
+                                                          _buildResultColumn(
+                                                            title: 'Close',
+                                                            value: item['results'] == null
+                                                                ? "***"
+                                                                : item['results']['close_pana'] == null
+                                                                    ? "***"
+                                                                    : item['results']['date'] == today
+                                                                        ? item['results']['close_pana']['text_value'][0]
+                                                                        : "***",
+                                                            color: AppColors.errorColor,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 16),
+                                                    // Time section
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        _buildTimeInfo(
+                                                          label: 'Open Time',
+                                                          time: openDate,
+                                                          color: AppColors.successColor,
+                                                        ),
+                                                        _buildTimeInfo(
+                                                          label: 'Close Time',
+                                                          time: closeDate,
+                                                          color: AppColors.errorColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                    )
+                  ],
+                ),
+              ),
+        bottomNavigationBar:
                                                   children: [
                                                     // Left side arrow icon
                                                     GestureDetector(
@@ -628,17 +775,18 @@ class HomeView extends GetView<HomeController> {
                                                         height: 32,
                                                         decoration:
                                                             BoxDecoration(
-                                                          color: AppColors
-                                                              .primaryColor
-                                                              .withOpacity(0.1),
+                                                          color: Color(
+                                                                  0xFFd4af37)
+                                                              .withOpacity(
+                                                                  0.2), // Gold background
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(8),
                                                         ),
                                                         child: Icon(
                                                           Icons.trending_up,
-                                                          color: AppColors
-                                                              .primaryColor,
+                                                          color: Color(
+                                                              0xFFd4af37), // Gold color
                                                           size: 18,
                                                         ),
                                                       ),
@@ -656,14 +804,12 @@ class HomeView extends GetView<HomeController> {
                                                                 .toString()
                                                                 .toUpperCase(),
                                                             style: TextStyle(
-                                                              color: AppColors
-                                                                  .blackColor,
-                                                              fontSize: 20,
+                                                              color: Color(
+                                                                  0xFFd4af37), // Gold color
+                                                              fontSize: 16,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w700,
-                                                              fontFamily:
-                                                                  'Poppins',
+                                                                      .bold,
                                                               letterSpacing:
                                                                   0.5,
                                                             ),
@@ -686,23 +832,20 @@ class HomeView extends GetView<HomeController> {
                                                                                 : "***",
                                                                 style:
                                                                     TextStyle(
-                                                                  color: AppColors
-                                                                      .blackColor,
-                                                                  fontSize: 16,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 14,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
-                                                                  fontFamily:
-                                                                      'Poppins',
+                                                                          .w500,
                                                                 ),
                                                               ),
                                                               Text(
                                                                 " • ",
                                                                 style:
                                                                     TextStyle(
-                                                                  color:
-                                                                      AppColors
-                                                                          .grey,
+                                                                  color: Color(
+                                                                      0xFFd4af37),
                                                                   fontSize: 14,
                                                                 ),
                                                               ),
@@ -721,14 +864,12 @@ class HomeView extends GetView<HomeController> {
                                                                                 : "***",
                                                                 style:
                                                                     TextStyle(
-                                                                  color: AppColors
-                                                                      .blackColor,
-                                                                  fontSize: 16,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 14,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
-                                                                  fontFamily:
-                                                                      'Poppins',
+                                                                          .w500,
                                                                 ),
                                                               ),
                                                             ],
@@ -780,28 +921,15 @@ class HomeView extends GetView<HomeController> {
                                                         height: 36,
                                                         decoration:
                                                             BoxDecoration(
-                                                          color: (isMarketClosed
-                                                                  ? AppColors
-                                                                      .errorColor
-                                                                  : isMarketOpen
-                                                                      ? AppColors
-                                                                          .successColor
-                                                                      : AppColors
-                                                                          .primaryColor)
-                                                              .withOpacity(0.1),
+                                                          color: Color(
+                                                                  0xFFd4af37)
+                                                              .withOpacity(0.2),
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(8),
                                                           border: Border.all(
-                                                            color:
-                                                                isMarketClosed
-                                                                    ? AppColors
-                                                                        .errorColor
-                                                                    : isMarketOpen
-                                                                        ? AppColors
-                                                                            .successColor
-                                                                        : AppColors
-                                                                            .primaryColor,
+                                                            color: Color(
+                                                                0xFFd4af37),
                                                             width: 1.5,
                                                           ),
                                                         ),
@@ -810,14 +938,8 @@ class HomeView extends GetView<HomeController> {
                                                               ? Icons.close
                                                               : Icons
                                                                   .play_arrow,
-                                                          color: isMarketClosed
-                                                              ? AppColors
-                                                                  .errorColor
-                                                              : isMarketOpen
-                                                                  ? AppColors
-                                                                      .successColor
-                                                                  : AppColors
-                                                                      .primaryColor,
+                                                          color:
+                                                              Color(0xFFd4af37),
                                                           size: 20,
                                                         ),
                                                       ),
@@ -1063,6 +1185,87 @@ class HomeView extends GetView<HomeController> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       );
     });
+  }
+
+  // Helper method to build result columns
+  Widget _buildResultColumn({
+    required String title,
+    required String value,
+    required Color color,
+  }) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            color: AppColors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Poppins',
+          ),
+        ),
+        SizedBox(height: 8),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: color.withOpacity(0.3)),
+          ),
+          child: Text(
+            value,
+            style: TextStyle(
+              color: color,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Poppins',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Helper method to build time info
+  Widget _buildTimeInfo({
+    required String label,
+    required String time,
+    required Color color,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: AppColors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Poppins',
+          ),
+        ),
+        SizedBox(height: 4),
+        Row(
+          children: [
+            Icon(
+              Icons.access_time,
+              color: color,
+              size: 14,
+            ),
+            SizedBox(width: 4),
+            Text(
+              time,
+              style: TextStyle(
+                color: color,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Poppins',
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   // Widget setupAlertDialoadContainer() {
