@@ -43,11 +43,7 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                     onTap: () {
                       Get.to(() => WalletView());
                     },
-                    child: Image.asset(
-                      DrawerImages.pointManagement,
-                      height: 30,
-                      width: 30,
-                    ),
+                    child: Icon(Icons.account_balance_wallet_outlined),
                   )
                 : Container(),
             widthSpace5,

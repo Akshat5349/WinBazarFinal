@@ -2,12 +2,13 @@ import 'package:azmatka/app/Models/setting_model.dart';
 
 class Strings {
   static const SIGN_IN_TITLE = 'Welcome Back';
-  static  List<SettingModel> settings = [];
+  static List<SettingModel> settings = [];
 }
 
 class ImagePath {
   static const LOGO = 'assets/logo/logo.png';
   static const whatsapp = 'assets/images/whatsapp.png';
+  static const whatsapp_black = 'assets/images/whatsapp-black.png';
   static const paytm = 'assets/images/paytm.png';
   static const phonepe = 'assets/images/phonepe.png';
   static const gpay = 'assets/images/gpay.png';
@@ -23,7 +24,6 @@ class ImagePath {
   static const double = 'assets/images/double.png';
   static const star = 'assets/images/star.png';
   static const comming_soon = 'assets/images/comingsoon.png';
-
 }
 
 class IconPath {

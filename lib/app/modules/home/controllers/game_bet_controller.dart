@@ -31,6 +31,7 @@ class GameBetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    print("Market Type: $marketType");
     if (open == false && close == true) {
       selectvalue.value = 2;
     } else {
@@ -53,10 +54,11 @@ class GameBetController extends GetxController {
       selectvalue.value = 2;
     }
 
-    if (digitContoller.text.isEmpty && !(title == 'Half Sangam' || title == 'Full Sangam')) {
+    if (digitContoller.text.isEmpty &&
+        !(title == 'Half Sangam' || title == 'Full Sangam')) {
       toast('Please Select Digit');
       return;
-    }else if (pointContoller.text.length <
+    } else if (pointContoller.text.length <
         Strings.settings[0].minimumBidAmount!.length) {
       toast('Minimum Bid points is ${Strings.settings[0].minimumBidAmount} Rs');
       return;
@@ -65,84 +67,78 @@ class GameBetController extends GetxController {
       toast('Maximum Bid points is ${Strings.settings[0].maximumBidAmount} Rs');
       return;
     }
-    if(title=='Half Sangam'){
-      if(selectvalue==1){
-        if(openPanaContoller.text.isEmpty) {
-        toast("Please Select Open Pana");
-        return;
-      }
-      if(closeDigitContoller.text.isEmpty) {
-        toast("Please Select Close Digit");
-        return;
-      }
-      }
-      else{
-        if(closePanaContoller.text.isEmpty) {
-        toast("Please Select Close Pana");
-        return;
-      }
-      if(openDigitContoller.text.isEmpty) {
-        toast("Please Select Open Digit");
-        return;
-      }
-      }
-    }
-    if(title=='Full Sangam'){
-      if(closePanaContoller.text.isEmpty) {
-        toast("Please Select Close Pana");
-        return;
-      }
-      if(openPanaContoller.text.isEmpty) {
-        toast("Please Select Open Pana");
-        return;
-      }
-    }
-      var d = {
-        'amount': pointContoller.text,
-        'number': digitContoller.text,
-        'open_pana': openPanaContoller.text,
-        'close_pana': closePanaContoller.text,
-        'open_digit': openDigitContoller.text,
-        'close_digit': closeDigitContoller.text,
-        'game_type_id': gameTypeId,
-        'market_id': gameId,
-        'session': selectvalue == 1 ? 'open' : 'close',
-      };
-
-      // marketType == 'Delhi'
-      //     ? d['delhi_market_id'] = gameId
-      //     : marketType == 'Mumbai'
-      //         ? d['mumbai_market_id'] = gameId
-      //         : d['starline_market_id'] = gameId;
-
-
-
-
-      //  appTitle == ''
-      try {
-        var res = await ApiProvider().postRequest(
-            temp: true,
-            apiUrl: 'user/bid_create',
-            data: d,
-            token: 'Bearer ${box.read('token')}');
-
-        if (res['success'].toString() == 'true') {
-          toast('Bet Placed Successfully');
-
-          digitContoller.clear();
-          pointContoller.clear();
-          home.wallet();
-          //Get.offAll(() => HomeView());
-        } else {
-          toast('${res['message']}');
-
+    if (title == 'Half Sangam') {
+      if (selectvalue == 1) {
+        if (openPanaContoller.text.isEmpty) {
+          toast("Please Select Open Pana");
+          return;
         }
-      } catch (e) {
+        if (closeDigitContoller.text.isEmpty) {
+          toast("Please Select Close Digit");
+          return;
+        }
+      } else {
+        if (closePanaContoller.text.isEmpty) {
+          toast("Please Select Close Pana");
+          return;
+        }
+        if (openDigitContoller.text.isEmpty) {
+          toast("Please Select Open Digit");
+          return;
+        }
+      }
+    }
+    if (title == 'Full Sangam') {
+      if (closePanaContoller.text.isEmpty) {
+        toast("Please Select Close Pana");
+        return;
+      }
+      if (openPanaContoller.text.isEmpty) {
+        toast("Please Select Open Pana");
+        return;
+      }
+    }
+    var d = {
+      'amount': pointContoller.text,
+      'number': digitContoller.text,
+      'open_pana': openPanaContoller.text,
+      'close_pana': closePanaContoller.text,
+      'open_digit': openDigitContoller.text,
+      'close_digit': closeDigitContoller.text,
+      'game_type_id': gameTypeId,
+      'market_id': gameId,
+      'session': selectvalue == 1 ? 'open' : 'close',
+    };
+
+    // marketType == 'Delhi'
+    //     ? d['delhi_market_id'] = gameId
+    //     : marketType == 'Mumbai'
+    //         ? d['mumbai_market_id'] = gameId
+    //         : d['starline_market_id'] = gameId;
+
+    //  appTitle == ''
+    try {
+      var res = await ApiProvider().postRequest(
+          temp: true,
+          apiUrl: 'user/bid_create',
+          data: d,
+          token: 'Bearer ${box.read('token')}');
+
+      if (res['success'].toString() == 'true') {
+        toast('Bet Placed Successfully');
+
         digitContoller.clear();
         pointContoller.clear();
-        print(e.toString());
-        toast('Bet Failed');
+        home.wallet();
+        //Get.offAll(() => HomeView());
+      } else {
+        toast('${res['message']}');
       }
-    
+    } catch (e) {
+      digitContoller.clear();
+      pointContoller.clear();
+      print(e.toString());
+      toast('Bet Failed');
+    }
   }
 }
