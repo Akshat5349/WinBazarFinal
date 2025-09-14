@@ -846,120 +846,127 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 1,
-                blurRadius: 10,
-                offset: Offset(0, -2),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-            child: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.white,
-              selectedItemColor: Colors.grey[600],
-              unselectedItemColor: Colors.grey[600],
-              selectedFontSize: 10,
-              unselectedFontSize: 10,
-              currentIndex: 0, // Default to home/My Bids
-              onTap: (index) {
-                SystemSound.play(SystemSoundType.click);
-                switch (index) {
-                  case 0:
-                    // My Bids - stay on current page or navigate to bids page
-                    Get.to(() => BidHistoryView(), arguments: {
-                      'type': 'regular',
-                    });
-                    break;
-                  case 1:
-                    // Passbook - navigate to wallet history or transaction history
-                    if (controller.approve.value == 'true') {
-                      Get.to(() => WalletView());
-                    }
-                    break;
-                  case 2:
-                    // Home/Center button - handled by floating action button
-                    Get.offAll(() => HomeView());
-                    break;
-                  case 3:
-                    // Funds - navigate to wallet/payment screen
-                    Get.to(() => WinningHistoryView(), arguments: {
-                      'type': 'regular',
-                    });
-                    break;
-                  case 4:
-                    // Support - navigate to support/contact page
-                    launchurl(
-                        'tel:+91${Strings.settings[0].whatsapp.toString()}');
-                    break;
-                }
-              },
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.list_alt, size: 24),
-                  label: 'My Bids',
+        bottomNavigationBar: controller.approve.value == 'true'
+            ? Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                      offset: Offset(0, -2),
+                    ),
+                  ],
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.account_balance_wallet_outlined, size: 24),
-                  label: 'Wallet',
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  child: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
+                    backgroundColor: Colors.white,
+                    selectedItemColor: Colors.grey[600],
+                    unselectedItemColor: Colors.grey[600],
+                    selectedFontSize: 10,
+                    unselectedFontSize: 10,
+                    currentIndex: 0, // Default to home/My Bids
+                    onTap: (index) {
+                      SystemSound.play(SystemSoundType.click);
+                      switch (index) {
+                        case 0:
+                          // My Bids - stay on current page or navigate to bids page
+                          Get.to(() => BidHistoryView(), arguments: {
+                            'type': 'regular',
+                          });
+                          break;
+                        case 1:
+                          // Passbook - navigate to wallet history or transaction history
+                          if (controller.approve.value == 'true') {
+                            Get.to(() => WalletView());
+                          }
+                          break;
+                        case 2:
+                          // Home/Center button - handled by floating action button
+                          Get.offAll(() => HomeView());
+                          break;
+                        case 3:
+                          // Funds - navigate to wallet/payment screen
+                          Get.to(() => WinningHistoryView(), arguments: {
+                            'type': 'regular',
+                          });
+                          break;
+                        case 4:
+                          // Support - navigate to support/contact page
+                          launchurl(
+                              'tel:+91${Strings.settings[0].whatsapp.toString()}');
+                          break;
+                      }
+                    },
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.list_alt, size: 24),
+                        label: 'My Bids',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.account_balance_wallet_outlined,
+                            size: 24),
+                        label: 'Wallet',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: SizedBox.shrink(), // Empty for center FAB
+                        label: '',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.emoji_events, size: 24),
+                        label: 'Win History',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.support_agent, size: 24),
+                        label: 'Support',
+                      ),
+                    ],
+                  ),
                 ),
-                BottomNavigationBarItem(
-                  icon: SizedBox.shrink(), // Empty for center FAB
-                  label: '',
+              )
+            : null,
+        floatingActionButton: controller.approve.value == 'true'
+            ? Container(
+                width: 65,
+                height: 65,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [AppColors.pinkColor, Colors.deepPurple],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.pinkColor.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 8,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.emoji_events, size: 24),
-                  label: 'Win History',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.support_agent, size: 24),
-                  label: 'Support',
-                ),
-              ],
-            ),
-          ),
-        ),
-        floatingActionButton: Container(
-          width: 65,
-          height: 65,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.pinkColor, Colors.deepPurple],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.pinkColor.withOpacity(0.3),
-                spreadRadius: 2,
-                blurRadius: 8,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
-          child: FloatingActionButton(
-              onPressed: () {
-                // Navigate to home or main action
-              },
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              child: Image.asset(ImagePath.LOGO)),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+                child: FloatingActionButton(
+                    onPressed: () {
+                      // Navigate to home or main action
+                    },
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    child: Image.asset(ImagePath.LOGO)),
+              )
+            : null,
+        floatingActionButtonLocation: controller.approve.value == 'true'
+            ? FloatingActionButtonLocation.centerDocked
+            : null,
       );
     });
   }
