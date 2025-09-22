@@ -1,4 +1,4 @@
-package com.loki_app.winbazar
+package com.loki_app.starkalyan
 
 import io.flutter.embedding.android.FlutterActivity
 

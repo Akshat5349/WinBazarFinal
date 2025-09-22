@@ -540,118 +540,129 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                   ],
                 ),
               ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 1,
-                blurRadius: 10,
-                offset: Offset(0, -2),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-            child: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.white,
-              selectedItemColor: AppColors.pinkColor,
-              unselectedItemColor: Colors.grey[600],
-              selectedFontSize: 12,
-              unselectedFontSize: 10,
-              currentIndex: 0, // Default to home/My Bids
-              onTap: (index) {
-                switch (index) {
-                  case 0:
-                    // My Bids - stay on current page or navigate to bids page
-                    Get.to(() => JodiBidHistoryView(), arguments: {
-                      'type': 'regular',
-                    });
-                    break;
-                  case 1:
-                    // Passbook - navigate to wallet history or transaction history
-                    Get.to(() => JodiWinningHistoryView(), arguments: {
-                      'type': 'regular',
-                    });
-                    break;
-                  case 2:
-                    // Home/Center button - handled by floating action button
+        bottomNavigationBar: controller.approve.value == 'true'
+            ? Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                      offset: Offset(0, -2),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  child: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
+                    backgroundColor: Colors.white,
+                    selectedItemColor: AppColors.pinkColor,
+                    unselectedItemColor: Colors.grey[600],
+                    selectedFontSize: 12,
+                    unselectedFontSize: 10,
+                    currentIndex: 0, // Default to home/My Bids
+                    onTap: (index) {
+                      switch (index) {
+                        case 0:
+                          // My Bids - stay on current page or navigate to bids page
+                          Get.to(() => JodiBidHistoryView(), arguments: {
+                            'type': 'regular',
+                          });
+                          break;
+                        case 1:
+                          // Passbook - navigate to wallet history or transaction history
+                          Get.to(() => JodiWinningHistoryView(), arguments: {
+                            'type': 'regular',
+                          });
+                          break;
+                        case 2:
+                          // Home/Center button - handled by floating action button
+                          Get.to(() => HomeView());
+                          break;
+                        case 3:
+                          // Funds - navigate to wallet/payment screen
+                          if (controller.approve.value == 'true') {
+                            Get.to(() => WalletView());
+                          }
+                          break;
+                        case 4:
+                          // Support - navigate to support/contact page
+                          break;
+                      }
+                    },
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.list_alt, size: 24),
+                        label: 'My Bids',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.account_balance_wallet_outlined,
+                            size: 24),
+                        label: 'Winnings',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: SizedBox.shrink(), // Empty for center FAB
+                        label: '',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.account_balance, size: 24),
+                        label: 'Funds',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.support_agent, size: 24),
+                        label: 'Support',
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : null,
+        floatingActionButton: controller.approve.value == 'true'
+            ? Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [AppColors.pinkColor, AppColors.blueColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.pinkColor.withOpacity(0.4),
+                      spreadRadius: 2,
+                      blurRadius: 8,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: FloatingActionButton(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  onPressed: () {
                     Get.to(() => HomeView());
-                    break;
-                  case 3:
-                    // Funds - navigate to wallet/payment screen
-                    if (controller.approve.value == 'true') {
-                      Get.to(() => WalletView());
-                    }
-                    break;
-                  case 4:
-                    // Support - navigate to support/contact page
-                    break;
-                }
-              },
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.list_alt, size: 24),
-                  label: 'My Bids',
+                  },
+                  child: Icon(
+                    Icons.home,
+                    color: Colors.white,
+                    size: 28,
+                  ),
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.account_balance_wallet_outlined, size: 24),
-                  label: 'Winnings',
-                ),
-                BottomNavigationBarItem(
-                  icon: SizedBox.shrink(), // Empty for center FAB
-                  label: '',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.account_balance, size: 24),
-                  label: 'Funds',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.support_agent, size: 24),
-                  label: 'Support',
-                ),
-              ],
-            ),
-          ),
-        ),
-        floatingActionButton: Container(
-          width: 65,
-          height: 65,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.pinkColor, Colors.deepPurple],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.pinkColor.withOpacity(0.3),
-                spreadRadius: 2,
-                blurRadius: 8,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
-          child: FloatingActionButton(
-              onPressed: () {
-                // Navigate to home or main action
-                Get.back();
-              },
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              child: Image.asset(ImagePath.LOGO)),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+              )
+            : null,
+        floatingActionButtonLocation: controller.approve.value == 'true'
+            ? FloatingActionButtonLocation.centerDocked
+            : null,
       );
     });
   }
