@@ -39,27 +39,45 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
           centerTitle: false,
           actions: [
             controller.approve.value == 'true'
-                ? InkWell(
-                    onTap: () {
-                      Get.to(() => WalletView());
-                    },
-                    child: Image.asset(
-                      DrawerImages.pointManagement,
-                      height: 30,
-                      width: 30,
+                ? Container(
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [AppColors.goldColor, Color(0xFFFFA000)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                  )
-                : Container(),
-            widthSpace5,
-            controller.approve.value == 'true'
-                ? Obx(
-                    () => Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          controller.userWallet['wallet_balance'].toString(),
-                          style:
-                              BaseStyles.whiteMedium18.copyWith(fontSize: 20),
-                        )),
+                    child: InkWell(
+                      onTap: () {
+                        SystemSound.play(SystemSoundType.click);
+                        Get.to(() => WalletView());
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.account_balance_wallet_outlined,
+                            color: AppColors.whiteColor,
+                            size: 18,
+                          ),
+                          SizedBox(width: 6),
+                          Obx(
+                            () => Text(
+                              "₹${controller.userWallet['wallet_balance'].toString()}",
+                              style: TextStyle(
+                                color: AppColors.whiteColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   )
                 : Container(),
             widthSpace10,
@@ -338,16 +356,16 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                                               Text(
                                                                 item['results'] ==
                                                                         null
-                                                                    ? "***"
-                                                                    : item['results']['close_pana'] ==
+                                                                    ? "*"
+                                                                    : item['results']['open_pana'] ==
                                                                             null
-                                                                        ? "***"
-                                                                        : item['results']['close_pana'].length ==
+                                                                        ? "*"
+                                                                        : item['results']['open_pana'].length ==
                                                                                 0
-                                                                            ? "***"
+                                                                            ? "*"
                                                                             : item['results']['date'] == today
-                                                                                ? item['results']['close_pana']['text_value']
-                                                                                : "***",
+                                                                                ? item['results']['open_pana']['text_value'][item['results']['open_pana']['text_value'].length - 1]
+                                                                                : "*",
                                                                 style:
                                                                     TextStyle(
                                                                   color: AppColors
