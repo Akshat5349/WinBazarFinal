@@ -33,7 +33,7 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
     Get.lazyPut(() => GaliDisawarController());
     return Obx(() {
       return Scaffold(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
           title: Text("Gali Disawar"),
           centerTitle: false,
@@ -237,199 +237,235 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                             date.compareTo(closeDateCompair) >=
                                                 0;
 
-                                        return GestureDetector(
-                                          onTap: () {
-                                            if (isMarketOpen ||
-                                                !isMarketClosed) {
-                                              if (controller.approve.value ==
-                                                  "true") {
-                                                Get.to(() => GamesView(),
-                                                    arguments: {
-                                                      'id': item['_id']
-                                                          .toString(),
-                                                      'name':
-                                                          item['market_name']
-                                                              .toString(),
-                                                      'type': 'Jodi',
-                                                      'market_type':
-                                                          item['market_type']
-                                                              .toString(),
-                                                      "item": item,
-                                                      "open": true,
-                                                      "close": true
-                                                    });
-                                              } else {
-                                                Get.toNamed('/quiz');
-                                              }
-                                            } else {
-                                              toast('Market is closed');
-                                            }
-                                          },
-                                          child: Container(
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 16, vertical: 6),
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Color(
-                                                      0xFF1a2332), // Dark navy blue
-                                                  Color(
-                                                      0xFF2a3441), // Slightly lighter navy
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              border: Border.all(
-                                                color: Color(0xFFd4af37),
-                                                width: 1,
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.3),
-                                                  blurRadius: 8,
-                                                  offset: Offset(0, 4),
-                                                ),
-                                              ],
+                                        return Container(
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 16, vertical: 6),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.whiteColor,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                              color: isMarketClosed
+                                                  ? AppColors.errorColor
+                                                  : isMarketOpen
+                                                      ? AppColors.successColor
+                                                      : AppColors.primaryColor,
+                                              width: 2,
                                             ),
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 16, vertical: 4),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  // Top row with market name and play/close icon
-                                                  Row(
-                                                    children: [
-                                                      // Left side arrow icon
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          SystemSound.play(
-                                                              SystemSoundType
-                                                                  .click);
-                                                          Get.toNamed(
-                                                            '/chart?market_name=${item['market_name']}&market_slug=${item['market_slug']}',
-                                                          );
-                                                        },
-                                                        child: Container(
-                                                          width: 32,
-                                                          height: 32,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                    0xFFd4af37)
-                                                                .withOpacity(
-                                                                    0.2), // Gold background
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: AppColors.blackColor
+                                                    .withOpacity(0.1),
+                                                blurRadius: 12,
+                                                offset: Offset(0, 6),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 16, vertical: 4),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                // Top row with market name and play/close icon
+                                                Row(
+                                                  children: [
+                                                    // Left side arrow icon
+
+                                                    // Market name and numbers
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            item['market_name']
+                                                                .toString()
+                                                                .toUpperCase(),
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .blackColor,
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              letterSpacing:
+                                                                  0.5,
+                                                            ),
                                                           ),
-                                                          child: Icon(
-                                                            Icons.trending_up,
-                                                            color: Color(
-                                                                0xFFd4af37), // Gold color
-                                                            size: 18,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      // Market name and numbers
-                                                      Expanded(
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              item['market_name']
-                                                                  .toString()
-                                                                  .toUpperCase(),
-                                                              style: TextStyle(
-                                                                color: Color(
-                                                                    0xFFd4af37), // Gold color
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                letterSpacing:
-                                                                    0.5,
+                                                          SizedBox(height: 4),
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                item['results'] ==
+                                                                        null
+                                                                    ? "***"
+                                                                    : item['results']['open_pana'] ==
+                                                                            null
+                                                                        ? "***"
+                                                                        : item['results']['open_pana'].length ==
+                                                                                0
+                                                                            ? "***"
+                                                                            : item['results']['date'] == today
+                                                                                ? item['results']['open_pana']['text_value']
+                                                                                : "***",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: AppColors
+                                                                      .blackColor,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontFamily:
+                                                                      'Poppins',
+                                                                ),
                                                               ),
-                                                            ),
-                                                            SizedBox(height: 4),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  item['results'] ==
-                                                                          null
-                                                                      ? "*"
-                                                                      : item['results']['open_pana'] ==
-                                                                              null
-                                                                          ? "*"
-                                                                          : item['results']['open_pana'].length == 0
-                                                                              ? "*"
-                                                                              : item['results']['date'] == today
-                                                                                  ? item['results']['open_pana']['text_value'][item['results']['open_pana']['text_value'].length - 1]
-                                                                                  : "*",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
+                                                              Text(
+                                                                " • ",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color:
+                                                                      AppColors
+                                                                          .grey,
+                                                                  fontSize: 14,
                                                                 ),
-                                                                Text(
-                                                                  item['results'] ==
-                                                                          null
-                                                                      ? "*"
-                                                                      : item['results']['close_pana'] ==
-                                                                              null
-                                                                          ? "*"
-                                                                          : item['results']['close_pana'].length == 0
-                                                                              ? "*"
-                                                                              : item['results']['date'] == today
-                                                                                  ? item['results']['close_pana']['text_value'][0]
-                                                                                  : "*",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
+                                                              ),
+                                                              Text(
+                                                                item['results'] ==
+                                                                        null
+                                                                    ? "***"
+                                                                    : item['results']['close_pana'] ==
+                                                                            null
+                                                                        ? "***"
+                                                                        : item['results']['close_pana'].length ==
+                                                                                0
+                                                                            ? "***"
+                                                                            : item['results']['date'] == today
+                                                                                ? item['results']['close_pana']['text_value']
+                                                                                : "***",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: AppColors
+                                                                      .blackColor,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontFamily:
+                                                                      'Poppins',
                                                                 ),
-                                                              ],
-                                                            ),
-                                                          ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        SystemSound.play(
+                                                            SystemSoundType
+                                                                .click);
+                                                        Get.toNamed(
+                                                          '/chart?market_name=${item['market_name']}&market_slug=${item['market_slug']}',
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        width: 32,
+                                                        height: 32,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: Border.all(
+                                                            color: AppColors
+                                                                .primaryColor,
+                                                            width: 1.5,
+                                                          ),
+                                                          color: AppColors
+                                                              .primaryColor
+                                                              .withOpacity(0.1),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        child: Icon(
+                                                          Icons.trending_up,
+                                                          color: AppColors
+                                                              .primaryColor,
+                                                          size: 18,
                                                         ),
                                                       ),
-                                                      // Right side play/close icon
-                                                      Container(
+                                                    ),
+                                                    SizedBox(width: 12),
+                                                    // Right side play/close icon
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        SystemSound.play(
+                                                            SystemSoundType
+                                                                .click);
+                                                        if (isMarketOpen ||
+                                                            !isMarketClosed) {
+                                                          if (controller.approve
+                                                                  .value ==
+                                                              "true") {
+                                                            Get.to(
+                                                                () =>
+                                                                    GamesView(),
+                                                                arguments: {
+                                                                  'id': item[
+                                                                          '_id']
+                                                                      .toString(),
+                                                                  'name': item[
+                                                                          'market_name']
+                                                                      .toString(),
+                                                                  'type':
+                                                                      'regular',
+                                                                  'market_type':
+                                                                      item['market_type']
+                                                                          .toString(),
+                                                                  "item": item,
+                                                                  "open": true,
+                                                                  "close": true
+                                                                });
+                                                          } else {
+                                                            Get.toNamed(
+                                                                '/quiz');
+                                                          }
+                                                        } else {
+                                                          toast(
+                                                              'Market is closed');
+                                                        }
+                                                      },
+                                                      child: Container(
                                                         width: 36,
                                                         height: 36,
                                                         decoration:
                                                             BoxDecoration(
-                                                          color: Color(
-                                                                  0xFFd4af37)
-                                                              .withOpacity(0.2),
+                                                          color: (isMarketClosed
+                                                                  ? AppColors
+                                                                      .errorColor
+                                                                  : isMarketOpen
+                                                                      ? AppColors
+                                                                          .successColor
+                                                                      : AppColors
+                                                                          .primaryColor)
+                                                              .withOpacity(0.1),
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(8),
                                                           border: Border.all(
-                                                            color: Color(
-                                                                0xFFd4af37),
+                                                            color:
+                                                                isMarketClosed
+                                                                    ? AppColors
+                                                                        .errorColor
+                                                                    : isMarketOpen
+                                                                        ? AppColors
+                                                                            .successColor
+                                                                        : AppColors
+                                                                            .primaryColor,
                                                             width: 1.5,
                                                           ),
                                                         ),
@@ -438,101 +474,99 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                                               ? Icons.close
                                                               : Icons
                                                                   .play_arrow,
-                                                          color:
-                                                              Color(0xFFd4af37),
+                                                          color: isMarketClosed
+                                                              ? AppColors
+                                                                  .errorColor
+                                                              : isMarketOpen
+                                                                  ? AppColors
+                                                                      .successColor
+                                                                  : AppColors
+                                                                      .primaryColor,
                                                           size: 20,
                                                         ),
                                                       ),
-                                                    ],
+                                                    )
+                                                  ],
+                                                ),
+
+                                                // Bottom row with times and status
+                                                Container(
+                                                  margin:
+                                                      EdgeInsets.only(top: 12),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 0,
+                                                      vertical: 6),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
-
-                                                  // Bottom row with times and status
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        top: 12),
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 8,
-                                                            vertical: 6),
-                                                    decoration: BoxDecoration(
-                                                      color: Color(0xFFd4af37)
-                                                          .withOpacity(0.2),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      spacing: 20,
-                                                      children: [
-                                                        // Open time
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Text(
-                                                              "Open",
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white60,
-                                                                fontSize: 11,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              openDate
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-
-                                                        // Center status button
-                                                        Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      30,
-                                                                  vertical: 2),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0xFFd4af37), // Gold background
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        16),
-                                                          ),
-                                                          child: Text(
-                                                            isMarketClosed
-                                                                ? 'Close for today'
-                                                                : 'Market Running',
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      // Open time
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Text(
+                                                            "Open",
                                                             style: TextStyle(
-                                                              color: Color(
-                                                                  0xFF1a2332), // Dark navy text
-                                                              fontSize: 12,
+                                                              color: AppColors
+                                                                  .blackColor,
+                                                              fontSize: 11,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            openDate.toString(),
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .blackColor,
+                                                              fontSize: 13,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
                                                             ),
                                                           ),
+                                                        ],
+                                                      ),
+
+                                                      // Center status button
+                                                      Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 24,
+                                                                vertical: 2),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Color(
+                                                              0xFFd4af37), // Gold background
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(16),
                                                         ),
-                                                      ],
-                                                    ),
+                                                        child: Text(
+                                                          isMarketClosed
+                                                              ? 'Close for today'
+                                                              : 'Market Running',
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                                0xFF1a2332), // Dark navy text
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         );
