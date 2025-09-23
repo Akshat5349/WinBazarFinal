@@ -2,7 +2,7 @@
     package="com.miyaki_app.kalyan365">
    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="WinBazar"
+        android:label="Royal"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true">

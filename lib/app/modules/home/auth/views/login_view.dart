@@ -7,7 +7,7 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => LoginController());
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.darkBlue,
       body: SingleChildScrollView(
         child: Column(
           children: [

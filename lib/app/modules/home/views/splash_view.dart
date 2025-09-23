@@ -6,7 +6,7 @@ class SplashView extends GetView<SplashController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => SplashController());
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.darkBlue,
       body: Center(
         child: AnimatedBuilder(
           animation: controller.animation1,

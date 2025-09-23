@@ -104,28 +104,11 @@ class HomeView extends GetView<HomeController> {
       return Scaffold(
         backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
-          title: Text("WinBazar", style: BaseStyles.whiteMedium20),
+          title: Text("Royal", style: BaseStyles.whiteMedium20),
           centerTitle: false,
           elevation: 0,
           backgroundColor: AppColors.primaryColor,
           actions: [
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-              decoration: BoxDecoration(
-                color: AppColors.whiteColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: IconButton(
-                onPressed: () {
-                  Get.to(() => NoticeView());
-                },
-                icon: Icon(
-                  Icons.notifications_outlined,
-                  color: AppColors.whiteColor,
-                  size: 22,
-                ),
-              ),
-            ),
             controller.approve.value == 'true'
                 ? Container(
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 4),

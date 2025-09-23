@@ -4,7 +4,7 @@ class WinRateView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.darkBlue,
       appBar: AppBar(
         title: Text('Win Rate'),
         centerTitle: false,

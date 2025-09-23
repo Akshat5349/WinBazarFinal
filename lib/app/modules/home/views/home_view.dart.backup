@@ -104,7 +104,7 @@ class HomeView extends GetView<HomeController> {
       return Scaffold(
         backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
-          title: Text("WinBazar", style: BaseStyles.whiteMedium20),
+          title: Text("Royal", style: BaseStyles.whiteMedium20),
           centerTitle: false,
           elevation: 0,
           backgroundColor: AppColors.primaryColor,

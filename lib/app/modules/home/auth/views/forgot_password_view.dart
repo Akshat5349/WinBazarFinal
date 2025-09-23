@@ -8,7 +8,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => ForgotPasswordController());
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.darkBlue,
       body: SingleChildScrollView(
         child: Column(
           children: [

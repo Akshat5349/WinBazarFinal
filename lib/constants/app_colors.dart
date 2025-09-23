@@ -65,6 +65,7 @@ class AppColors {
   static const primaryAccentColor = Color(0xFF42A5F5); // Light blue
   static const primaryColorback = Color(0xFFFFFFFF); // White background
   static const lightBlue = Color(0xFFE3F2FD); // Very light blue
+  static const darkBlue = Color(0xFF14364f); // Dark blue
   static const bgGrey = Color(0xFFFAFAFA); // Light grey background
   static const lightGrey = Color(0xFFE0E0E0); // Light grey
   static const grey = Color(0xFF9E9E9E); // Medium grey

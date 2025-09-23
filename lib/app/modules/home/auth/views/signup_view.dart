@@ -8,7 +8,7 @@ class SignupView extends GetView<SignupController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => SignupController());
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.darkBlue,
       body: SingleChildScrollView(
         child: Column(
           children: [
