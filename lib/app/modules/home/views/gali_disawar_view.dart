@@ -124,51 +124,168 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                         // ),
                         // heightSpace20,
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                width: Get.width * 0.45,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Color(0xFFd4af37), width: 1),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Single Digit : 10/90',
-                                      style: BaseStyles.goldMedium14,
+                              // Single Digit Card
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.only(right: 8),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        AppColors.primaryColor.withOpacity(0.1),
+                                        AppColors.primaryColor
+                                            .withOpacity(0.05),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                     ),
-                                  ],
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: AppColors.primaryColor
+                                          .withOpacity(0.3),
+                                      width: 1.5,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.primaryColor
+                                            .withOpacity(0.1),
+                                        blurRadius: 8,
+                                        offset: Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // Left side - Icon and label
+                                      Row(
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(6),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.primaryColor
+                                                  .withOpacity(0.15),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Icon(
+                                              Icons.casino,
+                                              color: AppColors.primaryColor,
+                                              size: 16,
+                                            ),
+                                          ),
+                                          SizedBox(width: 4),
+                                          Text(
+                                            'Single Digit',
+                                            style: TextStyle(
+                                              color: AppColors.blackColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Poppins',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // Right side - Rate badge
+                                      Text(
+                                        '10/90',
+                                        style: TextStyle(
+                                          color: AppColors.blackColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'Poppins',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                width: Get.width * 0.45,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Color(0xFFd4af37), width: 1),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(width: 6),
-                                    Text(
-                                      "Jodi Digit : 10/900",
-                                      style: BaseStyles.goldMedium14,
+
+                              // Jodi Digit Card
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 8),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        AppColors.successColor.withOpacity(0.1),
+                                        AppColors.successColor
+                                            .withOpacity(0.05),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                     ),
-                                  ],
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: AppColors.successColor
+                                          .withOpacity(0.3),
+                                      width: 1.5,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.successColor
+                                            .withOpacity(0.1),
+                                        blurRadius: 8,
+                                        offset: Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // Left side - Icon and label
+                                      Row(
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(6),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.successColor
+                                                  .withOpacity(0.15),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Icon(
+                                              Icons.looks_two,
+                                              color: AppColors.successColor,
+                                              size: 16,
+                                            ),
+                                          ),
+                                          SizedBox(width: 8),
+                                          Text(
+                                            'Jodi Digit',
+                                            style: TextStyle(
+                                              color: AppColors.blackColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Poppins',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // Right side - Rate badge
+                                      Text(
+                                        '10/900',
+                                        style: TextStyle(
+                                          color: AppColors.blackColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'Poppins',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
