@@ -614,36 +614,7 @@ class HomeView extends GetView<HomeController> {
                                                 Row(
                                                   children: [
                                                     // Left side arrow icon
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        SystemSound.play(
-                                                            SystemSoundType
-                                                                .click);
-                                                        Get.toNamed(
-                                                          '/chart?market_name=${item['market_name']}&market_slug=${item['market_slug']}',
-                                                        );
-                                                      },
-                                                      child: Container(
-                                                        width: 32,
-                                                        height: 32,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: AppColors
-                                                              .primaryColor
-                                                              .withOpacity(0.1),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        child: Icon(
-                                                          Icons.trending_up,
-                                                          color: AppColors
-                                                              .primaryColor,
-                                                          size: 18,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: 12),
+
                                                     // Market name and numbers
                                                     Expanded(
                                                       child: Column(
@@ -736,6 +707,41 @@ class HomeView extends GetView<HomeController> {
                                                         ],
                                                       ),
                                                     ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        SystemSound.play(
+                                                            SystemSoundType
+                                                                .click);
+                                                        Get.toNamed(
+                                                          '/chart?market_name=${item['market_name']}&market_slug=${item['market_slug']}',
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        width: 32,
+                                                        height: 32,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: Border.all(
+                                                            color: AppColors
+                                                                .primaryColor,
+                                                            width: 1.5,
+                                                          ),
+                                                          color: AppColors
+                                                              .primaryColor
+                                                              .withOpacity(0.1),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        child: Icon(
+                                                          Icons.trending_up,
+                                                          color: AppColors
+                                                              .primaryColor,
+                                                          size: 18,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 12),
                                                     // Right side play/close icon
                                                     GestureDetector(
                                                       onTap: () {
@@ -830,11 +836,9 @@ class HomeView extends GetView<HomeController> {
                                                   margin:
                                                       EdgeInsets.only(top: 12),
                                                   padding: EdgeInsets.symmetric(
-                                                      horizontal: 8,
+                                                      horizontal: 0,
                                                       vertical: 6),
                                                   decoration: BoxDecoration(
-                                                    color: Color(0xFFd4af37)
-                                                        .withOpacity(0.2),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8),
@@ -855,16 +859,16 @@ class HomeView extends GetView<HomeController> {
                                                           Text(
                                                             "Open",
                                                             style: TextStyle(
-                                                              color: Colors
-                                                                  .white60,
+                                                              color: AppColors
+                                                                  .blackColor,
                                                               fontSize: 11,
                                                             ),
                                                           ),
                                                           Text(
                                                             openDate.toString(),
                                                             style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
+                                                              color: AppColors
+                                                                  .blackColor,
                                                               fontSize: 13,
                                                               fontWeight:
                                                                   FontWeight
@@ -913,8 +917,8 @@ class HomeView extends GetView<HomeController> {
                                                           Text(
                                                             "Close",
                                                             style: TextStyle(
-                                                              color: Colors
-                                                                  .white60,
+                                                              color: AppColors
+                                                                  .blackColor,
                                                               fontSize: 11,
                                                             ),
                                                           ),
@@ -922,8 +926,8 @@ class HomeView extends GetView<HomeController> {
                                                             closeDate
                                                                 .toString(),
                                                             style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
+                                                              color: AppColors
+                                                                  .blackColor,
                                                               fontSize: 13,
                                                               fontWeight:
                                                                   FontWeight
