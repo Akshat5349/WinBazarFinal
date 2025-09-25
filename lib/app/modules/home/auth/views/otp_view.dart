@@ -8,7 +8,7 @@ class OtpView extends GetView<OtpController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => OtpController());
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.darkBlue,
       body: SingleChildScrollView(
         child: Column(
           children: [

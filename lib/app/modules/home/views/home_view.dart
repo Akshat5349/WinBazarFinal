@@ -340,7 +340,9 @@ class HomeView extends GetView<HomeController> {
                                           ),
                                           SizedBox(width: 8),
                                           Text(
-                                            'Gali Disawar',
+                                            controller.approve.value == 'true'
+                                                ? 'Gali Disawar'
+                                                : 'Level 2',
                                             style: TextStyle(
                                               color: AppColors.whiteColor,
                                               fontSize: 14,

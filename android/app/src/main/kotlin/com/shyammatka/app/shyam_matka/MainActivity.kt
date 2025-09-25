@@ -1,4 +1,4 @@
-package com.miyaki_app.kalyan365
+package com.loki.royal_app
 
 import io.flutter.embedding.android.FlutterActivity
 
