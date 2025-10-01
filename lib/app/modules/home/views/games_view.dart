@@ -220,7 +220,7 @@ class GamesView extends GetView<GamesController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.network(
-              "https://starkalyan.store/uploads/game_type/" + childImage,
+              "https://winbazar.store/uploads/game_type/" + childImage,
               height: 100,
               fit: BoxFit.fill,
             ),
