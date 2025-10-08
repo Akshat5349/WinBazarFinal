@@ -13,6 +13,7 @@ class GamesView extends GetView<GamesController> {
       _playBellSound();
     });
     Get.lazyPut(() => GamesController());
+    print("Game Type: ${controller.type}");
     return Scaffold(
       appBar: AppBar(
         title: Text(controller.title),

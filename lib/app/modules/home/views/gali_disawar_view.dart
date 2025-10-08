@@ -557,7 +557,7 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                                                           'market_name']
                                                                       .toString(),
                                                                   'type':
-                                                                      'regular',
+                                                                      'Jodi',
                                                                   'market_type':
                                                                       item['market_type']
                                                                           .toString(),
