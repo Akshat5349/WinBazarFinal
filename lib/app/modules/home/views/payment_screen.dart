@@ -226,7 +226,7 @@ class _PaymentScreenState extends State<PaymentScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Funds'),
-        backgroundColor: AppColors.primaryColorback,
+        backgroundColor: AppColors.primaryColor,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -301,8 +301,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                             Center(
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        AppColors.primaryColorback),
+                                    backgroundColor: AppColors.primaryColor),
                                 onPressed: () async {
                                   // if (refController.text.isEmpty) {
                                   //   toast("Please enter the Ref No.");
@@ -349,7 +348,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                               padding: EdgeInsets.symmetric(
                                   vertical: 12, horizontal: 16),
                               decoration: BoxDecoration(
-                                color: AppColors.primaryColorback,
+                                color: AppColors.primaryColor,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: TextField(
@@ -384,8 +383,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                               padding: EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 5),
                               decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: AppColors.primaryColorback),
+                                border:
+                                    Border.all(color: AppColors.primaryColor),
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Row(
@@ -408,7 +407,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                                     },
                                     child: Text("COPY",
                                         style: TextStyle(
-                                            color: AppColors.primaryColorback)),
+                                            color: AppColors.primaryColor)),
                                   )
                                 ],
                               ),
@@ -424,7 +423,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                                   ? ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                           backgroundColor:
-                                              AppColors.primaryColorback),
+                                              AppColors.primaryColor),
                                       onPressed: () async {
                                         setState(() {
                                           isLoading = true;

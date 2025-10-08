@@ -71,13 +71,17 @@ class GameBetView extends GetView<GameBetController> {
                                   temp: controller.open,
                                   controller: controller.selectvalue,
                                   selectvalue: 1,
-                                  txt: 'Open'),
+                                  txt: controller.marketType == 'Jodi'
+                                      ? 'Left Digit'
+                                      : 'Open'),
                               widthSpace30,
                               checkwithText(
                                   temp: controller.close,
                                   controller: controller.selectvalue,
                                   selectvalue: 2,
-                                  txt: 'Close'),
+                                  txt: controller.marketType == 'Jodi'
+                                      ? 'Right Digit'
+                                      : 'Close'),
                             ],
                           ),
                         ),

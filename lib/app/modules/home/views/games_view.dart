@@ -259,7 +259,7 @@ class GamesView extends GetView<GamesController> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
-                        "https://winbazar.store/uploads/game_type/" +
+                        "https://royalmatk.store/uploads/game_type/" +
                             childImage,
                         height: 60,
                         width: 60,
