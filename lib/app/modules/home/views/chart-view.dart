@@ -27,10 +27,11 @@ class ChartView extends GetView<ChartController> {
                                   controller.resultChart[i]['data'].length,
                                   (j) {
                                 return SizedBox(
-                                  width: (context.width-30)/7,
+                                  width: (context.width - 30) / 7,
                                   child: CustomWidgets().chartCard(
                                       day: days[j],
-                                      data: controller.resultChart[i]['data'][j]),
+                                      data: controller.resultChart[i]['data']
+                                          [j]),
                                 );
                               })),
                         ),
