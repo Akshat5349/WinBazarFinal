@@ -438,16 +438,16 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                                               Text(
                                                                 item['results'] ==
                                                                         null
-                                                                    ? "***"
+                                                                    ? "*"
                                                                     : item['results']['open_pana'] ==
                                                                             null
-                                                                        ? "***"
+                                                                        ? "*"
                                                                         : item['results']['open_pana'].length ==
                                                                                 0
-                                                                            ? "***"
+                                                                            ? "*"
                                                                             : item['results']['date'] == today
-                                                                                ? item['results']['open_pana']['text_value']
-                                                                                : "***",
+                                                                                ? item['results']['open_pana']['text_value'][item['results']['open_pana']['text_value'].length - 1]
+                                                                                : "*",
                                                                 style:
                                                                     TextStyle(
                                                                   color: AppColors
@@ -474,14 +474,14 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                                                 item['results'] ==
                                                                         null
                                                                     ? "*"
-                                                                    : item['results']['open_pana'] ==
+                                                                    : item['results']['close_pana'] ==
                                                                             null
                                                                         ? "*"
-                                                                        : item['results']['open_pana'].length ==
+                                                                        : item['results']['close_pana'].length ==
                                                                                 0
                                                                             ? "*"
                                                                             : item['results']['date'] == today
-                                                                                ? item['results']['open_pana']['text_value'][item['results']['open_pana']['text_value'].length - 1]
+                                                                                ? item['results']['close_pana']['text_value'][0]
                                                                                 : "*",
                                                                 style:
                                                                     TextStyle(
