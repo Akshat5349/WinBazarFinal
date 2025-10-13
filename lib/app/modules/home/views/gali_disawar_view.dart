@@ -501,126 +501,145 @@ class GaliDisawarView extends GetView<GaliDisawarController> {
                                                       ),
                                                     ),
                                                     GestureDetector(
-                                                      onTap: () {
-                                                        SystemSound.play(
-                                                            SystemSoundType
-                                                                .click);
-                                                        Get.toNamed(
-                                                          '/chart?market_name=${item['market_name']}&market_slug=${item['market_slug']}',
-                                                        );
-                                                      },
-                                                      child: Container(
-                                                        width: 32,
-                                                        height: 32,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          border: Border.all(
-                                                            color: AppColors
-                                                                .primaryColor,
-                                                            width: 1.5,
+                                                        onTap: () {
+                                                          SystemSound.play(
+                                                              SystemSoundType
+                                                                  .click);
+                                                          Get.toNamed(
+                                                            '/chart?market_name=${item['market_name']}&market_slug=${item['market_slug']}',
+                                                          );
+                                                        },
+                                                        child:
+                                                            Column(children: [
+                                                          Container(
+                                                            width: 32,
+                                                            height: 32,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              border:
+                                                                  Border.all(
+                                                                color: AppColors
+                                                                    .primaryColor,
+                                                                width: 1.5,
+                                                              ),
+                                                              color: AppColors
+                                                                  .primaryColor
+                                                                  .withOpacity(
+                                                                      0.1),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                            ),
+                                                            child: Icon(
+                                                              Icons.trending_up,
+                                                              color: AppColors
+                                                                  .primaryColor,
+                                                              size: 18,
+                                                            ),
                                                           ),
-                                                          color: AppColors
-                                                              .primaryColor
-                                                              .withOpacity(0.1),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        child: Icon(
-                                                          Icons.trending_up,
-                                                          color: AppColors
-                                                              .primaryColor,
-                                                          size: 18,
-                                                        ),
-                                                      ),
-                                                    ),
+                                                          Text(
+                                                            "Chart",
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .blackColor,
+                                                              fontSize: 11,
+                                                            ),
+                                                          ),
+                                                        ])),
                                                     SizedBox(width: 12),
                                                     // Right side play/close icon
                                                     GestureDetector(
-                                                      onTap: () {
-                                                        SystemSound.play(
-                                                            SystemSoundType
-                                                                .click);
-                                                        if (isMarketOpen ||
-                                                            !isMarketClosed) {
-                                                          if (controller.approve
-                                                                  .value ==
-                                                              "true") {
-                                                            Get.to(
-                                                                () =>
-                                                                    GamesView(),
-                                                                arguments: {
-                                                                  'id': item[
-                                                                          '_id']
-                                                                      .toString(),
-                                                                  'name': item[
-                                                                          'market_name']
-                                                                      .toString(),
-                                                                  'type':
-                                                                      'Jodi',
-                                                                  'market_type':
-                                                                      item['market_type']
-                                                                          .toString(),
-                                                                  "item": item,
-                                                                  "open": true,
-                                                                  "close": true
-                                                                });
+                                                        onTap: () {
+                                                          SystemSound.play(
+                                                              SystemSoundType
+                                                                  .click);
+                                                          if (isMarketOpen ||
+                                                              !isMarketClosed) {
+                                                            if (controller
+                                                                    .approve
+                                                                    .value ==
+                                                                "true") {
+                                                              Get.to(
+                                                                  () =>
+                                                                      GamesView(),
+                                                                  arguments: {
+                                                                    'id': item[
+                                                                            '_id']
+                                                                        .toString(),
+                                                                    'name': item[
+                                                                            'market_name']
+                                                                        .toString(),
+                                                                    'type':
+                                                                        'Jodi',
+                                                                    'market_type':
+                                                                        item['market_type']
+                                                                            .toString(),
+                                                                    "item":
+                                                                        item,
+                                                                    "open":
+                                                                        true,
+                                                                    "close":
+                                                                        true
+                                                                  });
+                                                            } else {
+                                                              Get.toNamed(
+                                                                  '/quiz');
+                                                            }
                                                           } else {
-                                                            Get.toNamed(
-                                                                '/quiz');
+                                                            toast(
+                                                                'Market is closed');
                                                           }
-                                                        } else {
-                                                          toast(
-                                                              'Market is closed');
-                                                        }
-                                                      },
-                                                      child: Container(
-                                                        width: 36,
-                                                        height: 36,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: (isMarketClosed
-                                                                  ? AppColors
-                                                                      .errorColor
-                                                                  : isMarketOpen
-                                                                      ? AppColors
-                                                                          .successColor
-                                                                      : AppColors
-                                                                          .primaryColor)
-                                                              .withOpacity(0.1),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                          border: Border.all(
-                                                            color:
-                                                                isMarketClosed
-                                                                    ? AppColors
-                                                                        .errorColor
+                                                        },
+                                                        child:
+                                                            Column(children: [
+                                                          Container(
+                                                            width: 36,
+                                                            height: 36,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: (isMarketClosed
+                                                                      ? AppColors.errorColor
+                                                                      : isMarketOpen
+                                                                          ? AppColors.successColor
+                                                                          : AppColors.primaryColor)
+                                                                  .withOpacity(0.1),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                              border:
+                                                                  Border.all(
+                                                                color: isMarketClosed
+                                                                    ? AppColors.errorColor
                                                                     : isMarketOpen
-                                                                        ? AppColors
-                                                                            .successColor
-                                                                        : AppColors
-                                                                            .primaryColor,
-                                                            width: 1.5,
+                                                                        ? AppColors.successColor
+                                                                        : AppColors.primaryColor,
+                                                                width: 1.5,
+                                                              ),
+                                                            ),
+                                                            child: Icon(
+                                                              isMarketClosed
+                                                                  ? Icons.close
+                                                                  : Icons
+                                                                      .play_arrow,
+                                                              color: isMarketClosed
+                                                                  ? AppColors.errorColor
+                                                                  : isMarketOpen
+                                                                      ? AppColors.successColor
+                                                                      : AppColors.primaryColor,
+                                                              size: 20,
+                                                            ),
                                                           ),
-                                                        ),
-                                                        child: Icon(
-                                                          isMarketClosed
-                                                              ? Icons.close
-                                                              : Icons
-                                                                  .play_arrow,
-                                                          color: isMarketClosed
-                                                              ? AppColors
-                                                                  .errorColor
-                                                              : isMarketOpen
-                                                                  ? AppColors
-                                                                      .successColor
-                                                                  : AppColors
-                                                                      .primaryColor,
-                                                          size: 20,
-                                                        ),
-                                                      ),
-                                                    )
+                                                          Text(
+                                                            "Play",
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .blackColor,
+                                                              fontSize: 11,
+                                                            ),
+                                                          ),
+                                                        ]))
                                                   ],
                                                 ),
 
