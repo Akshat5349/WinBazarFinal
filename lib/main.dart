@@ -1,10 +1,22 @@
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:azmatka/constants/values.dart';
+import 'package:azmatka/services/notification_service.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize GetStorage
   await GetStorage.init();
+
+  // Initialize Firebase
+  await Firebase.initializeApp();
+
+  // Initialize Notification Service
+  await Get.putAsync(() => NotificationService().init());
+
   runApp(
     GetMaterialApp(
       title: "Royal",

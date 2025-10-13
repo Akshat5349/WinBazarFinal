@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "837518802151",
+    "project_id": "royal-push-notification",
+    "storage_bucket": "royal-push-notification.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837518802151:android:47e193e5e1ec9cab2bf642",
+        "android_client_info": {
+          "package_name": "com.loki.royal_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKtugFdZzaNYSJ4TR-n_a_lXuaLJy_--s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

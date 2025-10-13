@@ -10,6 +10,7 @@ import 'package:azmatka/app/modules/home/views/withdraw_view.dart';
 import 'package:azmatka/constants/values.dart';
 import 'package:azmatka/widgets/base_url.dart';
 import 'package:azmatka/widgets/main_drawer.dart';
+import 'package:azmatka/widgets/notification_badge_icon.dart';
 import 'package:azmatka/widgets/share.dart';
 import 'package:azmatka/widgets/custom_widgets.dart';
 import 'package:azmatka/services/audio_service.dart';
@@ -109,6 +110,7 @@ class HomeView extends GetView<HomeController> {
           elevation: 0,
           backgroundColor: AppColors.primaryColor,
           actions: [
+            NotificationBadgeIcon(),
             controller.approve.value == 'true'
                 ? Container(
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
