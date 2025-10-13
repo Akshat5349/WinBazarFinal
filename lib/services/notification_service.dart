@@ -1,7 +1,12 @@
+import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:azmatka/widgets/base_url.dart';
 
 /// Background message handler - must be a top-level function
 @pragma('vm:entry-point')
@@ -165,7 +170,11 @@ class NotificationService extends GetxService {
         fcmToken.value = token;
         box.write('fcm_token', token);
         print('FCM Token: $token');
-        // TODO: Send this token to your backend server
+        
+        // Send token to backend server
+        if (box.read('token') != null) {
+          await sendTokenToServer(token);
+        }
       }
 
       // Listen for token refresh
@@ -173,7 +182,11 @@ class NotificationService extends GetxService {
         fcmToken.value = newToken;
         box.write('fcm_token', newToken);
         print('FCM Token refreshed: $newToken');
-        // TODO: Send updated token to your backend server
+        
+        // Send updated token to backend server
+        if (box.read('token') != null) {
+          sendTokenToServer(newToken);
+        }
       });
     } catch (e) {
       print('Error getting FCM token: $e');
@@ -365,21 +378,105 @@ class NotificationService extends GetxService {
   /// Send token to backend server
   Future<void> sendTokenToServer(String token) async {
     try {
-      // TODO: Implement API call to send token to your backend
-      print('Sending token to server: $token');
+      print('Sending FCM token to server...');
+      
+      // Get device information
+      final deviceInfo = DeviceInfoPlugin();
+      String? deviceId;
+      String? deviceName;
+      String platform = 'unknown';
+      
+      if (Platform.isAndroid) {
+        final androidInfo = await deviceInfo.androidInfo;
+        deviceId = androidInfo.id;
+        deviceName = '${androidInfo.manufacturer} ${androidInfo.model}';
+        platform = 'android';
+      } else if (Platform.isIOS) {
+        final iosInfo = await deviceInfo.iosInfo;
+        deviceId = iosInfo.identifierForVendor;
+        deviceName = '${iosInfo.model}';
+        platform = 'ios';
+      }
 
-      // Example implementation:
-      // final response = await dio.post(
-      //   '${BaseUrl.baseUrl}/api/register-device',
-      //   data: {
-      //     'fcm_token': token,
-      //     'device_id': box.read('device_id'),
-      //     'device_name': box.read('device_name'),
-      //     'platform': Platform.isAndroid ? 'android' : 'ios',
-      //   },
-      // );
+      // Get user token from storage
+      final userToken = box.read('token');
+      if (userToken == null) {
+        print('⚠️ User not logged in, skipping token registration');
+        return;
+      }
+
+      // Prepare request body
+      final body = {
+        'fcm_token': token,
+        'device_id': deviceId ?? 'unknown',
+        'device_name': deviceName ?? 'Unknown Device',
+        'platform': platform,
+      };
+
+      print('Request body: $body');
+
+      // Send to backend
+      final response = await http.post(
+        Uri.parse('${BASE_URL}register-fcm-token'),
+        headers: {
+          'Authorization': 'Bearer $userToken',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(body),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        print('✅ FCM token registered successfully: ${responseData['message']}');
+      } else {
+        print('❌ Failed to register FCM token: ${response.body}');
+      }
     } catch (e) {
-      print('Error sending token to server: $e');
+      print('❌ Error sending token to server: $e');
+    }
+  }
+
+  /// Remove FCM token from backend server (call on logout)
+  Future<void> removeTokenFromServer() async {
+    try {
+      print('Removing FCM token from server...');
+      
+      // Get user token from storage
+      final userToken = box.read('token');
+      if (userToken == null) {
+        print('⚠️ User not logged in, skipping token removal');
+        return;
+      }
+
+      // Send to backend
+      final response = await http.post(
+        Uri.parse('${BASE_URL}remove-fcm-token'),
+        headers: {
+          'Authorization': 'Bearer $userToken',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        print('✅ FCM token removed successfully: ${responseData['message']}');
+        
+        // Clear local storage
+        box.remove('fcm_token');
+        fcmToken.value = '';
+      } else {
+        print('❌ Failed to remove FCM token: ${response.body}');
+      }
+    } catch (e) {
+      print('❌ Error removing token from server: $e');
     }
   }
 
