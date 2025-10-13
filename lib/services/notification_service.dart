@@ -24,12 +24,52 @@ class NotificationService extends GetxService {
   // Observable for notification count
   final notificationCount = 0.obs;
 
+  // Observable list for notifications
+  final notifications = <Map<String, dynamic>>[].obs;
+
   Future<NotificationService> init() async {
+    print('Initializing NotificationService...');
+
+    // Request permission
     await _requestPermission();
+
+    // Setup local notifications
     await _setupLocalNotifications();
+
+    // Setup Firebase messaging handlers
     await _setupFirebaseMessaging();
+
+    // Get FCM token
     await _getToken();
+
+    // Load saved FCM token
+    String? savedToken = box.read('fcm_token');
+    if (savedToken != null) {
+      fcmToken.value = savedToken;
+    }
+
+    // Load saved notifications
+    _loadNotifications();
+
+    print('NotificationService initialized successfully');
     return this;
+  }
+
+  /// Load saved notifications from storage
+  void _loadNotifications() {
+    try {
+      final savedNotifications = box.read<List>('notifications');
+      if (savedNotifications != null) {
+        notifications.value = List<Map<String, dynamic>>.from(
+          savedNotifications.map((n) => Map<String, dynamic>.from(n)),
+        );
+        // Update count of unread notifications
+        notificationCount.value =
+            notifications.where((n) => n['isRead'] == false).length;
+      }
+    } catch (e) {
+      print('Error loading notifications: $e');
+    }
   }
 
   /// Request notification permissions
@@ -99,7 +139,7 @@ class NotificationService extends GetxService {
       if (message.notification != null) {
         print('Message also contained a notification: ${message.notification}');
         _showLocalNotification(message);
-        notificationCount.value++;
+        _saveNotification(message);
       }
     });
 
@@ -252,9 +292,68 @@ class NotificationService extends GetxService {
     }
   }
 
+  /// Save notification to storage
+  void _saveNotification(RemoteMessage message) {
+    try {
+      final notification = {
+        'id': message.messageId ??
+            DateTime.now().millisecondsSinceEpoch.toString(),
+        'title': message.notification?.title ?? 'Notification',
+        'body': message.notification?.body ?? '',
+        'data': message.data,
+        'timestamp': DateTime.now().toIso8601String(),
+        'isRead': false,
+        'category': message.data['category'] ?? 'general',
+      };
+
+      notifications.insert(0, notification); // Add to beginning of list
+      box.write('notifications', notifications.toList());
+
+      // Update unread count
+      notificationCount.value =
+          notifications.where((n) => n['isRead'] == false).length;
+    } catch (e) {
+      print('Error saving notification: $e');
+    }
+  }
+
+  /// Mark notification as read
+  void markAsRead(String notificationId) {
+    try {
+      final index = notifications.indexWhere((n) => n['id'] == notificationId);
+      if (index != -1) {
+        notifications[index]['isRead'] = true;
+        notifications.refresh();
+        box.write('notifications', notifications.toList());
+
+        // Update unread count
+        notificationCount.value =
+            notifications.where((n) => n['isRead'] == false).length;
+      }
+    } catch (e) {
+      print('Error marking notification as read: $e');
+    }
+  }
+
+  /// Remove a notification
+  void removeNotification(String notificationId) {
+    try {
+      notifications.removeWhere((n) => n['id'] == notificationId);
+      box.write('notifications', notifications.toList());
+
+      // Update unread count
+      notificationCount.value =
+          notifications.where((n) => n['isRead'] == false).length;
+    } catch (e) {
+      print('Error removing notification: $e');
+    }
+  }
+
   /// Clear all notifications
   Future<void> clearAllNotifications() async {
     await _localNotifications.cancelAll();
+    notifications.clear();
+    box.remove('notifications');
     notificationCount.value = 0;
   }
 

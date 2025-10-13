@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:azmatka/constants/values.dart';
 import 'package:azmatka/services/notification_service.dart';
-import 'package:azmatka/app/modules/home/views/notification_settings_view.dart';
+import 'package:azmatka/widgets/notification_list_widget.dart';
 
 class NotificationBadgeIcon extends StatelessWidget {
   final NotificationService notificationService =
@@ -19,8 +19,7 @@ class NotificationBadgeIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        notificationService.clearNotificationCount();
-        Get.to(() => NotificationSettingsView());
+        Get.to(() => NotificationListWidget());
       },
       child: Container(
         padding: EdgeInsets.all(8),
