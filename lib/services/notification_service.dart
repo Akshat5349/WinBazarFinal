@@ -170,7 +170,7 @@ class NotificationService extends GetxService {
         fcmToken.value = token;
         box.write('fcm_token', token);
         print('FCM Token: $token');
-        
+
         // Send token to backend server
         if (box.read('token') != null) {
           await sendTokenToServer(token);
@@ -182,7 +182,7 @@ class NotificationService extends GetxService {
         fcmToken.value = newToken;
         box.write('fcm_token', newToken);
         print('FCM Token refreshed: $newToken');
-        
+
         // Send updated token to backend server
         if (box.read('token') != null) {
           sendTokenToServer(newToken);
@@ -379,13 +379,13 @@ class NotificationService extends GetxService {
   Future<void> sendTokenToServer(String token) async {
     try {
       print('Sending FCM token to server...');
-      
+
       // Get device information
       final deviceInfo = DeviceInfoPlugin();
       String? deviceId;
       String? deviceName;
       String platform = 'unknown';
-      
+
       if (Platform.isAndroid) {
         final androidInfo = await deviceInfo.androidInfo;
         deviceId = androidInfo.id;
@@ -417,7 +417,7 @@ class NotificationService extends GetxService {
 
       // Send to backend
       final response = await http.post(
-        Uri.parse('${BASE_URL}register-fcm-token'),
+        Uri.parse('${BASE_URL}/user/register-fcm-token'),
         headers: {
           'Authorization': 'Bearer $userToken',
           'Content-Type': 'application/json',
@@ -431,7 +431,8 @@ class NotificationService extends GetxService {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        print('✅ FCM token registered successfully: ${responseData['message']}');
+        print(
+            '✅ FCM token registered successfully: ${responseData['message']}');
       } else {
         print('❌ Failed to register FCM token: ${response.body}');
       }
@@ -444,7 +445,7 @@ class NotificationService extends GetxService {
   Future<void> removeTokenFromServer() async {
     try {
       print('Removing FCM token from server...');
-      
+
       // Get user token from storage
       final userToken = box.read('token');
       if (userToken == null) {
@@ -454,7 +455,7 @@ class NotificationService extends GetxService {
 
       // Send to backend
       final response = await http.post(
-        Uri.parse('${BASE_URL}remove-fcm-token'),
+        Uri.parse('${BASE_URL}/user/remove-fcm-token'),
         headers: {
           'Authorization': 'Bearer $userToken',
           'Content-Type': 'application/json',
@@ -468,7 +469,7 @@ class NotificationService extends GetxService {
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         print('✅ FCM token removed successfully: ${responseData['message']}');
-        
+
         // Clear local storage
         box.remove('fcm_token');
         fcmToken.value = '';
