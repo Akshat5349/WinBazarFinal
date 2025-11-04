@@ -135,7 +135,7 @@ class WithdrawView extends GetView<WithdrawController> {
                   height: 54,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryColorback,
+                      backgroundColor: AppColors.blueColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28),
                       ),
