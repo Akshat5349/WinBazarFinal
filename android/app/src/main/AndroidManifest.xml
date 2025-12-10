@@ -2,7 +2,7 @@
     package="com.loki_app.starkalyan">
    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="Star Kalyan"
+        android:label="Kalyan365"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true">

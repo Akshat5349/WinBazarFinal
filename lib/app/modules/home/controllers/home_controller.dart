@@ -116,7 +116,7 @@ class HomeController extends GetxController {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                Strings.settings[0].popupMsg ?? 'Welcome to Star Kalyan!',
+                Strings.settings[0].popupMsg ?? 'Welcome to Kalyan365!',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey[700],

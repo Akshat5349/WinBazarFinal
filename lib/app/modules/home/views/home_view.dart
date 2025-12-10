@@ -104,7 +104,7 @@ class HomeView extends GetView<HomeController> {
       return Scaffold(
         backgroundColor: AppColors.primaryColor,
         appBar: AppBar(
-          title: Text("Star Kalyan"),
+          title: Text("Kalyan365"),
           centerTitle: false,
           actions: [
             IconButton(
