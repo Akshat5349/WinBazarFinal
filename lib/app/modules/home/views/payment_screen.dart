@@ -1,19 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:azmatka/constants/values.dart';
-import 'package:azmatka/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-// import 'dart:typed_data';
-// import 'package:image_picker_web/image_picker_web.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../widgets/base_url.dart';
-
 import '../../../../widgets/share.dart';
 
 var box = GetStorage();
@@ -35,6 +32,7 @@ Future<bool> sendPaymentProof({
     });
     request.fields['amount'] = amount;
     request.fields['refNo'] = '';
+    request.fields['type'] = "UPI";
 
     if (imageFile != null) {
       request.files.add(
@@ -117,11 +115,17 @@ class _PaymentScreenState extends State<PaymentScreen>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   final TextEditingController amountController = TextEditingController();
   final TextEditingController refController = TextEditingController();
-  // Uint8List? _selectedImage;
   File? _selectedImage;
   bool isLoading = false;
 
   late TabController _tabController;
+
+  static const platform = MethodChannel('upi_payment_channel');
+
+  // UPI transaction response variables
+  String upiTransactionId = '';
+  String upiTransactionRefId = '';
+  String upiStatus = '';
 
   @override
   void initState() {
@@ -164,6 +168,198 @@ class _PaymentScreenState extends State<PaymentScreen>
       setState(() {
         _selectedImage = File(pickedFile.path);
       });
+    }
+  }
+
+  // Decode UPI response from payment apps
+  Map<String, String> decodeUpiResponse(String response) {
+    Map<String, String> result = {};
+
+    try {
+      // Parse the response string which comes in format: key1=value1&key2=value2
+      List<String> pairs = response.split('&');
+
+      for (String pair in pairs) {
+        List<String> keyValue = pair.split('=');
+        if (keyValue.length == 2) {
+          result[keyValue[0].toLowerCase()] = Uri.decodeComponent(keyValue[1]);
+        }
+      }
+
+      print('Decoded UPI Response: $result');
+    } catch (e) {
+      print('Error decoding UPI response: $e');
+    }
+
+    return result;
+  }
+
+  Future<void> initiateUpiPayment() async {
+    if (amountController.text.isEmpty) {
+      toast('Please enter amount');
+      return;
+    }
+
+    // Validate amount against settings
+    if (Strings.settings.isNotEmpty) {
+      int enteredAmount = int.tryParse(amountController.text) ?? 0;
+      int minAmount =
+          int.tryParse(Strings.settings[0].minDepositRate.toString()) ?? 0;
+      int maxAmount =
+          int.tryParse(Strings.settings[0].maxDepositRate.toString()) ??
+              99999999;
+
+      if (enteredAmount < minAmount) {
+        toast('Minimum amount is ${Strings.settings[0].minDepositRate} Rs');
+        return;
+      }
+
+      if (enteredAmount > maxAmount) {
+        toast('Maximum amount is ${Strings.settings[0].maxDepositRate} Rs');
+        return;
+      }
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      // Get UPI details from settings
+      String upiId = Strings.settings[0].upiPaymentId ?? '';
+      String payeeName = Strings.settings[0].upiName ?? 'Merchant';
+      String mobileNumber = await box.read('mobile_number') ?? '';
+
+      if (upiId.isEmpty) {
+        toast('UPI ID not configured');
+        setState(() {
+          isLoading = false;
+        });
+        return;
+      }
+
+      // Build UPI payment URL
+      String upiUrl = 'upi://pay?pa=$upiId'
+          '&pn=${Uri.encodeComponent(payeeName)}'
+          '&am=${amountController.text}'
+          '&cu=INR'
+          '&tn=${Uri.encodeComponent('Deposit for User $mobileNumber')}';
+
+      if (Strings.settings[0].merchantId != null &&
+          Strings.settings[0].merchantId.toString().isNotEmpty) {
+        upiUrl += '&mc=${Strings.settings[0].merchantId}';
+      }
+
+      print('Launching UPI URL: $upiUrl');
+
+      // For Android, use method channel to get response
+      if (Platform.isAndroid) {
+        try {
+          final result = await platform.invokeMethod('startUpiPayment', {
+            'upiUrl': upiUrl,
+          });
+
+          print('UPI Payment Result: $result');
+
+          if (result != null) {
+            // Decode the UPI response
+            Map<String, String> upiResponse =
+                decodeUpiResponse(result.toString());
+
+            String status = upiResponse['status']?.toUpperCase() ?? '';
+            upiTransactionId =
+                upiResponse['txnid'] ?? upiResponse['txnref'] ?? '';
+            upiTransactionRefId =
+                upiResponse['approvalrefno'] ?? upiResponse['txnref'] ?? '';
+            upiStatus = status;
+
+            if (status == 'SUCCESS' || status == 'SUBMITTED') {
+              // Send payment proof with transaction details
+              bool success = await sendPaymentProof(
+                apiUrl: 'user/credit_request_generate',
+                amount: amountController.text,
+                imageFile: null,
+              );
+
+              if (success) {
+                toast(
+                  'Payment Successful - Transaction ID: $upiTransactionId',
+                );
+                amountController.clear();
+                Get.back();
+              }
+            } else if (status == 'FAILURE') {
+              toast(
+                  'Payment Failed - Transaction was not successful. Please try again.');
+            } else {
+              toast('Payment Status: $status');
+            }
+          } else {
+            toast('Payment was cancelled');
+          }
+        } on PlatformException catch (e) {
+          print('Platform Exception: ${e.message}');
+          // Fallback to url_launcher if method channel fails
+          await _launchUpiUrl(upiUrl);
+        }
+      } else {
+        // For iOS or other platforms, use url_launcher
+        await _launchUpiUrl(upiUrl);
+      }
+    } catch (e) {
+      print('Error initiating UPI payment: $e');
+      toast('Failed to initiate payment: $e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _launchUpiUrl(String upiUrl) async {
+    try {
+      final uri = Uri.parse(upiUrl);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+
+        // Show dialog to confirm payment manually since we can't get response on iOS
+        Get.dialog(
+          AlertDialog(
+            title: Text('Payment Confirmation'),
+            content: Text('Have you completed the payment?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: Text('No'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  Get.back();
+                  // Submit payment request
+                  bool success = await sendPaymentProof(
+                    apiUrl: 'user/credit_request_generate',
+                    amount: amountController.text,
+                    imageFile: null,
+                  );
+
+                  if (success) {
+                    amountController.clear();
+                    Get.back();
+                  }
+                },
+                child: Text('Yes'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        toast('No UPI app found');
+      }
+    } catch (e) {
+      print('Error launching UPI URL: $e');
+      toast('Failed to open UPI app');
     }
   }
 
@@ -299,44 +495,60 @@ class _PaymentScreenState extends State<PaymentScreen>
                             ),
                             heightSpace20,
                             Center(
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primaryColor),
-                                onPressed: () async {
-                                  // if (refController.text.isEmpty) {
-                                  //   toast("Please enter the Ref No.");
-                                  //   return;
-                                  // }
-                                  // if (_selectedImage == null) {
-                                  //    toast("Please upload payment proof.");
-                                  //   return;
-                                  // }
-                                  if (int.parse(Strings
-                                          .settings[0].minDepositRate
-                                          .toString()) >
-                                      int.parse(amountController.text)) {
-                                    toast(
-                                        'Minimum amount is ${Strings.settings[0].minDepositRate} Rs');
-                                    return;
-                                  }
-                                  if (int.parse(Strings
-                                          .settings[0].maxDepositRate
-                                          .toString()) <
-                                      int.parse(amountController.text)) {
-                                    toast(
-                                        'Maximum amount is ${Strings.settings[0].maxDepositRate} Rs');
-                                    return;
-                                  }
-                                  var url = await widget.pay(
-                                    amount: amountController.text,
-                                  );
-                                  if (url != "#") {
-                                    launchurl(url);
-                                  }
-                                },
-                                child: Text("Auto Pay",
-                                    style: TextStyle(color: Colors.white)),
-                              ),
+                              child: isLoading
+                                  ? CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          AppColors.primaryColor),
+                                    )
+                                  : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              AppColors.primaryColor),
+                                      onPressed: () async {
+                                        if (amountController.text.isEmpty) {
+                                          toast("Please enter amount");
+                                          return;
+                                        }
+
+                                        if (int.parse(Strings
+                                                .settings[0].minDepositRate
+                                                .toString()) >
+                                            int.parse(amountController.text)) {
+                                          toast(
+                                              'Minimum amount is ${Strings.settings[0].minDepositRate} Rs');
+                                          return;
+                                        }
+                                        if (int.parse(Strings
+                                                .settings[0].maxDepositRate
+                                                .toString()) <
+                                            int.parse(amountController.text)) {
+                                          toast(
+                                              'Maximum amount is ${Strings.settings[0].maxDepositRate} Rs');
+                                          return;
+                                        }
+
+                                        // Check if VPA is enabled in settings
+                                        bool vpaEnabled =
+                                            Strings.settings[0].vpaEnabled ??
+                                                false;
+
+                                        if (vpaEnabled) {
+                                          // Use UPI intent payment
+                                          await initiateUpiPayment();
+                                        } else {
+                                          // Use IMB payment (existing flow)
+                                          var url = await widget.pay(
+                                            amount: amountController.text,
+                                          );
+                                          if (url != "#") {
+                                            launchurl(url);
+                                          }
+                                        }
+                                      },
+                                      child: Text("Auto Pay",
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                    ),
                             ),
                           ],
                         ),
@@ -452,7 +664,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                                               'Maximum amount is ${Strings.settings[0].maxDepositRate} Rs');
                                           return;
                                         }
-                                        bool isSuccess = await sendPaymentProof(
+                                        await sendPaymentProof(
                                             apiUrl:
                                                 'user/credit_request_generate',
                                             amount: amountController.text,
