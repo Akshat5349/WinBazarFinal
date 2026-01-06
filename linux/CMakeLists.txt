@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
 set(BINARY_NAME "azmatka")
-set(APPLICATION_ID "com.loki_app.starkalyan")
+set(APPLICATION_ID "com.lokeshh_app.starkalyan")
 
 cmake_policy(SET CMP0063 NEW)
 
