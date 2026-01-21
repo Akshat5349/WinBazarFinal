@@ -233,8 +233,8 @@ class HomeView extends GetView<HomeController> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  launchWhatsapp(
-                                      '+91${Strings.settings[0].whatsapp.toString()}');
+                                  launchurl(
+                                      'https://wa.me/+91${Strings.settings[0].whatsapp.toString()}');
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
